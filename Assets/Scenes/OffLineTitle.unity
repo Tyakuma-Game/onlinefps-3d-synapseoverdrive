@@ -864,7 +864,7 @@ GameObject:
   - component: {fileID: 1365428896}
   - component: {fileID: 1365428895}
   m_Layer: 5
-  m_Name: QuitButton
+  m_Name: QuitGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1372,7 +1372,7 @@ GameObject:
   - component: {fileID: 1908265056}
   - component: {fileID: 1908265055}
   m_Layer: 5
-  m_Name: FindRoomButton
+  m_Name: OnLineConnect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
