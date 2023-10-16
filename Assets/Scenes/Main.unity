@@ -3413,7 +3413,7 @@ GameObject:
   - component: {fileID: 320344004}
   m_Layer: 6
   m_Name: Light
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4763,7 +4763,7 @@ GameObject:
   - component: {fileID: 375194868}
   m_Layer: 6
   m_Name: Map_v1
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -6475,7 +6475,7 @@ GameObject:
   - component: {fileID: 535951492}
   m_Layer: 6
   m_Name: Static
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -18247,7 +18247,7 @@ GameObject:
   - component: {fileID: 1290436397}
   m_Layer: 6
   m_Name: Particles
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31322,9 +31322,13 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 934038861538154322, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 934038861538154330, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
+      propertyPath: playerMovement
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 934038861538154330, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
+      propertyPath: PLAYER_JUMP_FORTH.y
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 934038861538154331, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
       propertyPath: m_RootOrder
@@ -31368,18 +31372,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 934038861538154331, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3097683915387969117, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4614868034172195072, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7854471898811161121, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8574140716887355001, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}

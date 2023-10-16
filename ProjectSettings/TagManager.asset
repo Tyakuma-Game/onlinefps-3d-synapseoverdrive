@@ -8,6 +8,7 @@ TagManager:
   - SpawnManager
   - GameManager
   - MiniMapCamera
+  - Ground
   layers:
   - Default
   - TransparentFX

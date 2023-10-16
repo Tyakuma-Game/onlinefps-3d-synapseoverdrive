@@ -1,7 +1,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.Playables;
 
+public struct PlayerStatus
+{
+    public float activeMoveSpeed;   // Œ»İ‚ÌˆÚ“®‘¬“x
+    public Vector3 jumpForth;         // ƒWƒƒƒ“ƒv—Í
+    public PlayerAnimationState playerAnimationState; // Œ»İ‚Ìó‘Ô
+}
 
 /// <summary>
 /// PlayerŠÇ—ƒNƒ‰ƒX
@@ -14,8 +21,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
     int currentHp;                              //Œ»İ‚ÌHP
 
     [Header("QÆ")]
-    [Tooltip("Player‚ÌˆÚ“®‚ÉŠÖ‚·‚éƒNƒ‰ƒX")]
-    [SerializeField] PlayerMovement playerMovement;
 
     [Tooltip("Player‚Ì‹“_ˆÚ“®‚ÉŠÖ‚·‚éƒNƒ‰ƒX")]
     [SerializeField] PlayerViewpointShift playerViewpointShift;
@@ -27,6 +32,38 @@ public class PlayerController : MonoBehaviourPunCallbacks
     SpawnManager spawnManager;  //ƒXƒ|[ƒ“ƒ}ƒl[ƒWƒƒ[ŠÇ—
     GameManager gameManager;    //ƒQ[ƒ€ƒ}ƒl[ƒWƒƒ[
 
+    //|||||||||||||||||||||/
+    //@Œø—¦‰»’†‚ÌProgram
+    //|||||||||||||||||||||/
+
+    [Tooltip("ƒvƒŒƒCƒ„[‚ÌStatusî•ñ")]
+    PlayerStatus playerStatus;
+
+
+    // Player‹@”\
+    [Tooltip("Player‚ÌˆÚ“®ˆ—")]
+    IPlayerMove playerMove;
+
+    [Tooltip("Player‚ÌƒWƒƒƒ“ƒvˆ—")]
+    IPlayerJump playerJump;
+
+    [Tooltip("Player‚ÌƒAƒjƒ[ƒVƒ‡ƒ“ˆ—")]
+    IPlayerAnimator playerAnimator;
+
+    [Tooltip("’…’n‚µ‚Ä‚¢‚é‚©”»’èˆ—")]
+    PlayerLandDetector playerLandDetector;
+
+
+    // “ü—ÍƒVƒXƒeƒ€
+    [Tooltip("ƒL[ƒ{[ƒh‚Ì“ü—Íˆ—")]
+    IKeyBoardInput keyBoardInput;
+
+
+    [SerializeField] float PLAYER_WALK_SPEED = 4f;
+    [SerializeField] float PLAYER_RUN_SPEED = 8f;
+    [SerializeField] Vector3 PLAYER_JUMP_FORTH = new Vector3(0,3f,0);
+
+    //|||||||||||||||||||||/
 
     private void Awake()
     {
@@ -45,10 +82,36 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         //ƒ^ƒO‚©‚çSpawnManager‚ğ’T‚·
         spawnManager = GameObject.FindGameObjectWithTag("SpawnManager").GetComponent<SpawnManager>();
+
+    }
+
+    void Start()
+    {
+        //Œ»İ‚ÌHP‚ğMAXHP‚Ì”’l‚Éİ’è
+        currentHp = PLAYER_MAX_HP;
+
+        //HP‚ğƒXƒ‰ƒCƒ_[‚É”½‰f
+        uIManager.UpdateHP(PLAYER_MAX_HP, currentHp);
+
+
+        // “ü—ÍƒVƒXƒeƒ€
+        keyBoardInput = GetComponent<IKeyBoardInput>();
+
+        // PlayerƒVƒXƒeƒ€
+        playerAnimator = GetComponent<PlayerAnimator>();
+        playerMove = GetComponent<IPlayerMove>();
+        playerJump = GetComponent<IPlayerJump>();
+        playerJump = GetComponent<IPlayerJump>();
+        playerLandDetector = GetComponent<PlayerLandDetector>();
+
+        // ‰Šú‰»ˆ—
+        playerStatus.activeMoveSpeed = PLAYER_WALK_SPEED;               // ˆÚ“®‘¬“x
+        playerStatus.jumpForth = PLAYER_JUMP_FORTH;                     // ƒWƒƒƒ“ƒv—Í
+        playerStatus.playerAnimationState = PlayerAnimationState.Idol;  // ó‘Ô
     }
 
 
-    private void Start()
+    void Update()
     {
         //©•ªˆÈŠO‚Ìê‡‚Í
         if (!photonView.IsMine)
@@ -57,11 +120,50 @@ public class PlayerController : MonoBehaviourPunCallbacks
             return;
         }
 
-        //Œ»İ‚ÌHP‚ğMAXHP‚Ì”’l‚Éİ’è
-        currentHp = PLAYER_MAX_HP;
+        //@–ˆ‰ñ‘–‚Á‚Ä‚¢‚Ä‚à•à‚«‚É‚È‚èA‚ë‚­‚ÈğŒ®‚Å‚È‚¢‚©‚çC³‚·‚é
+        //|||||||||||||||||||||/
 
-        //HP‚ğƒXƒ‰ƒCƒ_[‚É”½‰f
-        uIManager.UpdateHP(PLAYER_MAX_HP, currentHp);
+        // ‘–‚èó‘Ô‘JˆÚ ‘–‚èƒL[“ü—Í‚³‚ê‚Ä‚¢‚é•‘–‚èó‘Ô‚Å‚È‚¢‚È‚ç
+        if (keyBoardInput.GetRunKeyInput() && !(playerStatus.playerAnimationState == PlayerAnimationState.Run))
+        {
+            playerStatus.activeMoveSpeed = PLAYER_RUN_SPEED;
+            playerStatus.playerAnimationState = PlayerAnimationState.Run;
+        }// ‘–‚éƒL[‚ª‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢ & ó‘Ô‚ª•à‚«ó‘Ô‚Å‚Í‚È‚¢
+        else if (!keyBoardInput.GetRunKeyInput() && !(playerStatus.playerAnimationState == PlayerAnimationState.Walk))
+        {
+            playerStatus.activeMoveSpeed = PLAYER_WALK_SPEED;
+            playerStatus.playerAnimationState = PlayerAnimationState.Walk;
+        }
+
+        //|||||||||||||||||||||/
+
+        // ˆÚ“®
+        Vector3 moveDirection = keyBoardInput.GetWASDAndArrowKeyInput();
+        if (moveDirection != Vector3.zero)
+        {
+            playerMove.Move(moveDirection, playerStatus.activeMoveSpeed);
+        }
+        else
+        {
+            playerStatus.playerAnimationState = PlayerAnimationState.Idol;
+        }
+
+        // ƒWƒƒƒ“ƒv
+        if (playerLandDetector.IsGrounded)
+        {
+            Debug.Log("’n–Ê‚É‚¢‚Ü‚·");
+            if (keyBoardInput.GetJumpKeyInput())
+            {
+                playerJump.Jump(playerStatus.jumpForth);
+            }
+        }
+        else
+        {
+            Debug.Log("’n–Ê‚É‚¢‚Ü‚¹‚ñ");
+        }
+
+        // ƒAƒjƒ[ƒVƒ‡ƒ“XV
+        playerAnimator.AnimationUpdate(playerStatus.playerAnimationState);
     }
 
 

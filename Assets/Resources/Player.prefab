@@ -803,20 +803,23 @@ GameObject:
   - component: {fileID: 934038861538154330}
   - component: {fileID: 8574140716887355001}
   - component: {fileID: 1114773465164249257}
-  - component: {fileID: 417006582}
   - component: {fileID: 4238985569659927567}
   - component: {fileID: 417006584}
   - component: {fileID: 957401455}
   - component: {fileID: 223608590}
   - component: {fileID: 1087863930571978241}
   - component: {fileID: 2034190151421313895}
+  - component: {fileID: 6727318584958256230}
+  - component: {fileID: 552142755365448907}
+  - component: {fileID: 2866255046826575791}
+  - component: {fileID: 6225019319151826619}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &934038861538154331
 Transform:
   m_ObjectHideFlags: 0
@@ -927,9 +930,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PLAYER_MAX_HP: 100
-  playerMovement: {fileID: 417006582}
   playerViewpointShift: {fileID: 417006584}
   playerGunController: {fileID: 957401455}
+  PLAYER_WALK_SPEED: 4
+  PLAYER_RUN_SPEED: 8
+  PLAYER_JUMP_FORTH: {x: 0, y: 6, z: 0}
 --- !u!114 &8574140716887355001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -969,24 +974,6 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!114 &417006582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 934038861538154322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bbb056606727dc4dac5ae06ae96d862, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WALK_SPEED: 4
-  RUN_SPEED: 8
-  JUMP_FORCE: {x: 0, y: 6, z: 0}
-  groundLayers:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!114 &4238985569659927567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -999,7 +986,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ef13dd5d2dcbcf4d9e9521509f0e9c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMovement: {fileID: 417006582}
   animator: {fileID: 8283675028519006409}
 --- !u!114 &417006584
 MonoBehaviour:
@@ -1087,6 +1073,57 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PITFALL_COORDINATE: -25
+--- !u!114 &6727318584958256230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934038861538154322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a849cfd17a217741996e4f69b9b5eac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &552142755365448907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934038861538154322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0023bcf40e129d4ba7c9d3e7d144b4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2866255046826575791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934038861538154322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53d5408a09cea9a4897b15088e0d36e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!114 &6225019319151826619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934038861538154322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2913b53cf2b1ed4d86b3327ab141742, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &934038861596881045
 GameObject:
   m_ObjectHideFlags: 0
