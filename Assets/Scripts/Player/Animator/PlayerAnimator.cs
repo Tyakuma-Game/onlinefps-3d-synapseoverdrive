@@ -24,7 +24,7 @@ public class PlayerAnimator : MonoBehaviour,IPlayerAnimator
     /// <summary>
     /// アニメーションの更新処理
     /// </summary>
-    /// <param name="playerAnimationState">現在選択中のアニメーション</param>
+    /// <param name="playerAnimationState">現在のアニメーション状態</param>
     public void AnimationUpdate(PlayerAnimationState playerAnimationState)
     {
         //歩き判定

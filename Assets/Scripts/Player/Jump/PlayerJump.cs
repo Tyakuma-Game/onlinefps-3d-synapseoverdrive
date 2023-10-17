@@ -9,9 +9,13 @@ public class PlayerJump : MonoBehaviour, IPlayerJump
 {
     Rigidbody myRigidbody;
 
-    void Start()
+    /// <summary>
+    /// ‰Šú‰»ˆ—
+    /// </summary>
+    /// <param name="rigidbody"></param>
+    public void Init(Rigidbody rigidbody)
     {
-        myRigidbody = GetComponent<Rigidbody>();
+        myRigidbody = rigidbody;
     }
 
     /// <summary>

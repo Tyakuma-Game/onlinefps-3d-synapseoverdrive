@@ -74,6 +74,8 @@ public class PlayerViewpointShift : MonoBehaviourPunCallbacks
             transform.eulerAngles.y + mouseInput.x, //マウスのx軸の入力を足す
             transform.eulerAngles.z);
 
+
+
         //変数にy軸のマウス入力分の数値を足す
         verticalMouseInput += mouseInput.y;
 

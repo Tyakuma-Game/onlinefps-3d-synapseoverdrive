@@ -3,54 +3,11 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.Playables;
 
-public struct PlayerStatus
-{
-    public float activeMoveSpeed;                       // Œ»İ‚ÌˆÚ“®‘¬“x
-    public Vector3 jumpForth;                           // ƒWƒƒƒ“ƒv—Í
-    public PlayerAnimationState playerAnimationState;   // Œ»İ‚Ìó‘Ô
-}
-
-
-public class PlayerStatusA
-{
-    int currentHp;                          // Œ»İ‚ÌHP
-    float activeMoveSpeed;                  // Œ»İ‚ÌˆÚ“®‘¬“x
-    Vector3 jumpForth;                      // ƒWƒƒƒ“ƒv—Í
-    PlayerAnimationState animationState;    // Œ»İ‚Ìó‘Ô
-
-    public int CurrentHP
-    {
-        get { return currentHp; }
-    }
-
-    public float ActiveMoveSpeed
-    {
-        get { return activeMoveSpeed; }
-    }
-
-    public Vector3 JumpForth
-    {
-        get { return jumpForth; }
-    }
-
-    public PlayerAnimationState AnimationState
-    {
-        get { return animationState; }
-    }
-}
-
 /// <summary>
 /// PlayerŠÇ—ƒNƒ‰ƒX
 /// </summary>
 public class PlayerController : MonoBehaviourPunCallbacks
 {
-    [Header("’è”")]
-    [Tooltip("Player‚ÌHPÅ‘å’l")]
-    [SerializeField] int PLAYER_MAX_HP = 100;   //Å‘åHP
-    int currentHp;                              //Œ»İ‚ÌHP
-
-    [Header("QÆ")]
-
     [Tooltip("Player‚Ì‹“_ˆÚ“®‚ÉŠÖ‚·‚éƒNƒ‰ƒX")]
     [SerializeField] PlayerViewpointShift playerViewpointShift;
 
@@ -65,13 +22,15 @@ public class PlayerController : MonoBehaviourPunCallbacks
     //@Œø—¦‰»’†‚ÌProgram
     //|||||||||||||||||||||/
 
-    [Tooltip("ƒvƒŒƒCƒ„[‚ÌStatusî•ñ")]
+    [Tooltip("ƒvƒŒƒCƒ„[‚ÌƒXƒe[ƒ^ƒXî•ñ")]
     PlayerStatus playerStatus;
-
 
     // Player‹@”\
     [Tooltip("Player‚ÌˆÚ“®ˆ—")]
     IPlayerMove playerMove;
+
+    [Tooltip("Player‚Ì‰ñ“]ˆ—")]
+    IPlayerRotation playerRotation;
 
     [Tooltip("Player‚ÌƒWƒƒƒ“ƒvˆ—")]
     IPlayerJump playerJump;
@@ -86,15 +45,17 @@ public class PlayerController : MonoBehaviourPunCallbacks
     // “ü—ÍƒVƒXƒeƒ€
     [Tooltip("ƒL[ƒ{[ƒh‚Ì“ü—Íˆ—")]
     IKeyBoardInput keyBoardInput;
+    
+    [Tooltip("ƒ}ƒEƒX‚Ì“ü—Íˆ—")]
+    IMouseInput mouseInput;
 
 
-    [SerializeField] float PLAYER_WALK_SPEED = 4f;
-    [SerializeField] float PLAYER_RUN_SPEED = 8f;
-    [SerializeField] Vector3 PLAYER_JUMP_FORTH = new Vector3(0,3f,0);
+    Rigidbody myRigidbody;
+   
 
     //|||||||||||||||||||||/
 
-    private void Awake()
+    void Awake()
     {
         //©•ªˆÈŠO‚Ìê‡‚Í
         if (!photonView.IsMine)
@@ -116,32 +77,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        //Œ»İ‚ÌHP‚ğMAXHP‚Ì”’l‚Éİ’è
-        currentHp = PLAYER_MAX_HP;
-
-        //HP‚ğƒXƒ‰ƒCƒ_[‚É”½‰f
-        uIManager.UpdateHP(PLAYER_MAX_HP, currentHp);
-
-
-        // “ü—ÍƒVƒXƒeƒ€
-        keyBoardInput = GetComponent<IKeyBoardInput>();
-
-        // PlayerƒVƒXƒeƒ€
-        playerAnimator = GetComponent<PlayerAnimator>();
-        playerMove = GetComponent<IPlayerMove>();
-        playerJump = GetComponent<IPlayerJump>();
-        playerJump = GetComponent<IPlayerJump>();
-        playerLandDetector = GetComponent<PlayerLandDetector>();
-
-        // ‰Šú‰»ˆ—
-        playerStatus.activeMoveSpeed = PLAYER_WALK_SPEED;               // ˆÚ“®‘¬“x
-        playerStatus.jumpForth = PLAYER_JUMP_FORTH;                     // ƒWƒƒƒ“ƒv—Í
-        playerStatus.playerAnimationState = PlayerAnimationState.Idol;  // ó‘Ô
-    }
-
-
-    void Update()
-    {
         //©•ªˆÈŠO‚Ìê‡‚Í
         if (!photonView.IsMine)
         {
@@ -149,50 +84,80 @@ public class PlayerController : MonoBehaviourPunCallbacks
             return;
         }
 
-        //@–ˆ‰ñ‘–‚Á‚Ä‚¢‚Ä‚à•à‚«‚É‚È‚èA‚ë‚­‚ÈğŒ®‚Å‚È‚¢‚©‚çC³‚·‚é
-        //|||||||||||||||||||||/
+        myRigidbody = GetComponent<Rigidbody>();
 
-        // ‘–‚èó‘Ô‘JˆÚ ‘–‚èƒL[“ü—Í‚³‚ê‚Ä‚¢‚é•‘–‚èó‘Ô‚Å‚È‚¢‚È‚ç
-        if (keyBoardInput.GetRunKeyInput() && !(playerStatus.playerAnimationState == PlayerAnimationState.Run))
+        // “ü—ÍƒVƒXƒeƒ€
+        keyBoardInput = GetComponent<IKeyBoardInput>();
+        mouseInput = GetComponent<IMouseInput>();
+
+        // PlayerƒVƒXƒeƒ€
+        playerLandDetector = GetComponent<PlayerLandDetector>();
+        playerAnimator = GetComponent<IPlayerAnimator>();
+        playerMove = GetComponent<IPlayerMove>();
+        playerJump = GetComponent<IPlayerJump>();
+        playerRotation = GetComponent<IPlayerRotation>();
+
+        // ƒXƒe[ƒ^ƒX‰Šú‰»
+        playerJump.Init(myRigidbody);
+        playerStatus.Init();
+
+        //HPƒXƒ‰ƒCƒ_[”½‰f
+        uIManager.UpdateHP(playerStatus.MAX_HP, playerStatus.CurrentHP);
+    }
+
+
+    void Update()
+    {
+        // ©•ªˆÈŠO‚Ìê‡‚Í
+        if (!photonView.IsMine)
         {
-            playerStatus.activeMoveSpeed = PLAYER_RUN_SPEED;
-            playerStatus.playerAnimationState = PlayerAnimationState.Run;
-        }// ‘–‚éƒL[‚ª‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢ & ó‘Ô‚ª•à‚«ó‘Ô‚Å‚Í‚È‚¢
-        else if (!keyBoardInput.GetRunKeyInput() && !(playerStatus.playerAnimationState == PlayerAnimationState.Walk))
-        {
-            playerStatus.activeMoveSpeed = PLAYER_WALK_SPEED;
-            playerStatus.playerAnimationState = PlayerAnimationState.Walk;
+            //ˆ—I—¹
+            return;
         }
 
-        //|||||||||||||||||||||/
-
-        // ˆÚ“®
-        Vector3 moveDirection = keyBoardInput.GetWASDAndArrowKeyInput();
-        if (moveDirection != Vector3.zero)
+        // ó‘Ô‘JˆÚ
+        if (keyBoardInput.GetRunKeyInput())
         {
-            playerMove.Move(moveDirection, playerStatus.activeMoveSpeed);
+            if (playerStatus.AnimationState != PlayerAnimationState.Run)
+                playerStatus.IsRunning();
         }
         else
         {
-            playerStatus.playerAnimationState = PlayerAnimationState.Idol;
+            if (playerStatus.AnimationState != PlayerAnimationState.Walk)
+                playerStatus.IsWalking();
+        }
+
+        // ‰ñ“]ˆ—
+        Vector2 roteDirection = mouseInput.GetMouseMove();
+        if (roteDirection != Vector2.zero)
+        {
+            playerRotation.Rotation(roteDirection,playerStatus.ROTA_SPEED);
+        }
+
+        // ‹“_ˆÚ“®
+
+
+
+        // À•WˆÚ“®
+        Vector3 moveDirection = keyBoardInput.GetWASDAndArrowKeyInput();
+        if (moveDirection != Vector3.zero)
+        {
+            playerMove.Move(moveDirection, playerStatus.ActiveMoveSpeed);
+        }
+        else
+        {
+            playerStatus.IsIdol();
         }
 
         // ƒWƒƒƒ“ƒv
         if (playerLandDetector.IsGrounded)
         {
-            Debug.Log("’n–Ê‚É‚¢‚Ü‚·");
             if (keyBoardInput.GetJumpKeyInput())
-            {
-                playerJump.Jump(playerStatus.jumpForth);
-            }
-        }
-        else
-        {
-            Debug.Log("’n–Ê‚É‚¢‚Ü‚¹‚ñ");
+                playerJump.Jump(playerStatus.JumpForth);
         }
 
         // ƒAƒjƒ[ƒVƒ‡ƒ“XV
-        playerAnimator.AnimationUpdate(playerStatus.playerAnimationState);
+        playerAnimator.AnimationUpdate(playerStatus.AnimationState);
     }
 
 
@@ -222,51 +187,25 @@ public class PlayerController : MonoBehaviourPunCallbacks
         if (photonView.IsMine)
         {
             //ƒ_ƒ[ƒW
-            currentHp -= damage;
+            playerStatus.OnDamage(damage);
 
             //Œ»İ‚ÌHP‚ª0ˆÈ‰º‚Ìê‡
-            if (currentHp <= 0)
+            if (playerStatus.CurrentHP <= 0)
             {
                 //€–SŠÖ”‚ğŒÄ‚Ô
-                Death(ref currentHp, name, actor);
+                Death(name, actor);
             }
 
             //HP‚ğƒXƒ‰ƒCƒ_[‚É”½‰f
-            uIManager.UpdateHP(PLAYER_MAX_HP, currentHp);
+            uIManager.UpdateHP(playerStatus.MAX_HP, playerStatus.CurrentHP);
         }
     }
-
-
-    /// <summary>
-    /// €–Sˆ—
-    /// </summary>
-    public void Death(ref int currentHp, string name, int actor)
-    {
-        //Œ»İ‚ÌHP‚ğ‚O‚É’²®
-        currentHp = 0;
-
-        //€–SŠÖ”‚ğŒÄ‚Ño‚µ
-        spawnManager.Die();
-
-        //€–SUI‚ğXV
-        uIManager.UpdateDeathUI(name);
-
-        //©•ª‚ÌƒfƒX”‚ğã¸(©•ª‚Ì¯•Ê”Ô†AƒfƒXA‰ÁZ”’l)
-        gameManager.ScoreGet(PhotonNetwork.LocalPlayer.ActorNumber, 1, 1);
-
-        //Œ‚‚Á‚Ä‚«‚½‘Šè‚ÌƒLƒ‹”‚ğã¸(Œ‚‚Á‚Ä‚«‚½“G‚Ì¯•Ê”Ô†AƒLƒ‹A‰ÁZ”’l)
-        gameManager.ScoreGet(actor, 0, 1);
-    }
-
 
     /// <summary>
     /// €–Sˆ—
     /// </summary>
     public void Death(string name, int actor)
     {
-        //Œ»İ‚ÌHP‚ğ‚O‚É’²®
-        currentHp = 0;
-
         //€–SŠÖ”‚ğŒÄ‚Ño‚µ
         spawnManager.Die();
 
