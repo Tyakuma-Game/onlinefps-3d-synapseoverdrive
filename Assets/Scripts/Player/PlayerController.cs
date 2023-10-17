@@ -5,9 +5,9 @@ using UnityEngine.Playables;
 
 public struct PlayerStatus
 {
-    public float activeMoveSpeed;   // 現在の移動速度
-    public Vector3 jumpForth;         // ジャンプ力
-    public PlayerAnimationState playerAnimationState; // 現在の状態
+    public float activeMoveSpeed;                       // 現在の移動速度
+    public Vector3 jumpForth;                           // ジャンプ力
+    public PlayerAnimationState playerAnimationState;   // 現在の状態
 }
 
 /// <summary>
