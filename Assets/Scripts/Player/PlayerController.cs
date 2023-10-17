@@ -10,6 +10,35 @@ public struct PlayerStatus
     public PlayerAnimationState playerAnimationState;   // 現在の状態
 }
 
+
+public class PlayerStatusA
+{
+    int currentHp;                          // 現在のHP
+    float activeMoveSpeed;                  // 現在の移動速度
+    Vector3 jumpForth;                      // ジャンプ力
+    PlayerAnimationState animationState;    // 現在の状態
+
+    public int CurrentHP
+    {
+        get { return currentHp; }
+    }
+
+    public float ActiveMoveSpeed
+    {
+        get { return activeMoveSpeed; }
+    }
+
+    public Vector3 JumpForth
+    {
+        get { return jumpForth; }
+    }
+
+    public PlayerAnimationState AnimationState
+    {
+        get { return animationState; }
+    }
+}
+
 /// <summary>
 /// Player管理クラス
 /// </summary>
