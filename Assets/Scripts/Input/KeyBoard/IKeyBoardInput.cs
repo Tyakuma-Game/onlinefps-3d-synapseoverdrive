@@ -22,4 +22,10 @@ public interface IKeyBoardInput
     /// </summary>
     /// <returns>ダッシュキーの入力状態</returns>
     bool GetRunKeyInput();
+
+    /// <summary>
+    /// カーソルロックキーの入力状態取得
+    /// </summary>
+    /// <returns>カーソルロックキーの入力状態</returns>
+    bool GetCursorLockKeyInput();
 }

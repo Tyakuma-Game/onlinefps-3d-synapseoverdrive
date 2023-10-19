@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.Playables;
+using UnityEditor.Experimental.GraphView;
+using Unity.VisualScripting;
 
 /// <summary>
 /// PlayerŠÇ—ƒNƒ‰ƒX
@@ -39,12 +41,18 @@ public class PlayerController : MonoBehaviourPunCallbacks
     PlayerLandDetector playerLandDetector;
 
 
+    IPlayerViewPointRotation playerViewPointRotation;
+
+
+
     // “ü—ÍƒVƒXƒeƒ€
     [Tooltip("ƒL[ƒ{[ƒh‚Ì“ü—Íˆ—")]
     IKeyBoardInput keyBoardInput;
     
     [Tooltip("ƒ}ƒEƒX‚Ì“ü—Íˆ—")]
     IMouseInput mouseInput;
+
+    IMouseCursorLock mouseCursorLock;
 
 
     Rigidbody myRigidbody;
@@ -87,6 +95,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
         // “ü—ÍƒVƒXƒeƒ€
         keyBoardInput = GetComponent<IKeyBoardInput>();
         mouseInput = GetComponent<IMouseInput>();
+        mouseCursorLock = GetComponent<IMouseCursorLock>();
+        mouseCursorLock.LockScreen();
+
 
         // PlayerƒVƒXƒeƒ€
         playerLandDetector = GetComponent<PlayerLandDetector>();
@@ -94,6 +105,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         playerMove = GetComponent<IPlayerMove>();
         playerJump = GetComponent<IPlayerJump>();
         playerRotation = GetComponent<IPlayerRotation>();
+        playerViewPointRotation = GetComponent<IPlayerViewPointRotation>();
 
         // ƒXƒe[ƒ^ƒX‰Šú‰»
         playerJump.Init(myRigidbody);
@@ -113,53 +125,76 @@ public class PlayerController : MonoBehaviourPunCallbacks
             return;
         }
 
-        // ó‘Ô‘JˆÚ
-        if (keyBoardInput.GetRunKeyInput())
+        //|||||||||||||||||||||/
+        // ó‘Ô•ÏXˆ—
+        //|||||||||||||||||||||/
         {
-            if (playerStatus.AnimationState != PlayerAnimationState.Run)
-                playerStatus.IsRunning();
-        }
-        else
-        {
-            if (playerStatus.AnimationState != PlayerAnimationState.Walk)
-                playerStatus.IsWalking();
-        }
+            // ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ÌƒƒbƒNó‘Ô•ÏX
+            if (keyBoardInput.GetCursorLockKeyInput())
+            {
+                if (mouseCursorLock.IsLocked())
+                    mouseCursorLock.LockScreen();
+                else
+                    mouseCursorLock.UnlockScreen();
+            }
 
-        // Player‰ñ“]
-        Vector2 roteDirection = mouseInput.GetMouseMove();
-        if (roteDirection != Vector2.zero)
-        {
-            playerRotation.Rotation(roteDirection,playerStatus.Constants.RotationSpeed);
-        }
-
-        // ‹“_‰ñ“]
-
-
-
-        // À•WˆÚ“®
-        Vector3 moveDirection = keyBoardInput.GetWASDAndArrowKeyInput();
-        if (moveDirection != Vector3.zero)
-        {
-            playerMove.Move(moveDirection, playerStatus.ActiveMoveSpeed);
-        }
-        else
-        {
-            playerStatus.IsIdol();
+            // ó‘Ô‘JˆÚ
+            if (keyBoardInput.GetRunKeyInput())
+            {
+                if (playerStatus.AnimationState != PlayerAnimationState.Run)
+                    playerStatus.IsRunning();
+            }
+            else
+            {
+                if (playerStatus.AnimationState != PlayerAnimationState.Walk)
+                    playerStatus.IsWalking();
+            }
         }
 
-        // ƒWƒƒƒ“ƒv
-        if (playerLandDetector.IsGrounded)
+        //|||||||||||||||||||||/
+        // PLAYERˆ—
+        //|||||||||||||||||||||/
         {
-            Debug.Log("’…’n’†");
-            if (keyBoardInput.GetJumpKeyInput())
-                playerJump.Jump(playerStatus.Constants.JumpForce);
+            // ‰ñ“]
+            Vector2 roteDirection = mouseInput.GetMouseMove();
+            if (roteDirection != Vector2.zero)
+            {
+                playerRotation.Rotation(roteDirection, playerStatus.Constants.RotationSpeed);
+                playerStatus.ViewPointUpdate(playerViewPointRotation.Rotation(roteDirection, playerStatus.Constants.RotationSpeed, playerStatus.ViewPoint, playerStatus.Constants.VerticalRotationRange));
+            }
+
+            // ˆÚ“®
+            Vector3 moveDirection = keyBoardInput.GetWASDAndArrowKeyInput();
+            if (moveDirection != Vector3.zero)
+            {
+                playerMove.Move(moveDirection, playerStatus.ActiveMoveSpeed);
+            }
+            else
+            {
+                playerStatus.IsIdol();
+            }
+
+            // ƒWƒƒƒ“ƒv
+            if (playerLandDetector.IsGrounded)
+            {
+                if (keyBoardInput.GetJumpKeyInput())
+                {
+                    playerJump.Jump(playerStatus.Constants.JumpForce);
+                    playerLandDetector.OnJunpingChangeFlag();
+                }
+            }
+
+            // ƒAƒjƒ[ƒVƒ‡ƒ“XV
+            playerAnimator.AnimationUpdate(playerStatus.AnimationState);
         }
 
-        // ƒAƒjƒ[ƒVƒ‡ƒ“XV
-        playerAnimator.AnimationUpdate(playerStatus.AnimationState);
+        //|||||||||||||||||||||/
+        // ƒJƒƒ‰ˆ—
+        //|||||||||||||||||||||/
 
         // ƒJƒƒ‰À•WXV
-
+        myCamera.transform.position = playerStatus.ViewPoint.position;//À•W
+        myCamera.transform.rotation = playerStatus.ViewPoint.rotation;//‰ñ“]
     }
 
 

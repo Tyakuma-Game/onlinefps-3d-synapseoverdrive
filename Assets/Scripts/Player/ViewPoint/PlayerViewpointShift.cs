@@ -51,12 +51,12 @@ public class PlayerViewpointShift : MonoBehaviourPunCallbacks
             return;
         }
 
-        //視点移動関数
-        PlayerRotate();
+        ////視点移動関数
+        //PlayerRotate();
 
-        //カメラ座標調整
-        cam.transform.position = viewPoint.position;//座標
-        cam.transform.rotation = viewPoint.rotation;//回転
+        ////カメラ座標調整
+        //cam.transform.position = viewPoint.position;//座標
+        //cam.transform.rotation = viewPoint.rotation;//回転
     }
 
     /// <summary>
@@ -67,14 +67,6 @@ public class PlayerViewpointShift : MonoBehaviourPunCallbacks
         //変数にユーザーのマウスの動きを格納
         mouseInput = new Vector2(Input.GetAxisRaw("Mouse X") * MOUSE_SENSITIVITY,
             Input.GetAxisRaw("Mouse Y") * MOUSE_SENSITIVITY);
-
-        //横回転を反映
-        transform.rotation = Quaternion.Euler       //オイラー角としての角度が返される
-            (transform.eulerAngles.x,
-            transform.eulerAngles.y + mouseInput.x, //マウスのx軸の入力を足す
-            transform.eulerAngles.z);
-
-
 
         //変数にy軸のマウス入力分の数値を足す
         verticalMouseInput += mouseInput.y;

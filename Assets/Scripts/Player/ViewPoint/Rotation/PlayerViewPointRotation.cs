@@ -15,12 +15,13 @@ public class PlayerViewPointRotation : MonoBehaviour, IPlayerViewPointRotation
     /// Playerの視点回転処理
     /// </summary>
     /// <param name="rotaInput">回転のための入力情報</param>
+    /// <param name="rotaSpeed">回転速度</param>
     /// <param name="viewPoint">視点座標</param>
     /// <param name="rotationRange">回転範囲</param>
-    public Transform Rotation(Vector2 rotaInput, Transform viewPoint, float rotationRange)
+    public Transform Rotation(Vector2 rotaInput, float rotaSpeed, Transform viewPoint, float rotationRange)
     {
         //変数にy軸のマウス入力分の数値を足す
-        verticalMouseInput += rotaInput.y;
+        verticalMouseInput += rotaInput.y * rotaSpeed;
 
         //変数の数値を丸める（上下の視点範囲制御）
         verticalMouseInput = Mathf.Clamp(verticalMouseInput, -rotationRange, rotationRange);

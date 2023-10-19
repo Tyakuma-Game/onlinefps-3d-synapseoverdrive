@@ -30,12 +30,11 @@ public class PlayerLandDetector : MonoBehaviour
         }
     }
 
-    void OnCollisionExit(Collision collision)
+    /// <summary>
+    /// ジャンプ中にフラグを変更
+    /// </summary>
+    public void OnJunpingChangeFlag()
     {
-        // 地面に接触している & 衝突から離れたオブジェクトが指定された地面のレイヤーに含まれているかチェック
-        if (isGrounded == true && ((1 << collision.gameObject.layer) & groundLayers) != 0)
-        {
-            isGrounded = false;
-        }
+        isGrounded = false;
     }
 }

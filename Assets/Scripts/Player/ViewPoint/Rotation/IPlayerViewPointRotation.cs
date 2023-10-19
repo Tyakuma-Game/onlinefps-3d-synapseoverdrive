@@ -9,7 +9,8 @@ public interface IPlayerViewPointRotation
     /// Player‚Ì‹“_‰ñ“]ˆ—
     /// </summary>
     /// <param name="rotaInput">‰ñ“]‚Ì‚½‚ß‚Ì“ü—Íî•ñ</param>
+    /// <param name="rotaSpeed">‰ñ“]‘¬“x</param>
     /// <param name="viewPoint">‹“_À•W</param>
     /// <param name="rotationRange">‰ñ“]”ÍˆÍ</param>
-    public Transform Rotation(Vector2 rotaInput, Transform viewPoint, float rotationRange);
+    public Transform Rotation(Vector2 rotaInput, float rotaSpeed, Transform viewPoint, float rotationRange);
 }

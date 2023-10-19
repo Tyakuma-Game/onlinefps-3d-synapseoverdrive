@@ -32,6 +32,14 @@ public class PlayerStatus: MonoBehaviour
     }
 
     /// <summary>
+    /// ‹“_À•W‚ÌXVˆ—
+    /// </summary>
+    public void ViewPointUpdate(Transform transform)
+    {
+        viewPoint = transform;
+    }
+
+    /// <summary>
     /// ƒ_ƒ[ƒWˆ—
     /// </summary>
     /// <param name="damage"></param>
@@ -69,6 +77,11 @@ public class PlayerStatus: MonoBehaviour
         activeMoveSpeed = playerConstants.RunSpeed;
         animationState = PlayerAnimationState.Run;
     }
+
+
+    //|||||||||||||||||||||/
+    // ƒQƒbƒ^[
+    //|||||||||||||||||||||/
 
     /// <summary>
     /// PLAYER‚Ì’è”æ“¾
