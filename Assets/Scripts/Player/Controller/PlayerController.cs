@@ -8,9 +8,6 @@ using UnityEngine.Playables;
 /// </summary>
 public class PlayerController : MonoBehaviourPunCallbacks
 {
-    [Tooltip("Player‚Ì‹“_ˆÚ“®‚ÉŠÖ‚·‚éƒNƒ‰ƒX")]
-    [SerializeField] PlayerViewpointShift playerViewpointShift;
-
     [Tooltip("Player‚ÌeŠÇ—ƒNƒ‰ƒX")]
     [SerializeField] PlayerGunController playerGunController;
 
@@ -23,7 +20,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     //|||||||||||||||||||||/
 
     [Tooltip("ƒvƒŒƒCƒ„[‚ÌƒXƒe[ƒ^ƒXî•ñ")]
-    PlayerStatus playerStatus;
+    [SerializeField] PlayerStatus playerStatus;
 
     // Player‹@”\
     [Tooltip("Player‚ÌˆÚ“®ˆ—")]
@@ -51,7 +48,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
 
     Rigidbody myRigidbody;
-   
+    Camera myCamera;
 
     //|||||||||||||||||||||/
 
@@ -85,6 +82,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
 
         myRigidbody = GetComponent<Rigidbody>();
+        myCamera = Camera.main;
 
         // “ü—ÍƒVƒXƒeƒ€
         keyBoardInput = GetComponent<IKeyBoardInput>();
@@ -102,7 +100,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         playerStatus.Init();
 
         //HPƒXƒ‰ƒCƒ_[”½‰f
-        uIManager.UpdateHP(playerStatus.MAX_HP, playerStatus.CurrentHP);
+        uIManager.UpdateHP(playerStatus.Constants.MaxHP, playerStatus.CurrentHP);
     }
 
 
@@ -127,14 +125,14 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 playerStatus.IsWalking();
         }
 
-        // ‰ñ“]ˆ—
+        // Player‰ñ“]
         Vector2 roteDirection = mouseInput.GetMouseMove();
         if (roteDirection != Vector2.zero)
         {
-            playerRotation.Rotation(roteDirection,playerStatus.ROTA_SPEED);
+            playerRotation.Rotation(roteDirection,playerStatus.Constants.RotationSpeed);
         }
 
-        // ‹“_ˆÚ“®
+        // ‹“_‰ñ“]
 
 
 
@@ -152,12 +150,16 @@ public class PlayerController : MonoBehaviourPunCallbacks
         // ƒWƒƒƒ“ƒv
         if (playerLandDetector.IsGrounded)
         {
+            Debug.Log("’…’n’†");
             if (keyBoardInput.GetJumpKeyInput())
-                playerJump.Jump(playerStatus.JumpForth);
+                playerJump.Jump(playerStatus.Constants.JumpForce);
         }
 
         // ƒAƒjƒ[ƒVƒ‡ƒ“XV
         playerAnimator.AnimationUpdate(playerStatus.AnimationState);
+
+        // ƒJƒƒ‰À•WXV
+
     }
 
 
@@ -197,7 +199,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             }
 
             //HP‚ğƒXƒ‰ƒCƒ_[‚É”½‰f
-            uIManager.UpdateHP(playerStatus.MAX_HP, playerStatus.CurrentHP);
+            uIManager.UpdateHP(playerStatus.Constants.MaxHP, playerStatus.CurrentHP);
         }
     }
 
