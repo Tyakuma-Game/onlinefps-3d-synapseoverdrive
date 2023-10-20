@@ -37,7 +37,9 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     [Tooltip("銃ホルダー 相手視点用")]
     [SerializeField] Gun[] OtherGunsHolder;
 
-    
+
+    [SerializeField] List<GunStatus> gunStatus = new List<GunStatus>();
+
     //UI管理
     UIManager uIManager;
     
@@ -224,12 +226,48 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         }
     }
 
+    //　発砲時のエフェクト処理
+    private void ShotEffect()
+    {
+        //　効果音の再生
+        gunStatus[selectedGun].GetShotSE().Stop();
+        gunStatus[selectedGun].GetShotSE().Play();
+
+        //　光を表示
+        gunStatus[selectedGun].GetShotLight().enabled = false;
+        gunStatus[selectedGun].GetShotLight().enabled = true;
+
+        // 発射Objectを0.2fのみ生成
+        gunStatus[selectedGun].ActiveShotEffect();
+
+        //　コルーチンで消す処理を実行
+        StartCoroutine(DisableLight());
+        StartCoroutine(DisableEffect());
+
+        //　銃のEffectを消す
+        IEnumerator DisableEffect()
+        {
+            yield return new WaitForSeconds(0.1f);
+            gunStatus[selectedGun].ShotEffectNotActive();
+        }
+
+        //　ライトを消す処理
+        IEnumerator DisableLight()
+        {
+            yield return new WaitForSeconds(0.1f);
+            gunStatus[selectedGun].GetShotLight().enabled = false;
+        }
+    }
+
 
     /// <summary>
     /// 弾丸の発射
     /// </summary>
     private void FiringBullet()
     {
+        // Effectを散らす
+        ShotEffect();
+
         //Ray(光線)をカメラの中央から設定
         Ray ray = playerViewpointShift.GenerateRayFromCameraCenter();
 
