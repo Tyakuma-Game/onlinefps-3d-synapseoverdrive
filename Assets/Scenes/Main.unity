@@ -31476,6 +31476,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 934038861538154322, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 934038861538154331, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -31518,6 +31522,54 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 934038861538154331, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4665145223105240649, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
+      propertyPath: adsZoom
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4665145223105240649, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
+      propertyPath: adsSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4665145223105240649, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
+      propertyPath: shotDamage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4665145223105240649, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
+      propertyPath: shootInterval
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5896083620593332183, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
+      propertyPath: adsZoom
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5896083620593332183, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
+      propertyPath: adsSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5896083620593332183, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
+      propertyPath: shotDamage
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5896083620593332183, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
+      propertyPath: shootInterval
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6216079938162758234, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
+      propertyPath: adsZoom
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 6216079938162758234, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
+      propertyPath: adsSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6216079938162758234, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
+      propertyPath: shotDamage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7854471898811161121, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8574140716887355001, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}

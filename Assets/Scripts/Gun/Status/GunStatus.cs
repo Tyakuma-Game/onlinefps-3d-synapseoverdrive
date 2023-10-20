@@ -7,19 +7,32 @@ using UnityEngine;
 /// </summary>
 public class GunStatus : MonoBehaviour
 {
+    //|||||||||||||||||||||/
+    // ’è”
+    //|||||||||||||||||||||/
+    [Header("’è”")]
+    [Tooltip("ËŒ‚ŠÔŠu")]
+    [SerializeField] float shootInterval = 0.1f;
+
+    [Tooltip("ˆĞ—Í")]
+    [SerializeField] int shotDamage;
+
+    [Tooltip("”`‚«‚İ‚ÌƒY[ƒ€")]
+    [SerializeField] float adsZoom;
+
+    [Tooltip("”`‚«‚İ‚Ì‘¬“x")]
+    [SerializeField] float adsSpeed;
+
+    //|||||||||||||||||||||/
+    // QÆ
+    //|||||||||||||||||||||/
+    [Header("QÆ")]
     [SerializeField] AudioSource shotSE;    //@e‚Ì”­–C‰¹
-    [SerializeField] Light shotLight;       //@e‚ÌŒõ
-    [SerializeField] GameObject shotEffect; //@’e‚ª“–‚½‚Á‚½‚Ìƒp[ƒeƒBƒNƒ‹
+    [SerializeField] Light shotLight;       //@”­–C‚ÌeŒõ
+    [SerializeField] GameObject shotEffect; //@”­–C‚Ìƒp[ƒeƒBƒNƒ‹
+    [SerializeField] GameObject hitEffect;  //@’e‚ª“–‚½‚Á‚½‚Ìƒp[ƒeƒBƒNƒ‹
 
-    public AudioSource GetShotSE()
-    {
-        return shotSE;
-    }
 
-    public Light GetShotLight()
-    {
-        return shotLight;
-    }
 
     public void ActiveShotEffect()
     {
@@ -29,5 +42,47 @@ public class GunStatus : MonoBehaviour
     public void ShotEffectNotActive()
     {
         shotEffect.SetActive(false);
+    }
+
+
+
+    //|||||||||||||||||||||/
+    // ƒQƒbƒ^[
+    //|||||||||||||||||||||/
+
+    /// <summary>
+    /// e‚Ì”­–C‰¹‚ğæ“¾
+    /// </summary>
+    /// <returns>e‚Ì”­–C‰¹</returns>
+    public AudioSource GetShotSE()
+    {
+        return shotSE;
+    }
+
+    /// <summary>
+    /// e”­Ë‚Ì‰‰o—pƒ‰ƒCƒg‚ğæ“¾
+    /// </summary>
+    /// <returns>e”­Ë‚Ì‰‰o—pƒ‰ƒCƒg</returns>
+    public Light GetShotLight()
+    {
+        return shotLight;
+    }
+
+    /// <summary>
+    /// e”­–C‚ÌƒGƒtƒFƒNƒg‚ğæ“¾
+    /// </summary>
+    /// <returns>e”­–C‚ÌƒGƒtƒFƒNƒg</returns>
+    public GameObject GetEffect()
+    {
+        return shotEffect;
+    }
+
+    /// <summary>
+    /// ’e’…’e‚ÌEffect‚ğæ“¾
+    /// </summary>
+    /// <returns>’e’…’e‚ÌEffect</returns>
+    public GameObject HitEffect()
+    {
+        return hitEffect;
     }
 }

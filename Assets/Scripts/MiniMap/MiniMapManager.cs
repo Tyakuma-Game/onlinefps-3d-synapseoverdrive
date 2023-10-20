@@ -27,11 +27,6 @@ public class MiniMapManager : MonoBehaviour
 
     void Update()
     {
-        if(player == null)
-        {
-            return;
-        }
-
         // プレイヤーの現在位置を取得
         Vector3 playerPosition = player.transform.position;
 

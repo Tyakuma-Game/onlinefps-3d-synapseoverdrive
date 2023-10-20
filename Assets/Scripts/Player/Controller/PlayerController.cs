@@ -160,7 +160,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
             if (roteDirection != Vector2.zero)
             {
                 playerRotation.Rotation(roteDirection, playerStatus.Constants.RotationSpeed);
-                playerStatus.ViewPointUpdate(playerViewPointRotation.Rotation(roteDirection, playerStatus.Constants.RotationSpeed, playerStatus.ViewPoint, playerStatus.Constants.VerticalRotationRange));
+                playerStatus.ViewPointUpdate(playerViewPointRotation.Rotation(roteDirection,
+                    playerStatus.Constants.RotationSpeed, playerStatus.ViewPoint, playerStatus.Constants.VerticalRotationRange));
             }
 
             // ˆÚ“®
@@ -179,7 +180,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             {
                 if (keyBoardInput.GetJumpKeyInput())
                 {
-                    playerJump.Jump(playerStatus.Constants.JumpForce);
+                    playerJump.Jump(playerStatus.ActiveJumpForth);
                     playerLandDetector.OnJunpingChangeFlag();
                 }
             }
@@ -192,7 +193,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         // ƒJƒƒ‰ˆ—
         //|||||||||||||||||||||/
 
-        // ƒJƒƒ‰À•WXV
+        // ƒJƒƒ‰ˆÊ’uXV
         myCamera.transform.position = playerStatus.ViewPoint.position;//À•W
         myCamera.transform.rotation = playerStatus.ViewPoint.rotation;//‰ñ“]
     }

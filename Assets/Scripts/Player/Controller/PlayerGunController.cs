@@ -108,7 +108,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     /// <summary>
     /// 設定時間毎に実行
     /// </summary>
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         //自分以外なら
         if (!photonView.IsMine)
@@ -227,7 +227,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     }
 
     //　発砲時のエフェクト処理
-    private void ShotEffect()
+    void ShotEffect()
     {
         //　効果音の再生
         gunStatus[selectedGun].GetShotSE().Stop();

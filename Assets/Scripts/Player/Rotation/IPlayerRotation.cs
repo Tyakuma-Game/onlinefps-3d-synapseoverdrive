@@ -10,5 +10,5 @@ public interface IPlayerRotation
     /// </summary>
     /// <param name="rotaInput">‰ñ“]‚Ì‚½‚ß‚Ì“ü—Íî•ñ</param>
     /// /// <param name="rotaSpeed">‰ñ“]‘¬“x</param>
-    public void Rotation(Vector2 rotaInput, float rotaSpeed);
+    void Rotation(Vector2 rotaInput, float rotaSpeed);
 }

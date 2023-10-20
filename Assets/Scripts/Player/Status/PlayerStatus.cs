@@ -13,11 +13,17 @@ public class PlayerStatus: MonoBehaviour
     [Tooltip("カメラの位置オブジェクト")]
     [SerializeField] Transform viewPoint;
 
+    [Tooltip("HP残量")]
+    int currentHp;
 
-    int currentHp;                          // 現在のHP
-    float activeMoveSpeed;                  // 現在の移動速度
-    Vector3 jumpForth;                      // ジャンプ力
-    PlayerAnimationState animationState;    // 現在の状態
+    [Tooltip("移動速度")]
+    float activeMoveSpeed;
+
+    [Tooltip("ジャンプ力")]
+    Vector3 activeJumpForth;
+
+    [Tooltip("現在のアニメーション状態")]
+    PlayerAnimationState animationState;
 
     
     /// <summary>
@@ -27,7 +33,7 @@ public class PlayerStatus: MonoBehaviour
     {
         currentHp = playerConstants.MaxHP;            // 体力
         activeMoveSpeed = playerConstants.WalkSpeed;  // 移動速度
-        jumpForth = playerConstants.JumpForce;        // ジャンプ力
+        activeJumpForth = playerConstants.JumpForce;  // ジャンプ力
         animationState = PlayerAnimationState.Idol;   // 状態
     }
 
@@ -100,6 +106,11 @@ public class PlayerStatus: MonoBehaviour
     /// 現在の移動速度
     /// </summary>
     public float ActiveMoveSpeed { get { return activeMoveSpeed; } }
+
+    /// <summary>
+    /// 現在のジャンプ力
+    /// </summary>
+    public Vector3 ActiveJumpForth { get { return activeJumpForth; } }
 
     /// <summary>
     /// 現在のアニメーション状態
