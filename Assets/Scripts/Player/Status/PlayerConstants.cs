@@ -11,6 +11,18 @@ public class PlayerConstants : MonoBehaviour
     // ‹“_ŠÖ˜A
     //|||||||||||||||||||||/
     [Header("‹“_ŠÖ˜A")]
+
+    [Tooltip("ƒJƒƒ‰‚ÌŒ³‚Ìi‚è”{—¦")]
+    [SerializeField] float CAMERA_APERTURE_BASE_FACTOR = 60f;
+
+    /// <summary>
+    /// Player‚ÌƒJƒƒ‰Œ³‚Ìi‚è”{—¦
+    /// </summary>
+    public float CameraApertureBaseFactor
+    {
+        get { return CAMERA_APERTURE_BASE_FACTOR; }
+    }
+
     [Tooltip("Player‚Ì‹“_ã‰º‰ñ“]”ÍˆÍ")]
     [SerializeField] float VERTICAL_ROTATION_RANGE = 60f;
 

@@ -15,4 +15,13 @@ public class MouseInput : MonoBehaviour, IMouseInput
     {
         return new Vector2(Input.GetAxisRaw("Mouse X"), Input.GetAxisRaw("Mouse Y"));
     }
+
+    /// <summary>
+    /// ƒY[ƒ€Click‚ªs‚í‚ê‚Ä‚¢‚é‚©æ“¾
+    /// </summary>
+    /// <returns>ó‘Ô</returns>
+    public bool GetZoomClickStayt()
+    {
+        return Input.GetMouseButton(1);
+    }
 }
