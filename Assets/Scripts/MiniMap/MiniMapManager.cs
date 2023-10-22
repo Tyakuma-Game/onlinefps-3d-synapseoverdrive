@@ -27,13 +27,10 @@ public class MiniMapManager : MonoBehaviour
 
     void Update()
     {
-        // プレイヤーの現在位置を取得
-        Vector3 playerPosition = player.transform.position;
-
         // キャラクターアイコンの座標更新
-        miniMapCharacterIconController.MiniMapIconUpdate(playerPosition);
+        miniMapCharacterIconController.MiniMapIconUpdate(player.transform.position);
 
         // ミニマップカメラの座標更新
-        miniMapCameraController.MiniMapCameraUpdate(playerPosition);
+        miniMapCameraController.MiniMapCameraUpdate(player.transform.position);
     }
 }

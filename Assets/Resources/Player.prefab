@@ -30174,7 +30174,6 @@ GameObject:
   - component: {fileID: 1114773465164249257}
   - component: {fileID: 934038861538154330}
   - component: {fileID: 4238985569659927567}
-  - component: {fileID: 417006584}
   - component: {fileID: 957401455}
   - component: {fileID: 1087863930571978241}
   - component: {fileID: 2034190151421313895}
@@ -30359,23 +30358,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 8283675028519006409}
---- !u!114 &417006584
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 934038861538154322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71ed651d4ad91f94a9c9607099e3e3a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 0}
-  viewPoint: {fileID: 934038861596881044}
-  MOUSE_SENSITIVITY: 1
-  VERTICAL_ROTATION_RANGE: 60
-  CAMERA_APERTURE_BASE_FACTOR: 60
 --- !u!114 &957401455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -30388,7 +30370,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcaa89413759cd94781b4cbba12d93e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerViewpointShift: {fileID: 417006584}
+  cameraController: {fileID: 1228356572045506384}
   hitEffect: {fileID: 311715243518430044, guid: bccf130cc6354c24880e283aa6ec5e91, type: 3}
   guns: []
   ammunition: 320000001400000064000000
@@ -30449,6 +30431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31dab4be50b52d04b9d7cdcb4ef3083b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CAMERA_APERTURE_BASE_FACTOR: 60
   VERTICAL_ROTATION_RANGE: 60
   MOUSE_SENSITIVITY: 1
   PLAYER_MAX_HP: 100
@@ -30590,6 +30573,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 934038861596881044}
+  - component: {fileID: 1228356572045506384}
+  - component: {fileID: 796600846515467453}
+  - component: {fileID: 1940836328562076449}
   m_Layer: 0
   m_Name: ViewPoint
   m_TagString: Untagged
@@ -30613,6 +30599,43 @@ Transform:
   m_Father: {fileID: 934038861538154331}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1228356572045506384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934038861596881045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8ea5139e31666c4fbf99275240e7296, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CAMERA_APERTURE_BASE_FACTOR: 60
+--- !u!114 &796600846515467453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934038861596881045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c047823b50883a4886b7f124ae79c64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1940836328562076449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934038861596881045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c52e4c99ab06dad4fb86aba86e3f18ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &946906224654014236
 GameObject:
   m_ObjectHideFlags: 0
@@ -34066,9 +34089,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35ba0329a62bc064caf4b064d22483ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootInterval: 0.1
+  shotDamage: 10
+  adsZoom: 35
+  adsSpeed: 7
   shotSE: {fileID: 4576565738943641682}
   shotLight: {fileID: 3556090183570146616}
   shotEffect: {fileID: 1774160044}
+  hitEffect: {fileID: 0}
 --- !u!1 &3113929517950241695
 GameObject:
   m_ObjectHideFlags: 0
@@ -36141,9 +36169,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35ba0329a62bc064caf4b064d22483ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootInterval: 1
+  shotDamage: 50
+  adsZoom: 30
+  adsSpeed: 5
   shotSE: {fileID: 8537838339595117288}
   shotLight: {fileID: 8928666179299483167}
   shotEffect: {fileID: 1080846027}
+  hitEffect: {fileID: 0}
 --- !u!1 &4652332018577132231
 GameObject:
   m_ObjectHideFlags: 0
@@ -53504,9 +53537,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35ba0329a62bc064caf4b064d22483ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootInterval: 0.3
+  shotDamage: 10
+  adsZoom: 30
+  adsSpeed: 10
   shotSE: {fileID: 3877768655360373587}
   shotLight: {fileID: 6396082355212588268}
   shotEffect: {fileID: 6890284256618259115}
+  hitEffect: {fileID: 0}
 --- !u!1 &7855438838240630710
 GameObject:
   m_ObjectHideFlags: 0

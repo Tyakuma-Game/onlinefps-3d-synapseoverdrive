@@ -7,18 +7,15 @@ using UnityEngine;
 /// </summary>
 public class CameraController : MonoBehaviour
 {
+    [Tooltip("カメラの元の絞り倍率")]
+    [SerializeField] float CAMERA_APERTURE_BASE_FACTOR = 60f;
+
+    // 操作するカメラオブジェクト
     Camera myCamera;
 
 
     ICameraZoom cameraZoom;
-
-    // 入力システム
-    [Tooltip("キーボードの入力処理")]
-    IKeyBoardInput keyBoardInput;
-
-    [Tooltip("マウスの入力処理")]
-    IMouseInput mouseInput;
-
+    ICameraRay cameraRay;
 
     void Start()
     {
@@ -27,19 +24,36 @@ public class CameraController : MonoBehaviour
 
         // 処理取得
         cameraZoom = GetComponent<ICameraZoom>();
-
-        // 入力処理
-        keyBoardInput = GetComponent<IKeyBoardInput>();
-        mouseInput = GetComponent<IMouseInput>();
+        cameraRay = GetComponent<ICameraRay>();
     }
 
     /// <summary>
-    /// カメラのズーム処理
+    /// 開始地点から徐々にズームする
     /// </summary>
-    /// <param name="adsZoom"></param>
-    /// <param name="adsSpeed"></param>
+    /// <param name="adsZoom">ズーム倍率</param>
+    /// <param name="adsSpeed">ズーム速度</param>
     public void GunZoomIn(float adsZoom,float adsSpeed)
     {
         cameraZoom.GunZoomIn(myCamera,adsZoom,adsSpeed);
+    }
+
+    /// <summary>
+    /// 元の地点に徐々に戻す
+    /// </summary>
+    /// <param name="adsSpeed">ズーム速度</param>
+    public void GunZoomOut(float adsSpeed)
+    {
+        cameraZoom.GunZoomOut(myCamera, CAMERA_APERTURE_BASE_FACTOR, adsSpeed);
+    }
+
+    /// <summary>
+    /// カメラから場所を指定してRayを生成
+    /// </summary>
+    /// <param name="camera">生成するカメラ</param>
+    /// <param name="generationPos">生成する座標</param>
+    /// <returns>生成したRay</returns>
+    public Ray GenerateRay(Vector2 generationPos)
+    {
+         return cameraRay.GenerateRay(myCamera, generationPos);
     }
 }

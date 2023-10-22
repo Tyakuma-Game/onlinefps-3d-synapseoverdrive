@@ -11,7 +11,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
 {
     [Header("参照")]
     [Tooltip("Playerの視点に関するクラス")]
-    [SerializeField] PlayerViewpointShift playerViewpointShift;
+    [SerializeField] CameraController cameraController;
 
     [Header("銃関連")]
     [SerializeField] GameObject hitEffect;              //血のエフェクト
@@ -42,7 +42,6 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
 
     //UI管理
     UIManager uIManager;
-    
 
     void Start()
     {
@@ -197,12 +196,12 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         if (Input.GetMouseButton(1))
         {
             //ズームイン
-            playerViewpointShift.GunZoomIn(guns[selectedGun].adsZoom, guns[selectedGun].adsSpeed);
+            cameraController.GunZoomIn(guns[selectedGun].adsZoom, guns[selectedGun].adsSpeed);
         }
         else
         {
             //ズームアウト
-            playerViewpointShift.GunZoomOut(guns[selectedGun].adsSpeed);
+            cameraController.GunZoomOut(guns[selectedGun].adsSpeed);
         }
     }
 
@@ -268,8 +267,10 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         // Effectを散らす
         ShotEffect();
 
+        Vector2 pos = new Vector2(.5f, .5f);
+
         //Ray(光線)をカメラの中央から設定
-        Ray ray = playerViewpointShift.GenerateRayFromCameraCenter();
+        Ray ray = cameraController.GenerateRay(pos);
 
         //レイを発射
         if (Physics.Raycast(ray, out RaycastHit hit))

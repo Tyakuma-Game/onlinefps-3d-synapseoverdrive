@@ -17,7 +17,6 @@ public interface ICameraZoom
     /// 元の地点に徐々に戻す
     /// </summary>
     /// <param name="camera">対象のカメラ</param>
-    /// <param name="adsZoom">ズーム前カメラ倍率</param>
     /// <param name="adsSpeed">ズーム速度</param>
     public void GunZoomOut(Camera camera, float CameraBaseFactor, float adsSpeed);
 }

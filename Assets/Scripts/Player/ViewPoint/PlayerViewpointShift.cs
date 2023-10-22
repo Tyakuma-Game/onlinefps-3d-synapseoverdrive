@@ -13,21 +13,8 @@ public class PlayerViewpointShift : MonoBehaviourPunCallbacks
     [Tooltip("カメラ")]
     [SerializeField] Camera cam;
 
-    [Tooltip("カメラの位置オブジェクト")]
-    [SerializeField] Transform viewPoint;
-
-    [Tooltip("視点移動の速度")]
-    [SerializeField] float MOUSE_SENSITIVITY = 1f;
-
-    [Tooltip("視点の上下回転範囲")]
-    [SerializeField] float VERTICAL_ROTATION_RANGE = 60f;
-
     [Tooltip("カメラの元の絞り倍率")]
     [SerializeField] float CAMERA_APERTURE_BASE_FACTOR = 60f;
-
-    Vector2 mouseInput;         //ユーザーのマウス入力を格納
-    float verticalMouseInput;   //y軸の回転を格納　回転制御用
-
 
     void Start()
     {
@@ -40,45 +27,6 @@ public class PlayerViewpointShift : MonoBehaviourPunCallbacks
 
         //メインカメラ格納
         cam = Camera.main;
-    }
-
-    void Update()
-    {
-        //自分以外なら
-        if (!photonView.IsMine)
-        {
-            //処理終了
-            return;
-        }
-
-        ////視点移動関数
-        //PlayerRotate();
-
-        ////カメラ座標調整
-        //cam.transform.position = viewPoint.position;//座標
-        //cam.transform.rotation = viewPoint.rotation;//回転
-    }
-
-    /// <summary>
-    /// Playerの横回転と縦の視点移動
-    /// </summary>
-    public void PlayerRotate()
-    {
-        //変数にユーザーのマウスの動きを格納
-        mouseInput = new Vector2(Input.GetAxisRaw("Mouse X") * MOUSE_SENSITIVITY,
-            Input.GetAxisRaw("Mouse Y") * MOUSE_SENSITIVITY);
-
-        //変数にy軸のマウス入力分の数値を足す
-        verticalMouseInput += mouseInput.y;
-
-        //変数の数値を丸める（上下の視点範囲制御）
-        verticalMouseInput = Mathf.Clamp(verticalMouseInput, -VERTICAL_ROTATION_RANGE, VERTICAL_ROTATION_RANGE);
-
-        //縦の視点回転を反映
-        viewPoint.rotation = Quaternion.Euler
-            (-verticalMouseInput,                       //-を付けないと上下反転
-            viewPoint.transform.rotation.eulerAngles.y,
-            viewPoint.transform.rotation.eulerAngles.z);
     }
 
     /// <summary>
