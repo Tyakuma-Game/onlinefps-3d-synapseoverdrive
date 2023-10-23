@@ -1,4 +1,5 @@
 using System;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,6 +42,8 @@ public class UIManager : MonoBehaviour
     GameObject returnToTitlePanel;
 
 
+    [SerializeField] BloodEffect bloodEffect;
+
     /// <summary>
     /// ‘•”õ’†‚Ìe‚Ì’e””½‰f
     /// </summary>
@@ -61,6 +64,9 @@ public class UIManager : MonoBehaviour
     /// <param name="currentHp">Œ»İ‚ÌHP</param>
     public void UpdateHP(int maxhp, int currentHp)
     {
+        bloodEffect.BloodUpdate(maxhp, currentHp);
+
+        // TextXV
         hpText.text = $"{currentHp.ToString()} / {maxhp.ToString()}";
         hpSlider.maxValue = maxhp;
         hpSlider.value = currentHp;

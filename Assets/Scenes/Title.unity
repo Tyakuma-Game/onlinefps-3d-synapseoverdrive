@@ -2182,7 +2182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56cce363f62a31f48b0e1c41f33d4ef3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  titleLogoImage: {fileID: 614058166}
+  image: {fileID: 1621450733}
   minAlpha: 0.3
   maxAlpha: 1
   flickerSpeed: 0.3

@@ -35,13 +35,12 @@ public class CameraController : MonoBehaviour
 
     public void UpdatePosition(Transform viewPoint,float moveSpeed)
     {
-
-        Vector3 cameraPositionOffset = CurveControlledBobDoHeadBob(moveSpeed);
-        myCamera.transform.localPosition = cameraPositionOffset;
+        //Vector3 cameraPositionOffset = CurveControlledBobDoHeadBob(moveSpeed);
+        //myCamera.transform.localPosition = cameraPositionOffset;
 
         // カメラ位置更新
-        //myCamera.transform.position = viewPoint.position;//座標
-        //myCamera.transform.rotation = viewPoint.rotation;//回転
+        myCamera.transform.position = viewPoint.position;//座標
+        myCamera.transform.rotation = viewPoint.rotation;//回転
     }
 
     /// <summary>

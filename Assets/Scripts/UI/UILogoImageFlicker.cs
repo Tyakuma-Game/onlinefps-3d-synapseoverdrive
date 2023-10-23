@@ -6,8 +6,8 @@ using UnityEngine.UI;
 /// </summary>
 public class UILogoImageFlicker : MonoBehaviour
 {
-    [Tooltip("ロゴのイメージ")]
-    [SerializeField] Image titleLogoImage;
+    [Tooltip("対象のイメージ")]
+    [SerializeField] Image image;
 
     [Tooltip("アルファ値の最小値")]
     [SerializeField] float minAlpha = 0.2f;
@@ -26,28 +26,28 @@ public class UILogoImageFlicker : MonoBehaviour
 
     void Start()
     {
-        // 初期設定
-        InitializeAlpha();
+        currentAlpha = image.color.a;
     }
 
     void Update()
     {
-        // 透明度の増減状態更新
-        UpdateFlickerState();
+        if(maxAlpha < minAlpha)
+        {
+            // 透明度の増減状態更新
+            UpdateFlickerState();
 
-        // 透明度の増減状態更新
-        UpdateAlphaValue();
+            // 透明度の増減状態更新
+            UpdateAlphaValue();
 
-        // 新規透明率適用
-        ApplyNewAlpha();
+            // 新規透明率適用
+            ApplyNewAlpha();
+        }
     }
 
-    /// <summary>
-    /// 初期化
-    /// </summary>
-    void InitializeAlpha()
+
+    public void SetMacAlpha(float tmpAlpha)
     {
-        currentAlpha = titleLogoImage.color.a;
+        maxAlpha = tmpAlpha;
     }
 
     /// <summary>
@@ -66,9 +66,9 @@ public class UILogoImageFlicker : MonoBehaviour
     }
 
     /// <summary>
-    /// 透明度（α）値の更新
+    /// 透明度（α）値更新
     /// </summary>
-    private void UpdateAlphaValue()
+    void UpdateAlphaValue()
     {
         float deltaAlpha = flickerSpeed * Time.deltaTime * (increasing ? 1 : -1);
         currentAlpha = Mathf.Clamp(currentAlpha + deltaAlpha, minAlpha, maxAlpha);
@@ -79,8 +79,8 @@ public class UILogoImageFlicker : MonoBehaviour
     /// </summary>
     void ApplyNewAlpha()
     {
-        Color newColor = titleLogoImage.color;
+        Color newColor = image.color;
         newColor.a = currentAlpha;
-        titleLogoImage.color = newColor;
+        image.color = newColor;
     }
 }
