@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEditor.Rendering.LookDev;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 /// <summary>
 /// カメラに関する処理をまとめて管理するクラス
@@ -18,6 +20,8 @@ public class CameraController : MonoBehaviour
     ICameraZoom cameraZoom;
     ICameraRay cameraRay;
 
+    [SerializeField] CurveControlledBob curveControlledBob;
+
     void Start()
     {
         // カメラ格納
@@ -26,6 +30,37 @@ public class CameraController : MonoBehaviour
         // 処理取得
         cameraZoom = GetComponent<ICameraZoom>();
         cameraRay = GetComponent<ICameraRay>();
+    }
+
+
+    public void UpdatePosition(Transform viewPoint,float moveSpeed)
+    {
+
+        Vector3 cameraPositionOffset = CurveControlledBobDoHeadBob(moveSpeed);
+        myCamera.transform.localPosition = cameraPositionOffset;
+
+        // カメラ位置更新
+        //myCamera.transform.position = viewPoint.position;//座標
+        //myCamera.transform.rotation = viewPoint.rotation;//回転
+    }
+
+    /// <summary>
+    /// 視点の揺れセットアップ
+    /// </summary>
+    /// <param name="bobBaseInterval">ボブの基本間隔</param>
+    public void CurveControlledBobSetUp(float bobBaseInterval)
+    {
+        curveControlledBob.Setup(myCamera, bobBaseInterval);
+    }
+
+    /// <summary>
+    /// 視点の揺れを行う
+    /// </summary>
+    /// <param name="speed">揺れの速度</param>
+    /// <returns></returns>
+    public Vector3 CurveControlledBobDoHeadBob(float speed)
+    {
+        return curveControlledBob.DoHeadBob(speed);
     }
 
     /// <summary>

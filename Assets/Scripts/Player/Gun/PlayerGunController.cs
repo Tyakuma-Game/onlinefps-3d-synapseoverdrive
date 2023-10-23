@@ -262,7 +262,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     /// <summary>
     /// 弾丸の発射
     /// </summary>
-    private void FiringBullet()
+    void FiringBullet()
     {
         // Effectを散らす
         ShotEffect();
@@ -314,7 +314,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     /// <summary>
     /// リロード
     /// </summary>
-    private void Reload()
+    void Reload()
     {
         //リロードキーが押されたら
         if (Input.GetKeyDown(KeyCode.R))

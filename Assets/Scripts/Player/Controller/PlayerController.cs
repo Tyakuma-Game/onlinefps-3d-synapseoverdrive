@@ -58,6 +58,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
     Rigidbody myRigidbody;
     Camera myCamera;
 
+    [SerializeField] CameraController cameraController;
+
     //|||||||||||||||||||||/
 
     void Awake()
@@ -113,6 +115,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         //HPƒXƒ‰ƒCƒ_[”½‰f
         uIManager.UpdateHP(playerStatus.Constants.MaxHP, playerStatus.CurrentHP);
+
+        // ƒ{ƒu‚Ì‰Šú‰»
+        cameraController.CurveControlledBobSetUp(0.5f);
     }
 
 
@@ -193,9 +198,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
         // ƒJƒƒ‰ˆ—
         //|||||||||||||||||||||/
 
-        // ƒJƒƒ‰ˆÊ’uXV
-        myCamera.transform.position = playerStatus.ViewPoint.position;//À•W
-        myCamera.transform.rotation = playerStatus.ViewPoint.rotation;//‰ñ“]
+        // ƒJƒƒ‰‚ÌÀ•WXV‚È‚Ç
+        cameraController.UpdatePosition(playerStatus.ViewPoint, playerStatus.ActiveMoveSpeed);
     }
 
 
