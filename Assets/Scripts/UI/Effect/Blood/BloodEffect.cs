@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,8 +11,8 @@ public class BloodEffect : MonoBehaviour
     /// <summary>
     /// ŒŒ‚Ì‰æ‘œ
     /// </summary>
-    /// <param name="maxhp"></param>
-    /// <param name="currentHp"></param>
+    /// <param name="maxhp">Å‘åHP—Ê</param>
+    /// <param name="currentHp">Œ»İ‚ÌHP—Ê</param>
     public void BloodUpdate(int maxhp, int currentHp)
     {
         // HP‚ÌŠ„‡‚ğŒvZ
