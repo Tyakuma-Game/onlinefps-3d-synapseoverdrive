@@ -31,17 +31,14 @@ public class UILogoImageFlicker : MonoBehaviour
 
     void Update()
     {
-        if(maxAlpha < minAlpha)
-        {
-            // 透明度の増減状態更新
-            UpdateFlickerState();
+        // 透明度の増減状態更新
+        UpdateFlickerState();
 
-            // 透明度の増減状態更新
-            UpdateAlphaValue();
+        // 透明度の増減状態更新
+        UpdateAlphaValue();
 
-            // 新規透明率適用
-            ApplyNewAlpha();
-        }
+        // 新規透明率適用
+        ApplyNewAlpha();
     }
 
 
