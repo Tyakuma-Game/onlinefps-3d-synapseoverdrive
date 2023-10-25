@@ -40,8 +40,6 @@ public class CurveControlledBob : MonoBehaviour
     [Tooltip("ƒ^ƒCƒ€‚ğŒv‘ª")]
     float m_Time;
 
-    Camera m_Camera;
-
     /// <summary>
     /// ‰Šú‰»
     /// </summary>
