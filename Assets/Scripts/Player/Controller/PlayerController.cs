@@ -239,6 +239,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
             //ダメージ
             playerStatus.OnDamage(damage);
 
+            //カメラを揺らす
+            cameraController.Shake();
+
             //現在のHPが0以下の場合
             if (playerStatus.CurrentHP <= 0)
             {
