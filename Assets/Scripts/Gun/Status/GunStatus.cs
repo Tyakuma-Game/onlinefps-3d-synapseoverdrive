@@ -1,3 +1,4 @@
+using ExitGames.Client.Photon.StructWrapping;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,22 +30,7 @@ public class GunStatus : MonoBehaviour
     [Tooltip("”`‚«‚İ‚Ì‘¬“x")]
     [SerializeField] float adsSpeed;
 
-    public float ShootInterval
-    {
-        get { return shootInterval; }
-    }
-    public int ShotDamage
-    {
-        get { return shotDamage; }
-    }
-    public float AdsZoom
-    {
-        get { return adsZoom; }
-    }
-    public float AdsSpeed
-    {
-        get { return adsSpeed; }
-    }
+    
 
     //|||||||||||||||||||||/
     // QÆ
@@ -70,6 +56,38 @@ public class GunStatus : MonoBehaviour
     //|||||||||||||||||||||/
     // ƒQƒbƒ^[
     //|||||||||||||||||||||/
+
+    /// <summary>
+    /// e‚Ì”­ËƒCƒ“ƒ^[ƒoƒ‹ŠÔ
+    /// </summary>
+    public float ShootInterval
+    {
+        get { return shootInterval; }
+    }
+
+    /// <summary>
+    /// e‚ÌˆĞ—Í
+    /// </summary>
+    public int ShotDamage
+    {
+        get { return shotDamage; }
+    }
+
+    /// <summary>
+    /// ƒY[ƒ€”{—¦
+    /// </summary>
+    public float AdsZoom
+    {
+        get { return adsZoom; }
+    }
+
+    /// <summary>
+    /// ƒY[ƒ€‘¬“x
+    /// </summary>
+    public float AdsSpeed
+    {
+        get { return adsSpeed; }
+    }
 
     /// <summary>
     /// e‚Ì”­–C‰¹‚ğæ“¾
