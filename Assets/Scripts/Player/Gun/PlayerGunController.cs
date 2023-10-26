@@ -276,9 +276,8 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         // Effect‚ğU‚ç‚·
         ShotEffect();
 
-        Vector2 pos = new Vector2(.5f, .5f);
-
         //Ray(Œõü)‚ğƒJƒƒ‰‚Ì’†‰›‚©‚çİ’è
+        Vector2 pos = new Vector2(.5f, .5f);
         Ray ray = cameraController.GenerateRay(pos);
 
         //ƒŒƒC‚ğ”­Ë
