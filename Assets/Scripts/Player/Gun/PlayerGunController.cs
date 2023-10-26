@@ -237,7 +237,8 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         guns[selectedGun].GetShotLight().enabled = false;
         guns[selectedGun].GetShotLight().enabled = true;
 
-        // 発射Objectを0.2fのみ生成
+        // 発射エフェクトを表示
+        guns[selectedGun].ShotEffectNotActive();
         guns[selectedGun].ActiveShotEffect();
 
         //　コルーチンで消す処理を実行
