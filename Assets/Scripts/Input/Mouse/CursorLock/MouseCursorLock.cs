@@ -7,6 +7,16 @@ using UnityEngine;
 /// </summary>
 public class MouseCursorLock : MonoBehaviour, IMouseCursorLock
 {
+    void Start()
+    {
+        LockScreen();
+    }
+
+    void OnDestroy()
+    {
+        UnlockScreen();
+    }
+
     /// <summary>
     /// ƒƒbƒNó‘Ô‚É•Ï‰»
     /// </summary>
