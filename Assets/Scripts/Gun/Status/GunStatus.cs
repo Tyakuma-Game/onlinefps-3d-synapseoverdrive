@@ -14,14 +14,37 @@ public class GunStatus : MonoBehaviour
     [Tooltip("ËŒ‚ŠÔŠu")]
     [SerializeField] float shootInterval = 0.1f;
 
+    
+
     [Tooltip("ˆĞ—Í")]
     [SerializeField] int shotDamage;
+
+    
 
     [Tooltip("”`‚«‚İ‚ÌƒY[ƒ€")]
     [SerializeField] float adsZoom;
 
+    
+
     [Tooltip("”`‚«‚İ‚Ì‘¬“x")]
     [SerializeField] float adsSpeed;
+
+    public float ShootInterval
+    {
+        get { return shootInterval; }
+    }
+    public int ShotDamage
+    {
+        get { return shotDamage; }
+    }
+    public float AdsZoom
+    {
+        get { return adsZoom; }
+    }
+    public float AdsSpeed
+    {
+        get { return adsSpeed; }
+    }
 
     //|||||||||||||||||||||/
     // QÆ
@@ -31,8 +54,6 @@ public class GunStatus : MonoBehaviour
     [SerializeField] Light shotLight;       //@”­–C‚ÌeŒõ
     [SerializeField] GameObject shotEffect; //@”­–C‚Ìƒp[ƒeƒBƒNƒ‹
     [SerializeField] GameObject hitEffect;  //@’e‚ª“–‚½‚Á‚½‚Ìƒp[ƒeƒBƒNƒ‹
-
-
 
     public void ActiveShotEffect()
     {
@@ -72,7 +93,7 @@ public class GunStatus : MonoBehaviour
     /// e”­–C‚ÌƒGƒtƒFƒNƒg‚ğæ“¾
     /// </summary>
     /// <returns>e”­–C‚ÌƒGƒtƒFƒNƒg</returns>
-    public GameObject GetEffect()
+    public GameObject GetShotEffect()
     {
         return shotEffect;
     }
@@ -81,7 +102,7 @@ public class GunStatus : MonoBehaviour
     /// ’e’…’e‚ÌEffect‚ğæ“¾
     /// </summary>
     /// <returns>’e’…’e‚ÌEffect</returns>
-    public GameObject HitEffect()
+    public GameObject GetHitEffect()
     {
         return hitEffect;
     }

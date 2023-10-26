@@ -9,13 +9,31 @@ using Photon.Pun.Demo.PunBasics;
 /// </summary>
 public class PlayerGunController : MonoBehaviourPunCallbacks
 {
+    //－－－－－－－－－－－－－－－－－－－－－/
+    // 変更なし
+    //－－－－－－－－－－－－－－－－－－－－－/
+
     [Header("参照")]
     [Tooltip("Playerの視点に関するクラス")]
     [SerializeField] CameraController cameraController;
 
+    //－－－－－－－－－－－－－－－－－－－－－/
+
     [Header("銃関連")]
+    [Tooltip("被弾時のエフェクト")]
     [SerializeField] GameObject hitEffect;              //血のエフェクト
-    [SerializeField] List<Gun> guns = new List<Gun>();  //武器の格納配列
+
+
+    // 変更する
+    [SerializeField] List<GunStatus> guns = new List<GunStatus>();  //武器の格納用配列
+    
+    [Tooltip("銃ホルダー 自分視点用")]
+    [SerializeField] GunStatus[] gunsHolder;
+
+    [Tooltip("銃ホルダー 相手視点用")]
+    [SerializeField] GunStatus[] OtherGunsHolder;
+
+
     int selectedGun = 0;                                //選択中の武器管理用数値
     float shotTimer;                                    //射撃間隔
 
@@ -31,15 +49,6 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     [Tooltip("マガジンに入る最大の数")]
     [SerializeField] int[] maxAmmoClip;
 
-    [Tooltip("銃ホルダー 自分視点用")]
-    [SerializeField] Gun[] gunsHolder;
-
-    [Tooltip("銃ホルダー 相手視点用")]
-    [SerializeField] Gun[] OtherGunsHolder;
-
-
-    [SerializeField] List<GunStatus> gunStatus = new List<GunStatus>();
-
     //UI管理
     UIManager uIManager;
 
@@ -49,7 +58,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         if (photonView.IsMine)
         {
             //銃の数分ループ
-            foreach (Gun gun in gunsHolder)
+            foreach (GunStatus gun in gunsHolder)
             {
                 //リストに追加
                 guns.Add(gun);
@@ -61,7 +70,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         else//他人だったらOtherGunsHolderを表示
         {
             //銃の数分ループ
-            foreach (Gun gun in OtherGunsHolder)
+            foreach (GunStatus gun in OtherGunsHolder)
             {
                 //リストに追加
                 guns.Add(gun);
@@ -100,7 +109,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         if (Input.GetMouseButtonUp(0) || ammoClip[2] <= 0)
         {
             //サウンド停止
-            photonView.RPC("SoundStop", RpcTarget.All);
+            //photonView.RPC("SoundStop", RpcTarget.All);
         }
     }
 
@@ -176,7 +185,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     void switchGun()
     {
         //リスト分ループを回す
-        foreach (Gun gun in guns)
+        foreach (GunStatus gun in guns)
         {
             //銃を非表示
             gun.gameObject.SetActive(false);
@@ -196,12 +205,12 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         if (Input.GetMouseButton(1))
         {
             //ズームイン
-            cameraController.GunZoomIn(guns[selectedGun].adsZoom, guns[selectedGun].adsSpeed);
+            cameraController.GunZoomIn(guns[selectedGun].AdsZoom, guns[selectedGun].AdsSpeed);
         }
         else
         {
             //ズームアウト
-            cameraController.GunZoomOut(guns[selectedGun].adsSpeed);
+            cameraController.GunZoomOut(guns[selectedGun].AdsSpeed);
         }
     }
 
@@ -216,7 +225,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
             // 弾薬の残りがあるか判定
             if (ammoClip[selectedGun] == 0)
             {
-                photonView.RPC("SoundGeneration", RpcTarget.All);   //音を鳴らす（弾切れ音）
+                // 弾切れの音を鳴らす
                 return;                                             //処理終了
             }
 
@@ -229,15 +238,15 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     void ShotEffect()
     {
         //　効果音の再生
-        gunStatus[selectedGun].GetShotSE().Stop();
-        gunStatus[selectedGun].GetShotSE().Play();
+        guns[selectedGun].GetShotSE().Stop();
+        guns[selectedGun].GetShotSE().Play();
 
         //　光を表示
-        gunStatus[selectedGun].GetShotLight().enabled = false;
-        gunStatus[selectedGun].GetShotLight().enabled = true;
+        guns[selectedGun].GetShotLight().enabled = false;
+        guns[selectedGun].GetShotLight().enabled = true;
 
         // 発射Objectを0.2fのみ生成
-        gunStatus[selectedGun].ActiveShotEffect();
+        guns[selectedGun].ActiveShotEffect();
 
         //　コルーチンで消す処理を実行
         StartCoroutine(DisableLight());
@@ -247,14 +256,14 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         IEnumerator DisableEffect()
         {
             yield return new WaitForSeconds(0.1f);
-            gunStatus[selectedGun].ShotEffectNotActive();
+            guns[selectedGun].ShotEffectNotActive();
         }
 
         //　ライトを消す処理
         IEnumerator DisableLight()
         {
             yield return new WaitForSeconds(0.1f);
-            gunStatus[selectedGun].GetShotLight().enabled = false;
+            guns[selectedGun].GetShotLight().enabled = false;
         }
     }
 
@@ -284,14 +293,14 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
                 // ヒット関数を全プレイヤーで呼び出して撃たれたプレイヤーのHPを同期
                 hit.collider.gameObject.GetPhotonView().RPC("Hit",
                     RpcTarget.All,
-                    guns[selectedGun].shotDamage,
+                    guns[selectedGun].ShotDamage,
                     photonView.Owner.NickName,
                     PhotonNetwork.LocalPlayer.ActorNumber);
             }
             else
             {
                 //弾痕エフェクト生成 
-                GameObject bulletImpactObject = Instantiate(guns[selectedGun].bulletImpact,
+                GameObject bulletImpactObject = Instantiate(guns[selectedGun].GetHitEffect(),
                     hit.point + (hit.normal * .002f),                   //オブジェクトから少し浮かしてちらつき防止
                     Quaternion.LookRotation(hit.normal, Vector3.up));   //直角の方向を返してその方向に回転させる
 
@@ -301,10 +310,10 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         }
 
         //射撃間隔を設定
-        shotTimer = Time.time + guns[selectedGun].shootInterval;
+        shotTimer = Time.time + guns[selectedGun].ShootInterval;
 
         //音を鳴らす（発射音）
-        photonView.RPC("SoundGeneration", RpcTarget.All);
+        //photonView.RPC("SoundGeneration", RpcTarget.All);
 
         //選択中の銃の弾薬減らす
         ammoClip[selectedGun]--;
@@ -355,41 +364,41 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         }
     }
 
+    // この音の部分を別ファイルに移動する！！
+    ///// <summary>
+    ///// 音の発生
+    ///// </summary>
+    //[PunRPC]
+    //public void SoundGeneration()
+    //{
+    //    //マガジン内に弾薬が残っているか判定
+    //    if (ammoClip[selectedGun] == 0)
+    //    {
+    //        guns[selectedGun].SoundGunOutOfBullets();   //弾切れの音を鳴らす
+    //        return;                                     //終了
+    //    }
 
-    /// <summary>
-    /// 音の発生
-    /// </summary>
-    [PunRPC]
-    public void SoundGeneration()
-    {
-        //マガジン内に弾薬が残っているか判定
-        if (ammoClip[selectedGun] == 0)
-        {
-            guns[selectedGun].SoundGunOutOfBullets();   //弾切れの音を鳴らす
-            return;                                     //終了
-        }
-
-        //アサルトライフルか
-        if (selectedGun == 2)
-        {
-            guns[selectedGun].LoopON_SubmachineGun();//ループして鳴らす
-        }
-        else//違うなら
-        {
-            guns[selectedGun].SoundGunShot();//単発で鳴らす
-        }
-    }
+    //    //アサルトライフルか
+    //    if (selectedGun == 2)
+    //    {
+    //        guns[selectedGun].LoopON_SubmachineGun();//ループして鳴らす
+    //    }
+    //    else//違うなら
+    //    {
+    //        guns[selectedGun].SoundGunShot();//単発で鳴らす
+    //    }
+    //}
 
 
-    /// <summary>
-    /// 音を止める関数
-    /// </summary>
-    [PunRPC]
-    public void SoundStop()
-    {
-        //アサルトライフルのSEループを停止
-        guns[2].LoopOFF_SubmachineGun();
-    }
+    ///// <summary>
+    ///// 音を止める関数
+    ///// </summary>
+    //[PunRPC]
+    //public void SoundStop()
+    //{
+    //    //アサルトライフルのSEループを停止
+    //    guns[2].LoopOFF_SubmachineGun();
+    //}
 
 
     /// <summary>
