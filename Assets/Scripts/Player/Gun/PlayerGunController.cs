@@ -21,18 +21,16 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
 
     [Header("銃関連")]
     [Tooltip("被弾時のエフェクト")]
-    [SerializeField] GameObject hitEffect;              //血のエフェクト
+    [SerializeField] GameObject hitEffect;
 
-
-    // 変更する
-    [SerializeField] List<GunStatus> guns = new List<GunStatus>();  //武器の格納用配列
+    [Tooltip("銃の管理配列")]
+    [SerializeField] List<GunStatus> guns = new List<GunStatus>();
     
     [Tooltip("銃ホルダー 自分視点用")]
     [SerializeField] GunStatus[] gunsHolder;
 
     [Tooltip("銃ホルダー 相手視点用")]
     [SerializeField] GunStatus[] OtherGunsHolder;
-
 
     int selectedGun = 0;                                //選択中の武器管理用数値
     float shotTimer;                                    //射撃間隔
@@ -104,13 +102,6 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
 
         //弾薬テキスト更新
         uIManager.SettingBulletsText(GetGunAmmoClipMax(), GetGunAmmoClip(), GetGunAmmunition());
-
-        //サウンド止める条件
-        if (Input.GetMouseButtonUp(0) || ammoClip[2] <= 0)
-        {
-            //サウンド停止
-            //photonView.RPC("SoundStop", RpcTarget.All);
-        }
     }
 
     /// <summary>
@@ -130,7 +121,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     }
 
     /// <summary>
-    /// 銃の切り替えキー入力を検知する
+    /// 銃の切り替えキー入力を検知
     /// </summary>
     public void SwitchingGuns()
     {
@@ -226,7 +217,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
             if (ammoClip[selectedGun] == 0)
             {
                 // 弾切れの音を鳴らす
-                return;                                             //処理終了
+                return;// 処理終了
             }
 
             //銃の発射処理
@@ -235,6 +226,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     }
 
     //　発砲時のエフェクト処理
+    [PunRPC]
     void ShotEffect()
     {
         //　効果音の再生
@@ -274,7 +266,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     void FiringBullet()
     {
         // Effectを散らす
-        ShotEffect();
+        photonView.RPC("ShotEffect", RpcTarget.All);
 
         //Ray(光線)をカメラの中央から設定
         Vector2 pos = new Vector2(.5f, .5f);
