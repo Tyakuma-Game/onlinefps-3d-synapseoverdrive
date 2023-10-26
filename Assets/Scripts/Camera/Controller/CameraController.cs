@@ -11,6 +11,9 @@ public class CameraController : MonoBehaviour
     [Tooltip("カメラの元の絞り倍率")]
     [SerializeField] float CAMERA_APERTURE_BASE_FACTOR = 60f;
 
+    [Tooltip("カメラの位置オブジェクト")]
+    [SerializeField] Transform viewPoint;
+
     // 操作するカメラオブジェクト
     Camera myCamera;
 
@@ -41,13 +44,40 @@ public class CameraController : MonoBehaviour
         myCamera.transform.rotation = viewPoint.rotation;//回転
     }
 
+    public void Shake()
+    {
+        shakeCount = 0;
+        StartCoroutine(ViewPointShake());
+    }
+
+    float shakeMagnitude = 0.2f;
+    float shakeTime = 0.05f;
+    float shakeCount = 0;
+
+    IEnumerator ViewPointShake()
+    {
+        Vector3 initPos = myCamera.transform.position;
+
+        while(shakeCount < shakeTime)
+        {
+            float x = initPos.x + Random.Range(-shakeMagnitude, shakeMagnitude);
+            float y = initPos.y + Random.Range(-shakeMagnitude, shakeMagnitude);
+            myCamera.transform.position = new Vector3(x,y,initPos.z);
+
+            shakeCount += Time.deltaTime;
+
+            yield return null;
+        }
+        myCamera.transform.position = initPos;
+    }
+
     /// <summary>
     /// 視点の揺れセットアップ
     /// </summary>
     /// <param name="bobBaseInterval">ボブの基本間隔</param>
     public void CurveControlledBobSetUp(float bobBaseInterval)
     {
-        curveControlledBob.Setup(myCamera, bobBaseInterval);
+        //curveControlledBob.Setup(myCamera, bobBaseInterval);
     }
 
     /// <summary>

@@ -184,15 +184,19 @@ public class PlayerController : MonoBehaviourPunCallbacks
             {
                 if (keyBoardInput.GetJumpKeyInput())
                 {
-                    // テストコード（Damageで画面に血を出すやつ）
-                    playerStatus.OnDamage(10);
-                    uIManager.UpdateHP(playerStatus.Constants.MaxHP, playerStatus.CurrentHP);
-                    //
-
                     playerJump.Jump(playerStatus.ActiveJumpForth);
                     playerLandDetector.OnJunpingChangeFlag();
                 }
             }
+
+            if(Input.GetKeyDown(KeyCode.A))
+            {
+                // テストコード（Damageで画面に血を出すやつ）
+                playerStatus.OnDamage(10);
+                uIManager.UpdateHP(playerStatus.Constants.MaxHP, playerStatus.CurrentHP);
+                cameraController.Shake();
+            }
+            
 
             // アニメーション更新
             playerAnimator.AnimationUpdate(playerStatus.AnimationState);
