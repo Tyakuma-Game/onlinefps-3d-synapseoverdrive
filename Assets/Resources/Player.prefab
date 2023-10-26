@@ -963,7 +963,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.8627451, b: 0.3137255, a: 0.5019608}
+      maxColor: {r: 0.6431373, g: 0.9803922, b: 0.9803922, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -10830,7 +10830,7 @@ MonoBehaviour:
   observableSearch: 0
   ObservedComponents:
   - {fileID: 1114773465164249257}
-  sceneViewId: 0
+  sceneViewId: 2
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &1114773465164249257
@@ -11476,7 +11476,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.8627451, b: 0.3137255, a: 0.5019608}
+      maxColor: {r: 0.6392157, g: 0.97647065, b: 0.97647065, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -21521,7 +21521,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.8627451, b: 0.3137255, a: 0.627451}
+      maxColor: {r: 0.6862745, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -21617,7 +21617,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -21670,7 +21670,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeZ:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -26364,7 +26364,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 1, g: 0.84135276, b: 0.4029851, a: 1}
+  m_Color: {r: 0.027450982, g: 1, b: 0.9960785, a: 1}
   m_Intensity: 12.4
   m_Range: 2
   m_SpotAngle: 30
@@ -27760,7 +27760,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 1, g: 0.84135276, b: 0.4029851, a: 1}
+  m_Color: {r: 0.6392157, g: 0.9803922, b: 0.9803922, a: 1}
   m_Intensity: 12.4
   m_Range: 2
   m_SpotAngle: 30
@@ -32875,7 +32875,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 1, g: 0.84135276, b: 0.4029851, a: 1}
+  m_Color: {r: 0.76470596, g: 0.9215687, b: 0.9176471, a: 1}
   m_Intensity: 12.4
   m_Range: 2
   m_SpotAngle: 30
@@ -43205,7 +43205,7 @@ MonoBehaviour:
   shotSE: {fileID: 3273111573809817876}
   shotLight: {fileID: 4419606020764790369}
   shotEffect: {fileID: 2224151264343612216}
-  hitEffect: {fileID: 311715243518430044, guid: bccf130cc6354c24880e283aa6ec5e91, type: 3}
+  hitEffect: {fileID: 1539499003249960569, guid: a6714671b3126564c9840153544ba687, type: 3}
 --- !u!82 &3273111573809817876
 AudioSource:
   m_ObjectHideFlags: 0
@@ -43937,7 +43937,7 @@ MonoBehaviour:
   shotSE: {fileID: 1635178686199268252}
   shotLight: {fileID: 301228723685741276}
   shotEffect: {fileID: 970126711699885283}
-  hitEffect: {fileID: 311715243518430044, guid: bccf130cc6354c24880e283aa6ec5e91, type: 3}
+  hitEffect: {fileID: 6833913590222466750, guid: fb43f82835c452a40be08d45221b1fca, type: 3}
 --- !u!82 &1635178686199268252
 AudioSource:
   m_ObjectHideFlags: 0
@@ -44140,7 +44140,7 @@ MonoBehaviour:
   shotSE: {fileID: 7504881900593609018}
   shotLight: {fileID: 5374921974137095689}
   shotEffect: {fileID: 647342204528026816}
-  hitEffect: {fileID: 311715243518430044, guid: bccf130cc6354c24880e283aa6ec5e91, type: 3}
+  hitEffect: {fileID: 1539499003249960569, guid: a6714671b3126564c9840153544ba687, type: 3}
 --- !u!82 &7504881900593609018
 AudioSource:
   m_ObjectHideFlags: 0
@@ -44887,7 +44887,7 @@ MonoBehaviour:
   shotSE: {fileID: 5925471748340544662}
   shotLight: {fileID: 4128987865131521931}
   shotEffect: {fileID: 5339024431284466184}
-  hitEffect: {fileID: 311715243518430044, guid: bccf130cc6354c24880e283aa6ec5e91, type: 3}
+  hitEffect: {fileID: 1539499003249960569, guid: a6714671b3126564c9840153544ba687, type: 3}
 --- !u!82 &5925471748340544662
 AudioSource:
   m_ObjectHideFlags: 0
@@ -51122,7 +51122,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.96862745, g: 0.827451, b: 0.33333334, a: 0.23529412}
+      maxColor: {r: 0.019607844, g: 1, b: 0.9960785, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -66686,7 +66686,7 @@ MonoBehaviour:
   observableSearch: 0
   ObservedComponents:
   - {fileID: 7507501541390252760}
-  sceneViewId: 0
+  sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &7507501541390252760
@@ -66937,7 +66937,7 @@ MonoBehaviour:
   shotSE: {fileID: 5003618434892223819}
   shotLight: {fileID: 5653366447041561999}
   shotEffect: {fileID: 8062606995668941744}
-  hitEffect: {fileID: 311715243518430044, guid: bccf130cc6354c24880e283aa6ec5e91, type: 3}
+  hitEffect: {fileID: 1539499003249960569, guid: a6714671b3126564c9840153544ba687, type: 3}
 --- !u!82 &5003618434892223819
 AudioSource:
   m_ObjectHideFlags: 0
@@ -67538,7 +67538,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.8627451, b: 0.3137255, a: 0.627451}
+      maxColor: {r: 0.78823537, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -67634,7 +67634,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -67687,7 +67687,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeZ:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -72402,7 +72402,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.96862745, g: 0.827451, b: 0.33333334, a: 0.23529412}
+      maxColor: {r: 0.8352942, g: 0.97647065, b: 0.93725497, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -83063,7 +83063,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.8627451, b: 0.3137255, a: 0.5019608}
+      maxColor: {r: 0.6392157, g: 0.9725491, b: 0.9725491, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -88131,7 +88131,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.8627451, b: 0.3137255, a: 0.627451}
+      maxColor: {r: 0.023529414, g: 1, b: 0.9960785, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -88227,7 +88227,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeY:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -88280,7 +88280,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeZ:
       serializedVersion: 2
-      minMaxState: 0
+      minMaxState: 3
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -92908,7 +92908,7 @@ MonoBehaviour:
   shotSE: {fileID: 7724615336038556419}
   shotLight: {fileID: 1323278409196999288}
   shotEffect: {fileID: 801218106318937135}
-  hitEffect: {fileID: 311715243518430044, guid: bccf130cc6354c24880e283aa6ec5e91, type: 3}
+  hitEffect: {fileID: 6833913590222466750, guid: fb43f82835c452a40be08d45221b1fca, type: 3}
 --- !u!82 &7724615336038556419
 AudioSource:
   m_ObjectHideFlags: 0
