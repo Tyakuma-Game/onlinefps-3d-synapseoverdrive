@@ -44,6 +44,7 @@ MonoBehaviour:
   - SoundGeneration
   - SoundStop
   - ShotEffect
+  - NotShotSound
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

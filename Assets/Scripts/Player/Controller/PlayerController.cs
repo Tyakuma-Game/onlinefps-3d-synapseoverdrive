@@ -3,6 +3,7 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.Playables;
 using Unity.VisualScripting;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// PlayerŠÇ—ƒNƒ‰ƒX
@@ -39,9 +40,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [Tooltip("’…’n‚µ‚Ä‚¢‚é‚©”»’èˆ—")]
     PlayerLandDetector playerLandDetector;
 
-
-    IPlayerViewPointRotation playerViewPointRotation;
-
+    [SerializeField] PlayerSoundManager playerSoundManager;
 
 
     // “ü—ÍƒVƒXƒeƒ€
@@ -106,7 +105,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
         playerMove = GetComponent<IPlayerMove>();
         playerJump = GetComponent<IPlayerJump>();
         playerRotation = GetComponent<IPlayerRotation>();
-        playerViewPointRotation = GetComponent<IPlayerViewPointRotation>();
 
         // ƒXƒe[ƒ^ƒX‰Šú‰»
         playerJump.Init(myRigidbody);
@@ -114,9 +112,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         //HPƒXƒ‰ƒCƒ_[”½‰f
         uIManager.UpdateHP(playerStatus.Constants.MaxHP, playerStatus.CurrentHP);
-
-        // ƒ{ƒu‚Ì‰Šú‰»
-        cameraController.CurveControlledBobSetUp(0.5f);
     }
 
 
@@ -164,8 +159,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             if (roteDirection != Vector2.zero)
             {
                 playerRotation.Rotation(roteDirection, playerStatus.Constants.RotationSpeed);
-                playerStatus.ViewPointUpdate(playerViewPointRotation.Rotation(roteDirection,
-                    playerStatus.Constants.RotationSpeed, playerStatus.ViewPoint, playerStatus.Constants.VerticalRotationRange));
+                cameraController.Rotation(roteDirection, playerStatus.Constants.RotationSpeed, playerStatus.Constants.VerticalRotationRange);
             }
 
             // ˆÚ“®
@@ -189,7 +183,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 }
             }
 
-            if(Input.GetKeyDown(KeyCode.A))
+            //TO DO ‚±‚ê‚Ííœ‚·‚éI
+            if(Input.GetKeyDown(KeyCode.M))
             {
                 // ƒeƒXƒgƒR[ƒhiDamage‚Å‰æ–Ê‚ÉŒŒ‚ğo‚·‚â‚Âj
                 playerStatus.OnDamage(10);
@@ -197,17 +192,24 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 cameraController.Shake();
             }
             
-
             // ƒAƒjƒ[ƒVƒ‡ƒ“XV
             playerAnimator.AnimationUpdate(playerStatus.AnimationState);
+
+            if(playerLandDetector.IsGrounded == false)
+            {
+                playerStatus.IsIdol();
+            }
+
+            // Soundˆ—
+            playerSoundManager.SoundPlays(playerStatus.AnimationState);
         }
 
         //|||||||||||||||||||||/
         // ƒJƒƒ‰ˆ—
         //|||||||||||||||||||||/
 
-        // ƒJƒƒ‰‚ÌÀ•WXV‚È‚Ç
-        cameraController.UpdatePosition(playerStatus.ViewPoint, playerStatus.ActiveMoveSpeed);
+        // ƒJƒƒ‰‚ÌÀ•WXV
+        cameraController.UpdatePosition();
     }
 
 

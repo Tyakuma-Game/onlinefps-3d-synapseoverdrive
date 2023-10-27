@@ -10,9 +10,6 @@ public class PlayerStatus: MonoBehaviour
     [Tooltip("プレイヤーの定数クラス")]
     [SerializeField] PlayerConstants playerConstants;
 
-    [Tooltip("カメラの位置オブジェクト")]
-    [SerializeField] Transform viewPoint;
-
     [Tooltip("HP残量")]
     int currentHp;
 
@@ -35,14 +32,6 @@ public class PlayerStatus: MonoBehaviour
         activeMoveSpeed = playerConstants.WalkSpeed;  // 移動速度
         activeJumpForth = playerConstants.JumpForce;  // ジャンプ力
         animationState = PlayerAnimationState.Idol;   // 状態
-    }
-
-    /// <summary>
-    /// 視点座標の更新処理
-    /// </summary>
-    public void ViewPointUpdate(Transform transform)
-    {
-        viewPoint = transform;
     }
 
     /// <summary>
@@ -118,13 +107,5 @@ public class PlayerStatus: MonoBehaviour
     public PlayerAnimationState AnimationState
     {
         get { return animationState; }
-    }
-
-    /// <summary>
-    /// 現在の視点座標
-    /// </summary>
-    public Transform ViewPoint
-    {
-        get { return viewPoint; }
     }
 }

@@ -217,6 +217,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
             if (ammoClip[selectedGun] == 0)
             {
                 // 弾切れの音を鳴らす
+                photonView.RPC("NotShotSound", RpcTarget.All);
                 return;// 処理終了
             }
 
@@ -225,7 +226,17 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         }
     }
 
-    //　発砲時のエフェクト処理
+    // 弾切れ音処理
+    [PunRPC]
+    void NotShotSound()
+    {
+        //　効果音再生
+        guns[selectedGun].GetNotShotSE().Stop();
+        guns[selectedGun].GetNotShotSE().Play();
+    }
+
+
+    // 発砲時のエフェクト処理
     [PunRPC]
     void ShotEffect()
     {
@@ -272,6 +283,9 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         //Ray(光線)をカメラの中央から設定
         Vector2 pos = new Vector2(.5f, .5f);
         Ray ray = cameraController.GenerateRay(pos);
+
+        // カメラの演出(攻撃時に上を向かせる)
+        cameraController.ApplyRecoil();
 
         //レイを発射
         if (Physics.Raycast(ray, out RaycastHit hit))

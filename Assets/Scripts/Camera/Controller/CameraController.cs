@@ -14,14 +14,15 @@ public class CameraController : MonoBehaviour
     [Tooltip("ƒJƒƒ‰‚ÌˆÊ’uƒIƒuƒWƒFƒNƒg")]
     [SerializeField] Transform viewPoint;
 
+    [Tooltip("ƒJƒƒ‰‚ÌˆÊ’uƒIƒuƒWƒFƒNƒg‚Ì—\”õ")]
+    [SerializeField] Transform sabViewPoint;
+
     // ‘€ì‚·‚éƒJƒƒ‰ƒIƒuƒWƒFƒNƒg
     Camera myCamera;
 
 
     ICameraZoom cameraZoom;
     ICameraRay cameraRay;
-
-    [SerializeField] CurveControlledBob curveControlledBob;
 
     void Start()
     {
@@ -33,16 +34,55 @@ public class CameraController : MonoBehaviour
         cameraRay = GetComponent<ICameraRay>();
     }
 
-
-    public void UpdatePosition(Transform viewPoint,float moveSpeed)
+    /// <summary>
+    /// ƒJƒƒ‰‚ÌXVˆ—
+    /// </summary>
+    public void UpdatePosition()
     {
-        //Vector3 cameraPositionOffset = CurveControlledBobDoHeadBob(moveSpeed);
-        //myCamera.transform.localPosition = cameraPositionOffset;
-
         // ƒJƒƒ‰ˆÊ’uXV
         myCamera.transform.position = viewPoint.position;//À•W
         myCamera.transform.rotation = viewPoint.rotation;//‰ñ“]
     }
+
+    //|||||||||||||||||||||/
+    // e”­Ë‚Ì‰‰o
+    //|||||||||||||||||||||/
+
+    Quaternion originalRotation;
+    float recoilAngle = 2.0f; // ã•ûŒü‚ÉŒü‚¯‚éŠp“x
+    float recoilDuration = 0.3f; // ãŒü‚«‚É‚·‚éŠÔ
+    float returnDuration = 0.3f; // Œ³‚ÌŠp“x‚É–ß‚éŠÔ
+
+    public void ApplyRecoil()
+    {
+        StartCoroutine(RecoilCoroutine());
+    }
+
+    IEnumerator RecoilCoroutine()
+    {
+        // ã•ûŒü‚É‰ñ“]
+        Quaternion targetRotation = Quaternion.Euler(sabViewPoint.transform.eulerAngles + new Vector3(-recoilAngle, 0, 0));
+        float startTime = Time.time;
+        while (Time.time < startTime + recoilDuration)
+        {
+            viewPoint.transform.rotation = Quaternion.Lerp(sabViewPoint.transform.rotation, targetRotation, (Time.time - startTime) / recoilDuration);
+            yield return null;
+        }
+
+        // Œ³‚ÌŠp“x‚É–ß‚·
+        startTime = Time.time;
+        while (Time.time < startTime + returnDuration)
+        {
+            viewPoint.transform.rotation = Quaternion.Lerp(sabViewPoint.transform.rotation, originalRotation, (Time.time - startTime) / returnDuration);
+            yield return null;
+        }
+    }
+
+
+
+    //|||||||||||||||||||||/
+    // Damage‚Ì—h‚êˆ—
+    //|||||||||||||||||||||/
 
     public void Shake()
     {
@@ -51,44 +91,55 @@ public class CameraController : MonoBehaviour
     }
 
     float shakeMagnitude = 0.2f;
-    float shakeTime = 0.05f;
+    float shakeTime = 0.1f;
     float shakeCount = 0;
 
     IEnumerator ViewPointShake()
     {
-        Vector3 initPos = myCamera.transform.position;
-
         while(shakeCount < shakeTime)
         {
-            float x = initPos.x + Random.Range(-shakeMagnitude, shakeMagnitude);
-            float y = initPos.y + Random.Range(-shakeMagnitude, shakeMagnitude);
-            myCamera.transform.position = new Vector3(x,y,initPos.z);
+            float x = sabViewPoint.transform.position.x + Random.Range(-shakeMagnitude, shakeMagnitude);
+            float y = sabViewPoint.transform.position.y + Random.Range(-shakeMagnitude, shakeMagnitude);
+            viewPoint.transform.position = new Vector3(x,y, sabViewPoint.transform.position.z);
 
             shakeCount += Time.deltaTime;
 
             yield return null;
         }
-        myCamera.transform.position = initPos;
+        viewPoint.transform.position = sabViewPoint.transform.position;
     }
 
-    /// <summary>
-    /// ‹“_‚Ì—h‚êƒZƒbƒgƒAƒbƒv
-    /// </summary>
-    /// <param name="bobBaseInterval">ƒ{ƒu‚ÌŠî–{ŠÔŠu</param>
-    public void CurveControlledBobSetUp(float bobBaseInterval)
-    {
-        //curveControlledBob.Setup(myCamera, bobBaseInterval);
-    }
+    //|||||||||||||||||||||/
+
+    //|||||||||||||||||||||/
+    // ‹“_‚Ì‰ñ“]—pProgram
+    //|||||||||||||||||||||/
+
+    // y²‚Ì‰ñ“]‚ğŠi”[@‰ñ“]§Œä—p
+    float verticalMouseInput;
 
     /// <summary>
-    /// ‹“_‚Ì—h‚ê‚ğs‚¤
+    /// Player‚Ì‹“_‰ñ“]ˆ—
     /// </summary>
-    /// <param name="speed">—h‚ê‚Ì‘¬“x</param>
-    /// <returns></returns>
-    public Vector3 CurveControlledBobDoHeadBob(float speed)
+    /// <param name="rotaInput">‰ñ“]‚Ì‚½‚ß‚Ì“ü—Íî•ñ</param>
+    /// <param name="rotaSpeed">‰ñ“]‘¬“x</param>
+    /// <param name="rotationRange">‰ñ“]”ÍˆÍ</param>
+    public void Rotation(Vector2 rotaInput, float rotaSpeed, float rotationRange)
     {
-        return curveControlledBob.DoHeadBob(speed);
+        //•Ï”‚Éy²‚Ìƒ}ƒEƒX“ü—Í•ª‚Ì”’l‚ğ‘«‚·
+        verticalMouseInput += rotaInput.y * rotaSpeed;
+
+        //•Ï”‚Ì”’l‚ğŠÛ‚ß‚éiã‰º‚Ì‹“_”ÍˆÍ§Œäj
+        verticalMouseInput = Mathf.Clamp(verticalMouseInput, -rotationRange, rotationRange);
+
+        //c‚Ì‹“_‰ñ“]‚ğ”½‰f
+        viewPoint.rotation = Quaternion.Euler
+            (-verticalMouseInput,                       //-‚ğ•t‚¯‚È‚¢‚Æã‰º”½“]
+            viewPoint.transform.rotation.eulerAngles.y,
+            viewPoint.transform.rotation.eulerAngles.z);
     }
+
+    //|||||||||||||||||||||/
 
     /// <summary>
     /// ŠJn’n“_‚©‚ç™X‚ÉƒY[ƒ€‚·‚é

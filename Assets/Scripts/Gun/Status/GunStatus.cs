@@ -37,6 +37,7 @@ public class GunStatus : MonoBehaviour
     //|||||||||||||||||||||/
     [Header("QÆ")]
     [SerializeField] AudioSource shotSE;    //@e‚Ì”­–C‰¹
+    [SerializeField] AudioSource notShotSE; //@e‚Ì’eØ‚ê
     [SerializeField] Light shotLight;       //@”­–C‚ÌeŒõ
     [SerializeField] GameObject shotEffect; //@”­–C‚Ìƒp[ƒeƒBƒNƒ‹
     [SerializeField] GameObject hitEffect;  //@’e‚ª“–‚½‚Á‚½‚Ìƒp[ƒeƒBƒNƒ‹
@@ -96,6 +97,11 @@ public class GunStatus : MonoBehaviour
     public AudioSource GetShotSE()
     {
         return shotSE;
+    }
+
+    public AudioSource GetNotShotSE()
+    {
+        return notShotSE;
     }
 
     /// <summary>
