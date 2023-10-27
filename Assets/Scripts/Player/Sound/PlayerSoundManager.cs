@@ -6,6 +6,13 @@ public class PlayerSoundManager : MonoBehaviour
 {
     [SerializeField]AudioSource walkSound;
     [SerializeField] AudioSource runSound;
+    [SerializeField] AudioSource damegeSound;
+
+    public void DamageSound()
+    {
+        damegeSound.Stop();
+        damegeSound.Play();
+    }
 
     public void SoundPlays(PlayerAnimationState playerAnimationState)
     {

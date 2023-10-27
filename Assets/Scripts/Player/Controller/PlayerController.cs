@@ -189,7 +189,12 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 // テストコード（Damageで画面に血を出すやつ）
                 playerStatus.OnDamage(10);
                 uIManager.UpdateHP(playerStatus.Constants.MaxHP, playerStatus.CurrentHP);
+
+                // 動き
                 cameraController.Shake();
+
+                // 音
+                playerSoundManager.DamageSound();
             }
             
             // アニメーション更新
@@ -238,6 +243,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
         //自分なら
         if (photonView.IsMine)
         {
+            // Damageを受けた際の音を鳴らす
+            playerSoundManager.DamageSound();
+
             //ダメージ
             playerStatus.OnDamage(damage);
 
