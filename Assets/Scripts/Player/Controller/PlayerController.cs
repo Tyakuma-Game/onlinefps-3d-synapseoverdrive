@@ -182,20 +182,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     playerLandDetector.OnJunpingChangeFlag();
                 }
             }
-
-            //TO DO これは削除する！
-            if(Input.GetKeyDown(KeyCode.M))
-            {
-                // テストコード（Damageで画面に血を出すやつ）
-                playerStatus.OnDamage(10);
-                uIManager.UpdateHP(playerStatus.Constants.MaxHP, playerStatus.CurrentHP);
-
-                // 動き
-                cameraController.Shake();
-
-                // 音
-                playerSoundManager.DamageSound();
-            }
             
             // アニメーション更新
             playerAnimator.AnimationUpdate(playerStatus.AnimationState);
