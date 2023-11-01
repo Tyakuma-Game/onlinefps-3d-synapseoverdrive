@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 1877961522}
   - component: {fileID: 1877961525}
   - component: {fileID: 1877961524}
-  - component: {fileID: 6186523699713611447}
   m_Layer: 0
   m_Name: MagicRing
   m_TagString: Untagged
@@ -99,19 +98,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1877961521}
   m_CullTransparentMesh: 1
---- !u!114 &6186523699713611447
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1877961521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8b171c57a3c38445a89a1c71d1a4a8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  magicRing: {fileID: 1877961521}
 --- !u!1 &43134670257048361
 GameObject:
   m_ObjectHideFlags: 0
@@ -45931,7 +45917,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 7966175b23623544a8d7489cca0949c5, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
