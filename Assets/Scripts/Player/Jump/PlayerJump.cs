@@ -26,7 +26,7 @@ public class PlayerJump : MonoBehaviour, IPlayerJump
         if (myRigidbody.velocity.y < jumpForth.y / 2)
         {
             // ƒWƒƒƒ“ƒvˆ—
-            myRigidbody.AddForce(jumpForth, ForceMode.Impulse);
+            myRigidbody.AddForce(jumpForth, ForceMode.VelocityChange);
         }
     }
 }
