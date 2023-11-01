@@ -98,7 +98,8 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         Fire();
 
         //リロード関数
-        Reload();
+        if (Input.GetKeyDown(KeyCode.R))
+            Reload();
 
         //弾薬テキスト更新
         uIManager.SettingBulletsText(GetGunAmmoClipMax(), GetGunAmmoClip(), GetGunAmmunition());
@@ -218,7 +219,12 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
             {
                 // 弾切れの音を鳴らす
                 photonView.RPC("NotShotSound", RpcTarget.All);
-                return;// 処理終了
+
+                // リロード処理
+                Reload();
+
+                // 処理終了
+                return;
             }
 
             //銃の発射処理
@@ -331,24 +337,20 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     /// </summary>
     void Reload()
     {
-        //リロードキーが押されたら
-        if (Input.GetKeyDown(KeyCode.R))
+        //リロードで補充する弾数を取得
+        int amountNeed = maxAmmoClip[selectedGun] - ammoClip[selectedGun];
+
+        //必要な弾薬量と所持弾薬量を比較
+        int ammoAvailable = amountNeed < ammunition[selectedGun] ? amountNeed : ammunition[selectedGun];
+
+        //弾薬が満タンの時はリロードできない&弾薬を所持しているとき
+        if (amountNeed != 0 && ammunition[selectedGun] != 0)
         {
-            //リロードで補充する弾数を取得
-            int amountNeed = maxAmmoClip[selectedGun] - ammoClip[selectedGun];
+            //所持弾薬からリロードする弾薬分を引く
+            ammunition[selectedGun] -= ammoAvailable;
 
-            //必要な弾薬量と所持弾薬量を比較
-            int ammoAvailable = amountNeed < ammunition[selectedGun] ? amountNeed : ammunition[selectedGun];
-
-            //弾薬が満タンの時はリロードできない&弾薬を所持しているとき
-            if (amountNeed != 0 && ammunition[selectedGun] != 0)
-            {
-                //所持弾薬からリロードする弾薬分を引く
-                ammunition[selectedGun] -= ammoAvailable;
-
-                //銃に装填する
-                ammoClip[selectedGun] += ammoAvailable;
-            }
+            //銃に装填する
+            ammoClip[selectedGun] += ammoAvailable;
         }
     }
 
