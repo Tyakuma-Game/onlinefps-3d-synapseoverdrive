@@ -24,7 +24,9 @@ public class MiniMapManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
-
+    /// <summary>
+    /// ここで削除された際に再連結されず、マップの更新が行われないバグある
+    /// </summary>
     void Update()
     {
         // キャラクターアイコンの座標更新

@@ -98,7 +98,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
         mouseCursorLock = GetComponent<IMouseCursorLock>();
         mouseCursorLock.LockScreen();
 
-
         // PlayerƒVƒXƒeƒ€
         playerLandDetector = GetComponent<PlayerLandDetector>();
         playerAnimator = GetComponent<IPlayerAnimator>();
