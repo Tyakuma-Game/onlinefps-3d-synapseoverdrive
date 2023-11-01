@@ -48,24 +48,31 @@ public class CameraController : MonoBehaviour
     // e”­Ë‚Ì‰‰o
     //|||||||||||||||||||||/
 
+    bool isRecoiling = false;
     Quaternion originalRotation;
-    float recoilAngle = 2.0f; // ã•ûŒü‚ÉŒü‚¯‚éŠp“x
-    float recoilDuration = 0.3f; // ãŒü‚«‚É‚·‚éŠÔ
-    float returnDuration = 0.3f; // Œ³‚ÌŠp“x‚É–ß‚éŠÔ
+    float recoilAngle = 2.0f;       // ã•ûŒü‚ÉŒü‚¯‚éŠp“x
+    float recoilDuration = 0.3f;    // ãŒü‚«‚É‚·‚éŠÔ
+    float returnDuration = 0.3f;    // Œ³‚ÌŠp“x‚É–ß‚éŠÔ
 
     public void ApplyRecoil()
     {
-        StartCoroutine(RecoilCoroutine());
+        if (!isRecoiling)
+        {
+            StartCoroutine(RecoilCoroutine());
+        }
     }
 
     IEnumerator RecoilCoroutine()
     {
+        isRecoiling = true;
+
         // ã•ûŒü‚É‰ñ“]
         Quaternion targetRotation = Quaternion.Euler(sabViewPoint.transform.eulerAngles + new Vector3(-recoilAngle, 0, 0));
         float startTime = Time.time;
         while (Time.time < startTime + recoilDuration)
         {
             viewPoint.transform.rotation = Quaternion.Lerp(sabViewPoint.transform.rotation, targetRotation, (Time.time - startTime) / recoilDuration);
+            myCamera.transform.rotation = viewPoint.transform.rotation;
             yield return null;
         }
 
@@ -74,8 +81,11 @@ public class CameraController : MonoBehaviour
         while (Time.time < startTime + returnDuration)
         {
             viewPoint.transform.rotation = Quaternion.Lerp(sabViewPoint.transform.rotation, originalRotation, (Time.time - startTime) / returnDuration);
+            myCamera.transform.rotation = viewPoint.transform.rotation;
             yield return null;
         }
+
+        isRecoiling = false;
     }
 
 
@@ -101,6 +111,7 @@ public class CameraController : MonoBehaviour
             float x = sabViewPoint.transform.position.x + Random.Range(-shakeMagnitude, shakeMagnitude);
             float y = sabViewPoint.transform.position.y + Random.Range(-shakeMagnitude, shakeMagnitude);
             viewPoint.transform.position = new Vector3(x,y, sabViewPoint.transform.position.z);
+            myCamera.transform.position = viewPoint.transform.position;
 
             shakeCount += Time.deltaTime;
 
