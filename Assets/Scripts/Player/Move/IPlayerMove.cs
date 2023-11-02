@@ -6,6 +6,12 @@ using UnityEngine;
 public interface IPlayerMove
 {
     /// <summary>
+    /// ‰Šú‰»ˆ—
+    /// </summary>
+    /// <param name="rigidbody">•¨—ŒvZ—p</param>
+    void Init(Rigidbody rigidbody);
+
+    /// <summary>
     /// ˆÚ“®ˆ—
     /// </summary>
     /// <param name="direction">ˆÚ“®‚Ì‚½‚ß‚Ì“ü—Íî•ñ</param>

@@ -7,6 +7,17 @@ using UnityEngine;
 /// </summary>
 public class PlayerMove : MonoBehaviour, IPlayerMove
 {
+    Rigidbody myRigidbody;
+
+    /// <summary>
+    /// ‰Šú‰»ˆ—
+    /// </summary>
+    /// <param name="rigidbody">•¨—ŒvZ—p</param>
+    public void Init(Rigidbody rigidbody)
+    {
+        myRigidbody = rigidbody;
+    }
+
     /// <summary>
     /// ˆÚ“®ˆ—
     /// </summary>
