@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System.Xml;
 using UnityEngine;
 
 ///<summary>
@@ -6,31 +7,41 @@ using UnityEngine;
 ///</summary>
 public class AvatarTransformView : MonoBehaviourPunCallbacks, IPunObservable
 {
-    // 補間にかける時間
-    const float InterpolationPeriod = 0.1f;
+    [SerializeField, Tooltip("補間にかける時間")]
+    float INTERPOLATION_PERIOD = 0.1f;
 
-    Vector3 p1;         // 補間の開始座標
-    Vector3 p2;         // 補間の終了座標
-    Vector3 v1;         // 補間の開始速度
-    Vector3 v2;         // 補間の終了速度
-    Quaternion r1;      // 補間の開始回転情報
-    Quaternion r2;      // 補間の終了回転情報
-    float elapsedTime;  // 経過時間
+    [SerializeField, Tooltip("他のプレイヤーが移動しているかの判定値")]
+    float MIN_MOVEMENT_THRESHOLD = 0.01f;
+
+    // 経過時間
+    float elapsedTime;
 
     // 他のプレイヤーが停止しているか
     bool isOtherPlayerMoving = true;
+
+    // 補間の座標
+    Vector3 startPosition;
+    Vector3 endPosition;
+
+    // 補間の移動速度
+    Vector3 startSpeed;
+    Vector3 endSpeed;
+
+    // 補間の回転情報
+    Quaternion startRotation;
+    Quaternion endRotation;
 
     ///<summary>
     /// 初期化処理
     ///</summary>
     void Start()
     {
-        p1 = transform.position;
-        p2 = p1;
-        v1 = Vector3.zero;
-        v2 = v1;
-        r1 = transform.rotation;
-        r2 = r1;
+        startPosition = transform.position;
+        endPosition = startPosition;
+        startSpeed = Vector3.zero;
+        endSpeed = startSpeed;
+        startRotation = transform.rotation;
+        endRotation = startRotation;
         elapsedTime = Time.deltaTime;
     }
 
@@ -42,10 +53,10 @@ public class AvatarTransformView : MonoBehaviourPunCallbacks, IPunObservable
         if (photonView.IsMine)
         {
             // 自身のネットワークオブジェクトは、毎フレームの移動量と経過時間を記録
-            p1 = p2;
-            p2 = transform.position;
-            r1 = r2;
-            r2 = transform.rotation;
+            startPosition = endPosition;
+            endPosition = transform.position;
+            startRotation = endRotation;
+            endRotation = transform.rotation;
             elapsedTime = Time.deltaTime;
         }
         else
@@ -56,18 +67,18 @@ public class AvatarTransformView : MonoBehaviourPunCallbacks, IPunObservable
             // 座標移動の補間
             if (isOtherPlayerMoving)
             {
-                if (elapsedTime < InterpolationPeriod)
+                if (elapsedTime < INTERPOLATION_PERIOD)
                 {
-                    transform.position = HermiteSpline.Interpolate(p1, p2, v1, v2, elapsedTime / InterpolationPeriod);
+                    transform.position = HermiteSpline.Interpolate(startPosition, endPosition, startSpeed, endSpeed, elapsedTime / INTERPOLATION_PERIOD);
                 }
                 else
                 {
-                    transform.position = Vector3.LerpUnclamped(p1, p2, elapsedTime / InterpolationPeriod);
+                    transform.position = Vector3.LerpUnclamped(startPosition, endPosition, elapsedTime / INTERPOLATION_PERIOD);
                 }
             }
 
             // 回転処理の補間
-            transform.rotation = Quaternion.SlerpUnclamped(r1, r2, elapsedTime / InterpolationPeriod);
+            transform.rotation = Quaternion.SlerpUnclamped(startRotation, endRotation, elapsedTime / INTERPOLATION_PERIOD);
         }
     }
 
@@ -83,7 +94,7 @@ public class AvatarTransformView : MonoBehaviourPunCallbacks, IPunObservable
             stream.SendNext(transform.rotation);
 
             // 毎フレームの移動量と経過時間から、秒速を求めて送信
-            stream.SendNext((p2 - p1) / elapsedTime);
+            stream.SendNext((endPosition - startPosition) / elapsedTime);
         }
         else
         {
@@ -93,23 +104,23 @@ public class AvatarTransformView : MonoBehaviourPunCallbacks, IPunObservable
             var networkVelocity = (Vector3)stream.ReceiveNext();
             var lag = Mathf.Max(0f, unchecked(PhotonNetwork.ServerTimestamp - info.SentServerTimestamp) / 1000f);
 
-            // 受信時の座標を、補間の開始座標に
-            p1 = transform.position;
-            // 現在時刻における予測座標を、補間の終了座標に
-            p2 = networkPosition + networkVelocity * lag;
-            // 前回の補間の終了速度を、補間の開始速度に
-            v1 = v2;
-            // 受信した秒速を、補間にかける時間あたりの速度に変換して、補間の終了速度にする
-            v2 = networkVelocity * InterpolationPeriod;
-            // 受信時の回転情報を、補間の開始回転にする
-            r1 = transform.rotation;
-            // 現在時刻における予測回転情報を、補間の終了回転にする
-            r2 = networkRotation;
-            // 経過時間をリセット
+            // 座標
+            startPosition = transform.position;                     // 受信時の座標を、補間の開始座標にする
+            endPosition = networkPosition + networkVelocity * lag;  // 現在時刻における予測座標を、補間の終了座標にする
+
+            // 速度
+            startSpeed = endSpeed;                              // 前回の補間の終了速度を、補間の開始速度にする
+            endSpeed = networkVelocity * INTERPOLATION_PERIOD;  // 受信した秒速を、補間にかける時間あたりの速度に変換して、補間の終了速度にする
+
+            // 回転
+            startRotation = transform.rotation; // 受信時の回転情報を、補間の開始回転にする
+            endRotation = networkRotation;      // 現在時刻における予測回転情報を、補間の終了回転にする
+
+            // 経過時間リセット
             elapsedTime = 0f;
 
-            // 他のプレイヤーが停止しているかどうかを判定
-            isOtherPlayerMoving = networkVelocity.magnitude > 0.01f;
+            // 他のプレイヤーが停止しているかどうか判定
+            isOtherPlayerMoving = networkVelocity.magnitude > MIN_MOVEMENT_THRESHOLD;
         }
     }
 }
