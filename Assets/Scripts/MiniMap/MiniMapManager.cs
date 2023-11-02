@@ -29,10 +29,17 @@ public class MiniMapManager : MonoBehaviour
     /// </summary>
     void Update()
     {
-        // キャラクターアイコンの座標更新
-        miniMapCharacterIconController.MiniMapIconUpdate(player.transform.position);
+        if(player  != null)
+        {
+            // キャラクターアイコンの座標更新
+            miniMapCharacterIconController.MiniMapIconUpdate(player.transform.position);
 
-        // ミニマップカメラの座標更新
-        miniMapCameraController.MiniMapCameraUpdate(player.transform.position);
+            // ミニマップカメラの座標更新
+            miniMapCameraController.MiniMapCameraUpdate(player.transform.position);
+        }
+        else
+        {
+            Debug.Log("ミニマップでプレイヤーがNULLですよ！");
+        }
     }
 }

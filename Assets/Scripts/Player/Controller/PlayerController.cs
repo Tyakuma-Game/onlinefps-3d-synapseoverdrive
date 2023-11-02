@@ -106,6 +106,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         playerRotation = GetComponent<IPlayerRotation>();
 
         // ステータス初期化
+        playerMove.Init(myRigidbody);
         playerJump.Init(myRigidbody);
         playerStatus.Init();
 

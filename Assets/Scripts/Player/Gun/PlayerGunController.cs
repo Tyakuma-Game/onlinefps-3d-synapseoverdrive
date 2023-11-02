@@ -220,7 +220,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
                 // 弾切れの音を鳴らす
                 photonView.RPC("NotShotSound", RpcTarget.All);
 
-                // リロード処理
+                // オートリロード処理
                 Reload();
 
                 // 処理終了
