@@ -372,43 +372,6 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         }
     }
 
-    // この音の部分を別ファイルに移動する！！
-    ///// <summary>
-    ///// 音の発生
-    ///// </summary>
-    //[PunRPC]
-    //public void SoundGeneration()
-    //{
-    //    //マガジン内に弾薬が残っているか判定
-    //    if (ammoClip[selectedGun] == 0)
-    //    {
-    //        guns[selectedGun].SoundGunOutOfBullets();   //弾切れの音を鳴らす
-    //        return;                                     //終了
-    //    }
-
-    //    //アサルトライフルか
-    //    if (selectedGun == 2)
-    //    {
-    //        guns[selectedGun].LoopON_SubmachineGun();//ループして鳴らす
-    //    }
-    //    else//違うなら
-    //    {
-    //        guns[selectedGun].SoundGunShot();//単発で鳴らす
-    //    }
-    //}
-
-
-    ///// <summary>
-    ///// 音を止める関数
-    ///// </summary>
-    //[PunRPC]
-    //public void SoundStop()
-    //{
-    //    //アサルトライフルのSEループを停止
-    //    guns[2].LoopOFF_SubmachineGun();
-    //}
-
-
     /// <summary>
     /// 選択している銃の所持弾薬
     /// </summary>
