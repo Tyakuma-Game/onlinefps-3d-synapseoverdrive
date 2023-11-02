@@ -48,7 +48,6 @@ public class CameraController : MonoBehaviour
     // e”­Ë‚Ì‰‰o
     //|||||||||||||||||||||/
 
-    bool isRecoiling = false;
     Quaternion originalRotation;
     float recoilAngle = 2.0f;       // ã•ûŒü‚ÉŒü‚¯‚éŠp“x
     float recoilDuration = 0.3f;    // ãŒü‚«‚É‚·‚éŠÔ
@@ -56,23 +55,20 @@ public class CameraController : MonoBehaviour
 
     public void ApplyRecoil()
     {
-        if (!isRecoiling)
-        {
-            StartCoroutine(RecoilCoroutine());
-        }
+        StartCoroutine(RecoilCoroutine());
     }
 
     IEnumerator RecoilCoroutine()
     {
-        isRecoiling = true;
+        Quaternion targetRotation = Quaternion.Euler(sabViewPoint.transform.eulerAngles + new Vector3(-recoilAngle, 0, 0));
+        Quaternion startRotation = myCamera.transform.rotation;
+        float startTime = Time.time;
 
         // ã•ûŒü‚É‰ñ“]
-        Quaternion targetRotation = Quaternion.Euler(sabViewPoint.transform.eulerAngles + new Vector3(-recoilAngle, 0, 0));
-        float startTime = Time.time;
         while (Time.time < startTime + recoilDuration)
         {
-            viewPoint.transform.rotation = Quaternion.Lerp(sabViewPoint.transform.rotation, targetRotation, (Time.time - startTime) / recoilDuration);
-            myCamera.transform.rotation = viewPoint.transform.rotation;
+            float t = (Time.time - startTime) / recoilDuration;
+            myCamera.transform.rotation = Quaternion.Slerp(startRotation, targetRotation, t);
             yield return null;
         }
 
@@ -80,12 +76,10 @@ public class CameraController : MonoBehaviour
         startTime = Time.time;
         while (Time.time < startTime + returnDuration)
         {
-            viewPoint.transform.rotation = Quaternion.Lerp(sabViewPoint.transform.rotation, originalRotation, (Time.time - startTime) / returnDuration);
-            myCamera.transform.rotation = viewPoint.transform.rotation;
+            float t = (Time.time - startTime) / returnDuration;
+            myCamera.transform.rotation = Quaternion.Slerp(myCamera.transform.rotation, originalRotation, t);
             yield return null;
         }
-
-        isRecoiling = false;
     }
 
 
