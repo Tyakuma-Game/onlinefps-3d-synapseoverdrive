@@ -48,18 +48,26 @@ public class CameraController : MonoBehaviour
     // e”­Ë‚Ì‰‰o
     //|||||||||||||||||||||/
 
+    bool isRecoiling = false;       // e”­Ë‰‰o’†‚©‚Ç‚¤‚©‚ğ¦‚·ƒtƒ‰ƒO
     Quaternion originalRotation;
-    float recoilAngle = 2.0f;       // ã•ûŒü‚ÉŒü‚¯‚éŠp“x
+    float recoilAngle = 1.5f;       // ã•ûŒü‚ÉŒü‚¯‚éŠp“x
     float recoilDuration = 0.3f;    // ãŒü‚«‚É‚·‚éŠÔ
     float returnDuration = 0.3f;    // Œ³‚ÌŠp“x‚É–ß‚éŠÔ
 
     public void ApplyRecoil()
     {
-        StartCoroutine(RecoilCoroutine());
+        // ‰ğŒˆ‚ª“ï‚µ‚¢‚©‚çˆê’U–³‹I
+
+        //if (!isRecoiling)
+        //{
+        //    StartCoroutine(RecoilCoroutine());
+        //}
     }
 
     IEnumerator RecoilCoroutine()
     {
+        isRecoiling = true;
+
         Quaternion targetRotation = Quaternion.Euler(sabViewPoint.transform.eulerAngles + new Vector3(-recoilAngle, 0, 0));
         Quaternion startRotation = myCamera.transform.rotation;
         float startTime = Time.time;
@@ -80,6 +88,8 @@ public class CameraController : MonoBehaviour
             myCamera.transform.rotation = Quaternion.Slerp(myCamera.transform.rotation, originalRotation, t);
             yield return null;
         }
+
+        isRecoiling = false;
     }
 
 

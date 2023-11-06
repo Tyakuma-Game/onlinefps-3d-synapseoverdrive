@@ -10833,6 +10833,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deaa64dcd5c65c545a6afe2c121e102d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  INTERPOLATION_PERIOD: 0.1
+  MIN_MOVEMENT_THRESHOLD: 0.01
 --- !u!114 &934038861538154330
 MonoBehaviour:
   m_ObjectHideFlags: 0

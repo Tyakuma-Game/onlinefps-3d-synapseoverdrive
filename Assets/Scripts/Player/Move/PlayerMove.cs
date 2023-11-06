@@ -27,9 +27,9 @@ public class PlayerMove : MonoBehaviour, IPlayerMove
     {
         // ŒvŽZ
         Vector3 movement = ((transform.forward * direction.z)
-                            + (transform.right * direction.x)).normalized;
+                            + (transform.right * direction.x)).normalized * moveSpeed * Time.deltaTime;
 
         // ˆÚ“®
-        transform.position += movement * moveSpeed * Time.deltaTime;
+        myRigidbody.MovePosition(transform.position + movement);
     }
 }
