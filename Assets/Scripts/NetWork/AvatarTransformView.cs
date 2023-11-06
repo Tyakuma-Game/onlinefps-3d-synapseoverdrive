@@ -52,7 +52,7 @@ public class AvatarTransformView : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (photonView.IsMine)
         {
-            // 自身のネットワークオブジェクトは、毎フレームの移動量と経過時間を記録
+            // 自身は、毎フレームの移動量と経過時間を記録
             startPosition = endPosition;
             endPosition = transform.position;
             startRotation = endRotation;
@@ -61,7 +61,7 @@ public class AvatarTransformView : MonoBehaviourPunCallbacks, IPunObservable
         }
         else
         {
-            // 他プレイヤーのネットワークオブジェクトは、補間処理
+            // 他プレイヤーは、補間処理
             elapsedTime += Time.deltaTime;
 
             // 座標移動の補間
@@ -77,13 +77,13 @@ public class AvatarTransformView : MonoBehaviourPunCallbacks, IPunObservable
                 }
             }
 
-            // 回転処理の補間
+            // 回転の補間
             transform.rotation = Quaternion.SlerpUnclamped(startRotation, endRotation, elapsedTime / INTERPOLATION_PERIOD);
         }
     }
 
     ///<summary>
-    /// ネットワーク同期処理
+    /// ネットワーク同期
     ///</summary>
     void IPunObservable.OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -98,7 +98,7 @@ public class AvatarTransformView : MonoBehaviourPunCallbacks, IPunObservable
         }
         else
         {
-            // 他プレイヤーのデータを受信
+            // 他プレイヤーのデータ受信
             var networkPosition = (Vector3)stream.ReceiveNext();
             var networkRotation = (Quaternion)stream.ReceiveNext();
             var networkVelocity = (Vector3)stream.ReceiveNext();

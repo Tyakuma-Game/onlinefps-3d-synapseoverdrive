@@ -29,7 +29,11 @@ public class PlayerMove : MonoBehaviour, IPlayerMove
         Vector3 movement = ((transform.forward * direction.z)
                             + (transform.right * direction.x)).normalized * moveSpeed * Time.deltaTime;
 
+        // TODO: Rigidbodyを使用した座標移動に修正
+        // 試にRigidbodyを使用する方法に切り替えたところ自作のPhotonネットワーク上での座標予測処理が上手く動作しなくなった
+        // position直入でも処理自体にバグは発生していない為後ほど修正
+
         // 移動
-        myRigidbody.MovePosition(transform.position + movement);
+        transform.position += movement;
     }
 }

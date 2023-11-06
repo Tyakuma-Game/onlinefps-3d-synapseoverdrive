@@ -44,6 +44,20 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] BloodEffect bloodEffect;
 
+    [SerializeField] DashEffect dashEffect;
+
+
+    public void IsRunning()
+    {
+        dashEffect.SetImageVisible(true);
+    }
+
+    public void IsNotRunning()
+    {
+        dashEffect.SetImageVisible(false);
+    }
+
+
     /// <summary>
     /// ‘•”õ’†‚Ìe‚Ì’e””½‰f
     /// </summary>

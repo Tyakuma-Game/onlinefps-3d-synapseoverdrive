@@ -195,6 +195,16 @@ public class PlayerController : MonoBehaviourPunCallbacks
             playerSoundManager.SoundPlays(playerStatus.AnimationState);
         }
 
+        if (playerStatus.AnimationState == PlayerAnimationState.Run)
+        {
+            uIManager.IsRunning();
+        }
+        else
+        {
+            uIManager.IsNotRunning();
+        }
+            
+
         //Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|/
         // ÉJÉÅÉâèàóù
         //Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|/
