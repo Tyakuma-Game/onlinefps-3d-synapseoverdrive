@@ -10692,6 +10692,7 @@ GameObject:
   - component: {fileID: 648616306}
   - component: {fileID: 6765047478441314159}
   - component: {fileID: 648616327}
+  - component: {fileID: 8402002310179638983}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -10847,7 +10848,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfdd89d59b8fdd8488b6724e355e4708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerGunController: {fileID: 957401455}
   playerStatus: {fileID: 5144562220326655556}
   playerSoundManager: {fileID: 4336136826343351737}
   cameraController: {fileID: 1228356572045506384}
@@ -10898,7 +10898,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 934038861538154322}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2914c4e6b94061c4e97e194313e4644c, type: 3}
   m_Name: 
@@ -11065,6 +11065,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 694a6d42100c7c043b17744d441a346d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8402002310179638983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934038861538154322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43a05dfbcdad9bb4aa7743b240c35dd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 8283675028519006409}
 --- !u!1 &934038861596881045
 GameObject:
   m_ObjectHideFlags: 0
@@ -67192,7 +67205,7 @@ Animator:
   m_GameObject: {fileID: 6236036824616403751}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: e5d5faa8c8bc74f4db7086e8cae0760c, type: 2}
-  m_Controller: {fileID: 9100000, guid: c351bf9051bde964d82942d540e70159, type: 2}
+  m_Controller: {fileID: 9100000, guid: c768b96ac6c2c2c4ca201882123c6253, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

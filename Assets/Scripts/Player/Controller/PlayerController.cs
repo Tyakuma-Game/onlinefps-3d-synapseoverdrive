@@ -10,15 +10,12 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class PlayerController : MonoBehaviourPunCallbacks
 {
-    [Tooltip("Player‚ÌeŠÇ—ƒNƒ‰ƒX")]
-    [SerializeField] PlayerGunController playerGunController;
-
     UIManager uIManager;        //UIŠÇ—
     SpawnManager spawnManager;  //ƒXƒ|[ƒ“ƒ}ƒl[ƒWƒƒ[ŠÇ—
     GameManager gameManager;    //ƒQ[ƒ€ƒ}ƒl[ƒWƒƒ[
 
     //|||||||||||||||||||||/
-    //@Œø—¦‰»’†‚ÌProgram
+    //@Œø—¦‰»’†
     //|||||||||||||||||||||/
 
     [Tooltip("ƒvƒŒƒCƒ„[‚ÌƒXƒe[ƒ^ƒXî•ñ")]
@@ -52,11 +49,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     IMouseCursorLock mouseCursorLock;
 
-
     Rigidbody myRigidbody;
     Camera myCamera;
 
     [SerializeField] CameraController cameraController;
+
+
+    TestAnimatorController testAnimatorController;
 
     //|||||||||||||||||||||/
 
@@ -112,6 +111,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         //HPƒXƒ‰ƒCƒ_[”½‰f
         uIManager.UpdateHP(playerStatus.Constants.MaxHP, playerStatus.CurrentHP);
+
+
+        testAnimatorController = GetComponent<TestAnimatorController>();
+        testAnimatorController.TestSetHP(playerStatus.CurrentHP);
     }
 
 
@@ -182,11 +185,25 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     playerLandDetector.OnJunpingChangeFlag();
                 }
             }
-            
-            // ƒAƒjƒ[ƒVƒ‡ƒ“XV
-            playerAnimator.AnimationUpdate(playerStatus.AnimationState);
 
-            if(playerLandDetector.IsGrounded == false)
+            //|||||||||||||||||||||/
+            // ƒAƒjƒ[ƒVƒ‡ƒ“XV
+            //|||||||||||||||||||||/
+            testAnimatorController.TestIsGround(playerLandDetector.IsGrounded);
+            if (testAnimatorController == null)
+            {
+                Debug.Log("testAnimatorController‚ªNULL!!");
+            }
+            else
+            {
+                float moveSpeed = moveDirection.magnitude*playerStatus.ActiveMoveSpeed;
+                testAnimatorController.TestMove(moveSpeed);
+            }
+            //|||||||||||||||||||||/
+
+            //playerAnimator.AnimationUpdate(playerStatus.AnimationState);
+
+            if (playerLandDetector.IsGrounded == false)
             {
                 playerStatus.IsIdol();
             }
@@ -203,7 +220,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
         {
             uIManager.IsNotRunning();
         }
-            
 
         //|||||||||||||||||||||/
         // ƒJƒƒ‰ˆ—
@@ -212,7 +228,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         // ƒJƒƒ‰‚ÌÀ•WXV
         cameraController.UpdatePosition();
 
-
+        // ƒeƒXƒgƒR[ƒh
         if(Input.GetKeyDown(KeyCode.M))
         {
             // Damage‚ğó‚¯‚½Û‚Ì‰¹‚ğ–Â‚ç‚·
@@ -220,6 +236,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             //ƒ_ƒ[ƒW
             playerStatus.OnDamage(10);
+
+            // ƒAƒjƒ[ƒVƒ‡ƒ“
+            testAnimatorController.TestSetHP(playerStatus.CurrentHP);
+            testAnimatorController.Damage();
 
             //ƒJƒƒ‰‚ğ—h‚ç‚·
             cameraController.Shake();
@@ -260,6 +280,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             //ƒ_ƒ[ƒW
             playerStatus.OnDamage(damage);
+            
+            // ƒAƒjƒ[ƒVƒ‡ƒ“
+            testAnimatorController.TestSetHP(playerStatus.CurrentHP);
+            testAnimatorController.Damage();
 
             //ƒJƒƒ‰‚ğ—h‚ç‚·
             cameraController.Shake();

@@ -17,6 +17,8 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     [Tooltip("Player‚Ì‹“_‚ÉŠÖ‚·‚éƒNƒ‰ƒX")]
     [SerializeField] CameraController cameraController;
 
+    TestAnimatorController testAnimatorController;
+
     //|||||||||||||||||||||/
 
     [Header("eŠÖ˜A")]
@@ -64,6 +66,9 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
 
             //ƒ^ƒO‚©‚çUIManager‚ğ’T‚·
             uIManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
+
+
+            testAnimatorController = GetComponent<TestAnimatorController>();
         }
         else//‘¼l‚¾‚Á‚½‚çOtherGunsHolder‚ğ•\¦
         {
@@ -220,7 +225,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
                 // ’eØ‚ê‚Ì‰¹‚ğ–Â‚ç‚·
                 photonView.RPC("NotShotSound", RpcTarget.All);
 
-                // ƒI[ƒgƒŠƒ[ƒhˆ—
+                // ƒI[ƒgƒŠƒ[ƒh
                 Reload();
 
                 // ˆ—I—¹
@@ -283,6 +288,9 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     /// </summary>
     void FiringBullet()
     {
+        // ƒAƒjƒ[ƒVƒ‡ƒ“
+        testAnimatorController.Attack(AttackType.Short);
+
         // Effect‚ğU‚ç‚·
         photonView.RPC("ShotEffect", RpcTarget.All);
 
@@ -324,9 +332,6 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         //ËŒ‚ŠÔŠu‚ğİ’è
         shotTimer = Time.time + guns[selectedGun].ShootInterval;
 
-        //‰¹‚ğ–Â‚ç‚·i”­Ë‰¹j
-        //photonView.RPC("SoundGeneration", RpcTarget.All);
-
         //‘I‘ğ’†‚Ìe‚Ì’e–òŒ¸‚ç‚·
         ammoClip[selectedGun]--;
     }
@@ -361,6 +366,9 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SetGun(int gunNo)
     {
+        // ƒAƒjƒ[ƒVƒ‡ƒ“
+        testAnimatorController.TestWeaponChange();
+
         //e‚ÌØ‚è‘Ö‚¦
         if (gunNo < guns.Count)
         {
