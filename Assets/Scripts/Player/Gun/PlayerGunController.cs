@@ -66,9 +66,6 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
 
             //タグからUIManagerを探す
             uIManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
-
-
-            testAnimatorController = GetComponent<TestAnimatorController>();
         }
         else//他人だったらOtherGunsHolderを表示
         {
@@ -79,6 +76,8 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
                 guns.Add(gun);
             }
         }
+
+        testAnimatorController = GetComponent<TestAnimatorController>();
 
         //銃の表示切替
         switchGun();
@@ -175,6 +174,21 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         }
     }
 
+
+    IEnumerator DelayedSwitchGun()
+    {
+        yield return new WaitForSeconds(1f);
+
+        //リスト分ループを回す
+        foreach (GunStatus gun in guns)
+        {
+            //銃を非表示
+            gun.gameObject.SetActive(false);
+        }
+
+        //選択中の銃のみ表示
+        guns[selectedGun].gameObject.SetActive(true);
+    }
 
     /// <summary>
     /// 銃の表示切り替え
@@ -366,17 +380,17 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SetGun(int gunNo)
     {
-        // アニメーション
-        testAnimatorController.TestWeaponChange();
-
         //銃の切り替え
         if (gunNo < guns.Count)
         {
             //銃の番号をセット
             selectedGun = gunNo;
 
-            //銃の切り替え処理
-            switchGun();
+            // アニメーション
+            testAnimatorController.TestWeaponChange();
+
+            // 1秒待ってから切り替える
+            StartCoroutine(DelayedSwitchGun());
         }
     }
 

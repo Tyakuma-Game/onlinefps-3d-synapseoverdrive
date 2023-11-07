@@ -223,7 +223,7 @@ Light:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 222374297619833851}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
@@ -10898,7 +10898,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 934038861538154322}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2914c4e6b94061c4e97e194313e4644c, type: 3}
   m_Name: 
@@ -67467,10 +67467,25 @@ MonoBehaviour:
   m_SynchronizeParameters:
   - Type: 4
     SynchronizeType: 1
-    Name: walk
-  - Type: 4
+    Name: IsGround
+  - Type: 1
     SynchronizeType: 1
-    Name: run
+    Name: MoveSpeed
+  - Type: 9
+    SynchronizeType: 1
+    Name: Attack
+  - Type: 3
+    SynchronizeType: 1
+    Name: AttackType
+  - Type: 9
+    SynchronizeType: 1
+    Name: WeaponChange
+  - Type: 9
+    SynchronizeType: 1
+    Name: Damage
+  - Type: 3
+    SynchronizeType: 1
+    Name: HP
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0

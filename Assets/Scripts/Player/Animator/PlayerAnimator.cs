@@ -27,10 +27,10 @@ public class PlayerAnimator : MonoBehaviour,IPlayerAnimator
     /// <param name="playerAnimationState">現在のアニメーション状態</param>
     public void AnimationUpdate(PlayerAnimationState playerAnimationState)
     {
-        //歩き判定
-        animator.SetBool("walk", playerAnimationState == PlayerAnimationState.Walk);
+        ////歩き判定
+        //animator.SetBool("walk", playerAnimationState == PlayerAnimationState.Walk);
 
-        //走り判定
-        animator.SetBool("run", playerAnimationState == PlayerAnimationState.Run);
+        ////走り判定
+        //animator.SetBool("run", playerAnimationState == PlayerAnimationState.Run);
     }
 }
