@@ -18,8 +18,10 @@ public class SpawnManager : MonoBehaviour
     [Tooltip("生成したプレイヤーを格納")]
      GameObject player;
 
+    GameObject aaa;
 
-    private void Start()
+
+    void Start()
     {
         //スポーンポイントオブジェクトをすべて非表示に
         foreach (var pos in spawnPositons)
@@ -34,6 +36,7 @@ public class SpawnManager : MonoBehaviour
             SpawnPlayer();
         }
     }
+
 
 
     /// <summary>
@@ -58,6 +61,11 @@ public class SpawnManager : MonoBehaviour
         player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPoint.position, spawnPoint.rotation);//削除用に保存
     }
 
+    void DestryNetWarkPlayer()
+    {
+        //playerをネットワーク上から削除
+        PhotonNetwork.Destroy(player);
+    }
 
     /// <summary>
     /// Playerのリスポーン処理
@@ -70,7 +78,7 @@ public class SpawnManager : MonoBehaviour
             Invoke("SpawnPlayer", RESPAWN_INTERVAL);
         }
 
-        //playerをネットワーク上から削除
-        PhotonNetwork.Destroy(player);
+        //一定時間後プレイヤーを破壊
+        Invoke("DestryNetWarkPlayer", RESPAWN_INTERVAL-0.5f);
     }
 }

@@ -56,6 +56,22 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
 
     TestAnimatorController testAnimatorController;
+    [SerializeField] GameObject spawnEffect;
+
+
+    bool isShowDeath = false;
+
+    [PunRPC]
+    public void SpawnEffectActive()
+    {
+        spawnEffect.SetActive(true);
+    }
+
+    public void SpawnEffectNotActive()
+    {
+        spawnEffect.SetActive(false);
+    }
+
 
     //|||||||||||||||||||||/
 
@@ -81,6 +97,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     void Start()
     {
+        // w’èŠÔŒã‚É‰‰o‚ğ’â~‚³‚¹‚é
+        Invoke("SpawnEffectNotActive", 1.5f);
+
         //©•ªˆÈŠO‚Ìê‡‚Í
         if (!photonView.IsMine)
         {
@@ -124,6 +143,15 @@ public class PlayerController : MonoBehaviourPunCallbacks
         if (!photonView.IsMine)
         {
             //ˆ—I—¹
+            return;
+        }
+
+        // €–S‰‰o’†‚È‚ç
+        if (isShowDeath)
+        {
+            Debug.Log("€–S‰‰o‚Åˆ—‚ğ’†’f‚³‚¹‚Ä‚Ü‚·B");
+
+            // ˆ—I—¹
             return;
         }
 
@@ -289,7 +317,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             cameraController.Shake();
 
             //Œ»İ‚ÌHP‚ª0ˆÈ‰º‚Ìê‡
-            if (playerStatus.CurrentHP <= 0)
+            if (playerStatus.CurrentHP <= 0 && isShowDeath == false)
             {
                 //€–SŠÖ”‚ğŒÄ‚Ô
                 Death(name, actor);
@@ -305,9 +333,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
     /// </summary>
     public void Death(string name, int actor)
     {
-        //€–SŠÖ”‚ğŒÄ‚Ño‚µ
-        spawnManager.Die();
-
         //€–SUI‚ğXV
         uIManager.UpdateDeathUI(name);
 
@@ -316,6 +341,15 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         //Œ‚‚Á‚Ä‚«‚½‘Šè‚ÌƒLƒ‹”‚ğã¸(Œ‚‚Á‚Ä‚«‚½“G‚Ì¯•Ê”Ô†AƒLƒ‹A‰ÁZ”’l)
         gameManager.ScoreGet(actor, 0, 1);
+
+        // €–S‰‰o•ÏX
+        isShowDeath = true;
+
+        // Á–Åƒp[ƒeƒBƒNƒ‹oŒ»
+        photonView.RPC("SpawnEffectActive",RpcTarget.All);
+
+        //€–SŠÖ”‚ğŒÄ‚Ño‚µ
+        spawnManager.Die();
     }
 
 
