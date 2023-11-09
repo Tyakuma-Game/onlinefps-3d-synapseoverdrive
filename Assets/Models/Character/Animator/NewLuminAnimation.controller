@@ -200,13 +200,13 @@ AnimatorStateMachine:
   - {fileID: 4600350742938036460}
   - {fileID: 7582796435252092531}
   m_StateMachineTransitions:
+  - first: {fileID: -6600699195816813537}
+    second:
+    - {fileID: 798164744616877933}
   - first: {fileID: -8700376560475105465}
     second:
     - {fileID: -159586934560457485}
     - {fileID: -9006603053558487598}
-  - first: {fileID: -6600699195816813537}
-    second:
-    - {fileID: 798164744616877933}
   - first: {fileID: -4745124339863845990}
     second:
     - {fileID: 1206298668128995838}

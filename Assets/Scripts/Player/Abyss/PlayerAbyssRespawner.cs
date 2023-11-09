@@ -18,6 +18,8 @@ public class PlayerAbyssRespawner : MonoBehaviourPunCallbacks
     SpawnManager spawnManager;  //スポーンマネージャー管理
 
 
+    bool isRespawns = false;
+
     private void Awake()
     {
         //自分以外の場合は
@@ -45,8 +47,9 @@ public class PlayerAbyssRespawner : MonoBehaviourPunCallbacks
         }
 
         //下限突破しているなら
-        if (transform.position.y <= PITFALL_COORDINATE)
+        if (transform.position.y <= PITFALL_COORDINATE && isRespawns == false)
         {
+            isRespawns = true;
             AbyssRespawn();
         }
     }
