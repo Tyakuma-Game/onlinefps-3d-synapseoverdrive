@@ -42,7 +42,7 @@ AnimatorStateMachine:
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 50, y: 20, z: 0}
   m_EntryPosition: {x: 50, y: 120, z: 0}
-  m_ExitPosition: {x: 800, y: 120, z: 0}
+  m_ExitPosition: {x: 900, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: -2135331245478447895}
 --- !u!1102 &-8520467343452408270
@@ -200,13 +200,13 @@ AnimatorStateMachine:
   - {fileID: 4600350742938036460}
   - {fileID: 7582796435252092531}
   m_StateMachineTransitions:
+  - first: {fileID: -6600699195816813537}
+    second:
+    - {fileID: 798164744616877933}
   - first: {fileID: -8700376560475105465}
     second:
     - {fileID: -159586934560457485}
     - {fileID: -9006603053558487598}
-  - first: {fileID: -6600699195816813537}
-    second:
-    - {fileID: 798164744616877933}
   - first: {fileID: -4745124339863845990}
     second:
     - {fileID: 1206298668128995838}
@@ -704,7 +704,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: NewLuminAnimation
+  m_Name: PlayerAnimationController
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: IsGround
