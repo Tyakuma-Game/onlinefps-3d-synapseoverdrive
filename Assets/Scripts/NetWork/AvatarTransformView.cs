@@ -1,6 +1,6 @@
-using Photon.Pun;
 using System.Xml;
 using UnityEngine;
+using Photon.Pun;
 
 ///<summary>
 /// 他のプレイヤーの座標と回転を補間するクラス
