@@ -11,16 +11,9 @@ using System.Net.NetworkInformation;
 /// </summary>
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
-    //確認用
-    //https://doc-api.photonengine.com/ja-jp/pun/current/class_photon_1_1_pun_1_1_photon_network.html
-    //https://doc-api.photonengine.com/ja-jp/pun/current/class_photon_1_1_pun_1_1_mono_behaviour_pun_callbacks.html
-    //https://doc-api.photonengine.com/ja-jp/pun/current/namespace_photon_1_1_realtime.html
-
-
     [Header("定数")]
     [Tooltip("プレイヤーの最大参加人数")]
     public int ROOM_MEMBER_MAX = 6;
-
 
     [Header("参照")]
     [Tooltip("photon管理クラス")]
@@ -68,7 +61,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     [SerializeField] string levelToPlay;      //遷移先のシーン名
 
 
-    private void Awake()
+    void Awake()
     {
         //自身を格納
         instance = this;
@@ -84,37 +77,33 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         loadingPanel.SetActive(true);
         loadingText.text = "ネットワークに接続中...";
 
-        //off-line環境へ戻るか選択肢を表示
-
-
+        //To DO : off-line環境へ戻るか選択肢を表示するよう変更する
         if (!IsInternetConnected())
         {
-            loadingText.text = "ネットワークへの接続に失敗したため実行できません。";
+            loadingText.text = "ネットワークの接続に失敗したため実行できません。";
             Debug.LogError("Error:NotConnect Internet");
         }
 
         //初回接続時なら
         if (!PhotonNetwork.IsConnected)
         {
-            //PhotonServerSettingsファイルの設定に従ってPhotonに接続を行う
+            //PhotonServerSettingsファイルの設定に従ってPhotonに接続
             PhotonNetwork.ConnectUsingSettings();
         }
     }
 
 
     /// <summary>
-    /// 現在ネットに接続されているか確認
+    /// ネットワーク接続確認
     /// </summary>
     bool IsInternetConnected()
     {
         if (Application.internetReachability == NetworkReachability.NotReachable)
         {
-            // インターネットに接続されていない場合
             return false;
         }
         else
         {
-            // インターネットに接続されている場合
             return true;
         }
     }
@@ -483,7 +472,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     /// <summary>
     /// 名前の判定
     /// </summary>
-    private void ConfirmationName()
+    void ConfirmationName()
     {
         //名前が入力されていないなら
         if (!setName)
@@ -557,7 +546,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     /// <summary>
     /// 部屋のマスターか確認
     /// </summary>
-    private void CheckRoomMaster()
+    void CheckRoomMaster()
     {
         //部屋のマスターか確認
         if (PhotonNetwork.IsMasterClient)

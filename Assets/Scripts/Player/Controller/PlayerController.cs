@@ -131,7 +131,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
         //HPÉXÉâÉCÉ_Å[îΩâf
         uIManager.UpdateHP(playerStatus.Constants.MaxHP, playerStatus.CurrentHP);
 
-
         testAnimatorController = GetComponent<TestAnimatorController>();
         testAnimatorController.TestSetHP(playerStatus.CurrentHP);
     }
@@ -227,9 +226,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 float moveSpeed = moveDirection.magnitude*playerStatus.ActiveMoveSpeed;
                 testAnimatorController.TestMove(moveSpeed);
             }
-            //Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|/
-
-            //playerAnimator.AnimationUpdate(playerStatus.AnimationState);
+            
 
             if (playerLandDetector.IsGrounded == false)
             {

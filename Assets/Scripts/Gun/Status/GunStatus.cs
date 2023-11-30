@@ -15,29 +15,22 @@ public class GunStatus : MonoBehaviour
     [Tooltip("ËŒ‚ŠÔŠu")]
     [SerializeField] float shootInterval = 0.1f;
 
-    
-
     [Tooltip("ˆĞ—Í")]
     [SerializeField] int shotDamage;
-
-    
 
     [Tooltip("”`‚«‚İ‚ÌƒY[ƒ€")]
     [SerializeField] float adsZoom;
 
-    
-
     [Tooltip("”`‚«‚İ‚Ì‘¬“x")]
     [SerializeField] float adsSpeed;
 
-    
 
     //|||||||||||||||||||||/
     // QÆ
     //|||||||||||||||||||||/
     [Header("QÆ")]
-    [SerializeField] AudioSource shotSE;    //@e‚Ì”­–C‰¹
-    [SerializeField] AudioSource notShotSE; //@e‚Ì’eØ‚ê
+    [SerializeField] AudioSource shotSE;    //@”­–C‰¹
+    [SerializeField] AudioSource notShotSE; //@’eØ‚ê
     [SerializeField] Light shotLight;       //@”­–C‚ÌeŒõ
     [SerializeField] GameObject shotEffect; //@”­–C‚Ìƒp[ƒeƒBƒNƒ‹
     [SerializeField] GameObject hitEffect;  //@’e‚ª“–‚½‚Á‚½‚Ìƒp[ƒeƒBƒNƒ‹
