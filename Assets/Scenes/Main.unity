@@ -23027,7 +23027,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36870de52ff29d9459ab7da4f26b71c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GAMECLEAR_KILL_SCORE: 3
+  GAMECLEAR_KILL_SCORE: 114514
   WAIT_ENDING_TIME: 5
   playerList: []
   state: 0
