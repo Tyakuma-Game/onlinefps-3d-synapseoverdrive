@@ -15,8 +15,11 @@ public class SpawnManager : MonoBehaviour
     [Tooltip("生成するオブジェクト")]
     [SerializeField] GameObject playerPrefab;
 
+    [Tooltip("プレイヤーの階層管理用")]
+    [SerializeField] GameObject Players;
+
     [Tooltip("生成したプレイヤーを格納")]
-     GameObject player;
+    GameObject player;
 
     GameObject aaa;
 
