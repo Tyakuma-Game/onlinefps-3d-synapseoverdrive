@@ -50,7 +50,7 @@ public class PlayerConstants : MonoBehaviour
     //|||||||||||||||||||||/
     [Header("‘Ì—ÍŠÖ˜A")]
     [Tooltip("Player‚ÌHPÅ‘å’l")]
-    [SerializeField] int PLAYER_MAX_HP = 1919810;
+    [SerializeField] int PLAYER_MAX_HP = 100;
 
     /// <summary>
     /// Player‚ÌHPÅ‘å’l
