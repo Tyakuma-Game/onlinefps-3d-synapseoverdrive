@@ -10574,10 +10574,10 @@ Animator:
   m_GameObject: {fileID: 934038861093226653}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 29ef3a107df0da5469f4659ae97c08e9, type: 2}
+  m_Controller: {fileID: 9100000, guid: c1e0be4972bd1e647a12067d1d3d1291, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -10812,6 +10812,7 @@ MonoBehaviour:
   - {fileID: 1170606751133572208}
   - {fileID: 2115056984854896856}
   - {fileID: 7458785299418377086}
+  animator: {fileID: 1942873053}
   ammunition: 320000001400000064000000
   maxAmmunition: 320000001400000064000000
   ammoClip: 060000000200000018000000
@@ -53745,7 +53746,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2845792568706307349
 Transform:
   m_ObjectHideFlags: 0
@@ -54045,7 +54046,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2894203302544213512
 Transform:
   m_ObjectHideFlags: 0
@@ -96802,7 +96803,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6335113562944643635
 Transform:
   m_ObjectHideFlags: 0
