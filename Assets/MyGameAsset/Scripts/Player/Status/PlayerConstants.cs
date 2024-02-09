@@ -45,6 +45,11 @@ public class PlayerConstants : MonoBehaviour
         get { return MOUSE_SENSITIVITY; }
     }
 
+    public void ApplyMouseSensitivity(float newSpeed)
+    {
+        MOUSE_SENSITIVITY = newSpeed;
+    }
+
     //Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|/
     // ëÃóÕä÷òA
     //Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|/

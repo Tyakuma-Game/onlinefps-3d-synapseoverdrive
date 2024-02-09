@@ -252,26 +252,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         // カメラの座標更新
         cameraController.UpdatePosition();
-
-        // テストコード
-        if(Input.GetKeyDown(KeyCode.M))
-        {
-            // Damageを受けた際の音を鳴らす
-            playerSoundManager.DamageSound();
-
-            //ダメージ
-            playerStatus.OnDamage(10);
-
-            // アニメーション
-            testAnimatorController.TestSetHP(playerStatus.CurrentHP);
-            testAnimatorController.Damage();
-
-            //カメラを揺らす
-            cameraController.Shake();
-
-            //HPをスライダーに反映
-            uIManager.UpdateHP(playerStatus.Constants.MaxHP, playerStatus.CurrentHP);
-        }
     }
 
 
