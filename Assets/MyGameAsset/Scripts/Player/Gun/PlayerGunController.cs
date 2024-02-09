@@ -146,6 +146,9 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
                 selectedGun = 0;
             }
 
+            // アニメーション
+            gunAnimator.SetTrigger("WeaponChange");
+
             //銃の切り替え（ルーム内のプレイヤー全員呼び出し）
             photonView.RPC("SetGun", RpcTarget.All, selectedGun);
         }
@@ -159,6 +162,8 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
             {
                 selectedGun = guns.Count - 1;
             }
+            // アニメーション
+            gunAnimator.SetTrigger("WeaponChange");
 
             //銃の切り替え（ルーム内のプレイヤー全員呼び出し）
             photonView.RPC("SetGun", RpcTarget.All, selectedGun);
@@ -172,6 +177,9 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
             {
                 //銃を扱う数値を設定
                 selectedGun = i;
+                
+                // アニメーション
+                gunAnimator.SetTrigger("WeaponChange");
 
                 //銃の切り替え（ルーム内のプレイヤー全員呼び出し）
                 photonView.RPC("SetGun", RpcTarget.All, selectedGun);
@@ -251,10 +259,6 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
                 return;
             }
 
-            // アニメーション
-            gunAnimator.SetTrigger("Attack");
-            Debug.Log($"銃のアニメーション呼ばれたで！");
-
             //銃の発射処理
             FiringBullet();
         }
@@ -312,6 +316,9 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     void FiringBullet()
     {
         // アニメーション
+        gunAnimator.SetTrigger("Attack");
+
+        // アニメーション
         testAnimatorController.Attack(AttackType.Short);
 
         // Effectを散らす
@@ -365,6 +372,10 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     /// </summary>
     void Reload()
     {
+        // TODO: 時間がある際にここを調整する
+        // アニメーション
+        //gunAnimator.SetTrigger("Reload");
+
         //リロードで補充する弾数を取得
         int amountNeed = maxAmmoClip[selectedGun] - ammoClip[selectedGun];
 
