@@ -10574,10 +10574,10 @@ Animator:
   m_GameObject: {fileID: 934038861093226653}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c1e0be4972bd1e647a12067d1d3d1291, type: 2}
+  m_Controller: {fileID: 9100000, guid: 94016b0db5136a34181a0fb35adb974a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -10801,6 +10801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcaa89413759cd94781b4cbba12d93e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gunAnimator: {fileID: 1942873053}
   cameraController: {fileID: 1228356572045506384}
   hitEffect: {fileID: 311715243518430044, guid: bccf130cc6354c24880e283aa6ec5e91, type: 3}
   guns: []
@@ -10812,7 +10813,6 @@ MonoBehaviour:
   - {fileID: 1170606751133572208}
   - {fileID: 2115056984854896856}
   - {fileID: 7458785299418377086}
-  animator: {fileID: 1942873053}
   ammunition: 320000001400000064000000
   maxAmmunition: 320000001400000064000000
   ammoClip: 060000000200000018000000

@@ -13,6 +13,8 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     // 変更なし
     //－－－－－－－－－－－－－－－－－－－－－/
 
+    [SerializeField] Animator gunAnimator;
+
     [Header("参照")]
     [Tooltip("Playerの視点に関するクラス")]
     [SerializeField] CameraController cameraController;
@@ -34,7 +36,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     [Tooltip("銃ホルダー 相手視点用")]
     [SerializeField] GunStatus[] OtherGunsHolder;
 
-    [SerializeField] Animator animator;
+    
 
 
     int selectedGun = 0;                                //選択中の武器管理用数値
@@ -249,12 +251,12 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
                 return;
             }
 
+            // アニメーション
+            gunAnimator.SetTrigger("Attack");
+            Debug.Log($"銃のアニメーション呼ばれたで！");
+
             //銃の発射処理
             FiringBullet();
-
-            // アニメーション
-            animator.Play("Shot");
-            Debug.Log("銃のアニメーション呼ばれたで！");
         }
     }
 
