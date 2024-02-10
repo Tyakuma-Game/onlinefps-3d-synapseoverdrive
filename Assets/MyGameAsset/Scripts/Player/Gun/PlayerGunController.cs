@@ -228,11 +228,17 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         //マウス右ボタン押しているとき
         if (Input.GetMouseButton(1))
         {
+            // アニメーション
+            gunAnimator.SetBool("IsZoom",true);
+
             //ズームイン
             cameraController.GunZoomIn(guns[selectedGun].AdsZoom, guns[selectedGun].AdsSpeed);
         }
         else
         {
+            // アニメーション
+            gunAnimator.SetBool("IsZoom", false);
+
             //ズームアウト
             cameraController.GunZoomOut(guns[selectedGun].AdsSpeed);
         }

@@ -10553,8 +10553,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 934038861093226653}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0, y: -0.0036651045, z: 0, w: 0.9999933}
+  m_LocalPosition: {x: -0.24, y: 0.03, z: 0.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10563,7 +10563,7 @@ Transform:
   - {fileID: 2845792568706307349}
   m_Father: {fileID: 934038861596881044}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -0.42, z: 0}
 --- !u!95 &1942873053
 Animator:
   serializedVersion: 5
@@ -10772,6 +10772,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfdd89d59b8fdd8488b6724e355e4708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gunAnimator: {fileID: 1942873053}
   playerStatus: {fileID: 5144562220326655556}
   playerSoundManager: {fileID: 4336136826343351737}
   cameraController: {fileID: 1228356572045506384}
@@ -53746,7 +53747,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2845792568706307349
 Transform:
   m_ObjectHideFlags: 0
@@ -54046,7 +54047,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2894203302544213512
 Transform:
   m_ObjectHideFlags: 0
@@ -96803,7 +96804,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6335113562944643635
 Transform:
   m_ObjectHideFlags: 0

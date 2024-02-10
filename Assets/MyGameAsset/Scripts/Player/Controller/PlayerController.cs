@@ -18,6 +18,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
     //@Œø—¦‰»’†
     //|||||||||||||||||||||/
 
+    [SerializeField] Animator gunAnimator;
+
     [Tooltip("ƒvƒŒƒCƒ„[‚ÌƒXƒe[ƒ^ƒXî•ñ")]
     [SerializeField] PlayerStatus playerStatus;
 
@@ -225,12 +227,15 @@ public class PlayerController : MonoBehaviourPunCallbacks
             {
                 float moveSpeed = moveDirection.magnitude*playerStatus.ActiveMoveSpeed;
                 testAnimatorController.TestMove(moveSpeed);
+
+                gunAnimator.SetFloat("MoveSpeed",moveSpeed);
             }
             
 
             if (playerLandDetector.IsGrounded == false)
             {
                 playerStatus.IsIdol();
+                gunAnimator.SetFloat("MoveSpeed", 0f);
             }
 
             // Soundˆ—
