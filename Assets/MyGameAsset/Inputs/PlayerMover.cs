@@ -2,6 +2,9 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// プレイヤーの移動を管理するクラス
+/// </summary>
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMover : MonoBehaviour
 {
@@ -29,26 +32,26 @@ public class PlayerMover : MonoBehaviour
         _gameInputs.Enable();
     }
 
-    private void OnDestroy()
+    void OnDestroy()
     {
         // 自身でインスタンス化したActionクラスはIDisposableを実装しているので、
         // 必ずDisposeする必要がある
         _gameInputs?.Dispose();
     }
 
-    private void OnMove(InputAction.CallbackContext context)
+    void OnMove(InputAction.CallbackContext context)
     {
         // Moveアクションの入力取得
         _moveInputValue = context.ReadValue<Vector2>();
     }
 
-    private void OnJump(InputAction.CallbackContext context)
+    void OnJump(InputAction.CallbackContext context)
     {
         // ジャンプする力を与える
         _rigidbody.AddForce(Vector3.up * _playerData.JumpForce, ForceMode.Impulse);
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         // 移動方向の力を与える
         _rigidbody.AddForce(new Vector3(
