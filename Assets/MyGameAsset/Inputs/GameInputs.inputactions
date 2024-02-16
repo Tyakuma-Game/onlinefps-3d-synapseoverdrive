@@ -125,7 +125,18 @@
                 {
                     "name": "",
                     "id": "71dfe6b0-5873-4b29-a4bc-a3a43c42468f",
-                    "path": "",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5020fb44-5f38-41af-bcfa-f9e9621f928e",
+                    "path": "<Joystick>/stick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

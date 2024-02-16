@@ -45,56 +45,6 @@ public class CameraController : MonoBehaviour
     }
 
     //|||||||||||||||||||||/
-    // e”­Ë‚Ì‰‰o
-    //|||||||||||||||||||||/
-
-    bool isRecoiling = false;       // e”­Ë‰‰o’†‚©‚Ç‚¤‚©‚ğ¦‚·ƒtƒ‰ƒO
-    Quaternion originalRotation;
-    float recoilAngle = 1.5f;       // ã•ûŒü‚ÉŒü‚¯‚éŠp“x
-    float recoilDuration = 0.3f;    // ãŒü‚«‚É‚·‚éŠÔ
-    float returnDuration = 0.3f;    // Œ³‚ÌŠp“x‚É–ß‚éŠÔ
-
-    public void ApplyRecoil()
-    {
-        // ‰ğŒˆ‚ª“ï‚µ‚¢‚©‚çˆê’U–³‹I
-
-        //if (!isRecoiling)
-        //{
-        //    StartCoroutine(RecoilCoroutine());
-        //}
-    }
-
-    IEnumerator RecoilCoroutine()
-    {
-        isRecoiling = true;
-
-        Quaternion targetRotation = Quaternion.Euler(sabViewPoint.transform.eulerAngles + new Vector3(-recoilAngle, 0, 0));
-        Quaternion startRotation = myCamera.transform.rotation;
-        float startTime = Time.time;
-
-        // ã•ûŒü‚É‰ñ“]
-        while (Time.time < startTime + recoilDuration)
-        {
-            float t = (Time.time - startTime) / recoilDuration;
-            myCamera.transform.rotation = Quaternion.Slerp(startRotation, targetRotation, t);
-            yield return null;
-        }
-
-        // Œ³‚ÌŠp“x‚É–ß‚·
-        startTime = Time.time;
-        while (Time.time < startTime + returnDuration)
-        {
-            float t = (Time.time - startTime) / returnDuration;
-            myCamera.transform.rotation = Quaternion.Slerp(myCamera.transform.rotation, originalRotation, t);
-            yield return null;
-        }
-
-        isRecoiling = false;
-    }
-
-
-
-    //|||||||||||||||||||||/
     // Damage‚Ì—h‚êˆ—
     //|||||||||||||||||||||/
 
@@ -153,8 +103,6 @@ public class CameraController : MonoBehaviour
             viewPoint.transform.rotation.eulerAngles.y,
             viewPoint.transform.rotation.eulerAngles.z);
     }
-
-    //|||||||||||||||||||||/
 
     /// <summary>
     /// ŠJn’n“_‚©‚ç™X‚ÉƒY[ƒ€‚·‚é

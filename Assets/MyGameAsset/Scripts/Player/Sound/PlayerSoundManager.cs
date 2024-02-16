@@ -2,9 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// プレイヤーの移動状態
+/// </summary>
+public enum PlayerMoveState
+{
+    Idol,
+    Walk,
+    Run
+}
+
+
+/// <summary>
+/// プレイヤーの状態一覧
+/// </summary>
+public enum PlayerAnimationState
+{
+    Idol,   // 待機状態
+    Walk,   // 歩き状態
+    Run,    // 走り状態
+    Jump    // ジャンプ状態
+}
+
+
 public class PlayerSoundManager : MonoBehaviour
 {
-    [SerializeField]AudioSource walkSound;
+    [SerializeField] AudioSource walkSound;
     [SerializeField] AudioSource runSound;
     [SerializeField] AudioSource damegeSound;
 

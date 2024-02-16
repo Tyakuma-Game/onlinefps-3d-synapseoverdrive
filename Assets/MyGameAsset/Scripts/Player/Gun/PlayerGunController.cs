@@ -9,17 +9,13 @@ using Photon.Pun.Demo.PunBasics;
 /// </summary>
 public class PlayerGunController : MonoBehaviourPunCallbacks
 {
-    //|||||||||||||||||||||/
-    // •ÏX‚È‚µ
-    //|||||||||||||||||||||/
-
     [SerializeField] Animator gunAnimator;
 
     [Header("QÆ")]
     [Tooltip("Player‚Ì‹“_‚ÉŠÖ‚·‚éƒNƒ‰ƒX")]
     [SerializeField] CameraController cameraController;
 
-    TestAnimatorController testAnimatorController;
+    [SerializeField] PlayerAnimator playerAnimator;
 
     //|||||||||||||||||||||/
 
@@ -81,8 +77,6 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
                 guns.Add(gun);
             }
         }
-
-        testAnimatorController = GetComponent<TestAnimatorController>();
 
         //e‚Ì•\¦Ø‘Ö
         switchGun();
@@ -325,7 +319,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         gunAnimator.SetTrigger("Attack");
 
         // ƒAƒjƒ[ƒVƒ‡ƒ“
-        testAnimatorController.Attack(AttackType.Short);
+        playerAnimator.Attack(AttackType.Short);
 
         // Effect‚ğU‚ç‚·
         photonView.RPC("ShotEffect", RpcTarget.All);
@@ -333,9 +327,6 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         //Ray(Œõü)‚ğƒJƒƒ‰‚Ì’†‰›‚©‚çİ’è
         Vector2 pos = new Vector2(.5f, .5f);
         Ray ray = cameraController.GenerateRay(pos);
-
-        // ƒJƒƒ‰‚Ì‰‰o(UŒ‚‚Éã‚ğŒü‚©‚¹‚é)
-        cameraController.ApplyRecoil();
 
         //ƒŒƒC‚ğ”­Ë
         if (Physics.Raycast(ray, out RaycastHit hit))
@@ -413,7 +404,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
             selectedGun = gunNo;
 
             // ƒAƒjƒ[ƒVƒ‡ƒ“
-            testAnimatorController.TestWeaponChange();
+            playerAnimator.IsWeaponChange();
 
             // 1•b‘Ò‚Á‚Ä‚©‚çØ‚è‘Ö‚¦‚é
             StartCoroutine(DelayedSwitchGun());
@@ -436,7 +427,6 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     {
         return ammoClip[selectedGun];
     }
-
 
     /// <summary>
     /// ‘I‘ğ‚µ‚Ä‚¢‚ée‚Ìƒ}ƒKƒWƒ““à’e–òÅ‘å”

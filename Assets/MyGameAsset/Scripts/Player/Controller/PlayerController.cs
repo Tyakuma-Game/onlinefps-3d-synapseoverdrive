@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     IPlayerJump playerJump;
 
     [Tooltip("Player‚ÌƒAƒjƒ[ƒVƒ‡ƒ“ˆ—")]
-    IPlayerAnimator playerAnimator;
+    PlayerAnimator playerAnimator;
 
     [Tooltip("’…’n‚µ‚Ä‚¢‚é‚©”»’èˆ—")]
     PlayerLandDetector playerLandDetector;
@@ -56,8 +56,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     [SerializeField] CameraController cameraController;
 
-
-    TestAnimatorController testAnimatorController;
     [SerializeField] GameObject spawnEffect;
 
 
@@ -120,7 +118,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         // PlayerƒVƒXƒeƒ€
         playerLandDetector = GetComponent<PlayerLandDetector>();
-        playerAnimator = GetComponent<IPlayerAnimator>();
+        playerAnimator = GetComponent<PlayerAnimator>();
         playerMove = GetComponent<IPlayerMove>();
         playerJump = GetComponent<IPlayerJump>();
         playerRotation = GetComponent<IPlayerRotation>();
@@ -133,8 +131,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
         //HPƒXƒ‰ƒCƒ_[”½‰f
         uIManager.UpdateHP(playerStatus.Constants.MaxHP, playerStatus.CurrentHP);
 
-        testAnimatorController = GetComponent<TestAnimatorController>();
-        testAnimatorController.TestSetHP(playerStatus.CurrentHP);
+        // Œ»İ‚ÌHP‚ğƒZƒbƒg
+        playerAnimator.SetCurrentHP(playerStatus.CurrentHP);
     }
 
 
@@ -218,20 +216,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
             //|||||||||||||||||||||/
             // ƒAƒjƒ[ƒVƒ‡ƒ“XV
             //|||||||||||||||||||||/
-            testAnimatorController.TestIsGround(playerLandDetector.IsGrounded);
-            if (testAnimatorController == null)
             {
-                Debug.Log("testAnimatorController‚ªNULL!!");
-            }
-            else
-            {
-                float moveSpeed = moveDirection.magnitude*playerStatus.ActiveMoveSpeed;
-                testAnimatorController.TestMove(moveSpeed);
-
+                playerAnimator.IsGround(playerLandDetector.IsGrounded);
+                float moveSpeed = moveDirection.magnitude * playerStatus.ActiveMoveSpeed;
+                playerAnimator.UpdateMoveSpeed(moveSpeed);
                 gunAnimator.SetFloat("MoveSpeed",moveSpeed);
             }
             
-
             if (playerLandDetector.IsGrounded == false)
             {
                 playerStatus.IsIdol();
@@ -290,10 +281,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             //ƒ_ƒ[ƒW
             playerStatus.OnDamage(damage);
-            
+
             // ƒAƒjƒ[ƒVƒ‡ƒ“
-            testAnimatorController.TestSetHP(playerStatus.CurrentHP);
-            testAnimatorController.Damage();
+            playerAnimator.SetCurrentHP(playerStatus.CurrentHP);
+            playerAnimator.Damage();
 
             //ƒJƒƒ‰‚ğ—h‚ç‚·
             cameraController.Shake();
