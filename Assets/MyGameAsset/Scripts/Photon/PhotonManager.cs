@@ -6,6 +6,11 @@ using Photon.Realtime;
 using System.Net.NetworkInformation;
 
 
+public class RoomDataSettingTest
+{
+    [SerializeField] int RoomMember;
+}
+
 /// <summary>
 /// Photonä«óùÇÃÉNÉâÉX
 /// </summary>
@@ -63,8 +68,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     void Awake()
     {
-        //é©êgÇäiî[
-        instance = this;
+        if(instance ==  null)
+            instance = this;
+        else 
+            Destroy(this.gameObject);
     }
 
 
@@ -99,13 +106,9 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     bool IsInternetConnected()
     {
         if (Application.internetReachability == NetworkReachability.NotReachable)
-        {
             return false;
-        }
         else
-        {
             return true;
-        }
     }
 
 
