@@ -74,7 +74,7 @@ MonoBehaviour:
       m_SingletonActionBindings:
       - m_Name: 
         m_Id: 5389a895-681a-4a04-8bcc-f2a538290bc2
-        m_Path: <Keyboard>/space
+        m_Path: <HID::JC-U3613M - DirectXInput Mode>/button4
         m_Interactions: 
         m_Processors: 
         m_Groups: 
