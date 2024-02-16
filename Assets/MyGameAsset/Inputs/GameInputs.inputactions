@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Look",
+                    "type": "Value",
+                    "id": "78aa6cd9-accc-4b40-9d4f-f5e120e6b10f",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Jump",
                     "type": "Button",
                     "id": "a985fd72-b3b9-4001-8c70-27df283fb7ee",
@@ -22,15 +31,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Rotation",
-                    "type": "Value",
-                    "id": "54b08dbe-640d-4736-ac2f-6e67653dae7b",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -124,12 +124,12 @@
                 },
                 {
                     "name": "",
-                    "id": "17bd01d5-a340-4047-bea4-218daf7d0446",
-                    "path": "<VirtualMouse>/position",
+                    "id": "71dfe6b0-5873-4b29-a4bc-a3a43c42468f",
+                    "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Rotation",
+                    "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

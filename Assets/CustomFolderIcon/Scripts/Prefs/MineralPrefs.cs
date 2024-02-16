@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Text;
@@ -9,19 +7,19 @@ using UnityEditor;
 
 namespace Tabsil.Mineral
 {
-    // folderIconData
     /// <summary>
-    /// フォルダーの設定を管理するクラス
+    /// エディタ拡張のための設定を管理するクラス
     /// </summary>
     [InitializeOnLoad]
     public static class MineralPrefs
     {
+        const string CustomDataAssetName = "CustomFolderData";
         static string dataPath;
         static Data dataObject;
 
         static MineralPrefs()
         {
-            dataPath = GetAssetPath("CustomFolderData");
+            dataPath = GetAssetPath(CustomDataAssetName);
             LoadData();
         }
 
@@ -52,9 +50,8 @@ namespace Tabsil.Mineral
         {
             if(!File.Exists(dataPath))
             {
-                // データファイルを作成
+                // データファイル作成
                 FileStream fs = new FileStream(dataPath, FileMode.Create);
-
                 Data dataObject = new Data();
 
                 string data = JsonUtility.ToJson(dataObject);
@@ -65,12 +62,11 @@ namespace Tabsil.Mineral
             }
             else
             {
+                // データ読み取り
                 string data = File.ReadAllText(dataPath);
 
-                if(data.Length <= 0 )
-                {
+                if(data.Length <= 0)
                     return;
-                }
 
                 dataObject = JsonUtility.FromJson<Data>(data);
             }

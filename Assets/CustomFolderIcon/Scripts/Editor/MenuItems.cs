@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 #if UNITY_EDITOR
@@ -39,11 +37,9 @@ namespace Tabsil.Mineral
         [MenuItem("Assets/Custom Folder Icon/Reset Icon", true)]
         static bool ValidateFolder()
         {
-            // 選択されたオブジェクトが存在しない場合、メニュー項目を無効にする
+            // 選択されたオブジェクトが存在しない場合、メニュー項目を無効
             if (Selection.activeObject == null)
-            {
                 return false;
-            }
 
             // 選択されたオブジェクトのパス取得
             Object selectedObject = Selection.activeObject;

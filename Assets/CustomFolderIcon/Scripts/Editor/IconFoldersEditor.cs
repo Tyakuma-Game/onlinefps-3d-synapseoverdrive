@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Unity.VisualScripting;
 
@@ -36,9 +34,7 @@ namespace Tabsil.Mineral
         {
             // 選択されたフォルダのGUIDと一致しない場合は何もしない
             if (guid != selectedFolderGuid)
-            {
                 return;
-            }
 
             // オブジェクト選択が更新された場合、選択されたオブジェクトのGUIDを取得して保存
             if (Event.current.commandName == "ObjectSelectorUpdated" && EditorGUIUtility.GetObjectPickerControlID() == controlID)

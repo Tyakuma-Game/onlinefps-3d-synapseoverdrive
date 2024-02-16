@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 namespace Tabsil.Mineral
 {
@@ -34,12 +33,8 @@ namespace Tabsil.Mineral
         public string GetString(string key, string defultValue)
         {
             for (int i = 0; i < keys.Count; i++)
-            {
                 if (keys[i] == key)
-                {
                     return values[i];
-                }
-            }
 
             return defultValue;
         }
@@ -82,9 +77,7 @@ namespace Tabsil.Mineral
             }
 
             if (indexToRemove < 0)
-            {
                 return;
-            }
 
             keys.RemoveAt(indexToRemove);
             values.RemoveAt(indexToRemove);
