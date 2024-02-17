@@ -4,6 +4,7 @@ using Photon.Pun;
 using UnityEngine.Playables;
 using Unity.VisualScripting;
 using UnityEngine.EventSystems;
+using MiniMap;
 
 /// <summary>
 /// PlayerŠÇ—ƒNƒ‰ƒX
@@ -106,6 +107,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
             //ˆ—I—¹
             return;
         }
+
+        MiniMapController.instance.SetMiniMapTarget(this.transform);
 
         myRigidbody = GetComponent<Rigidbody>();
         myCamera = Camera.main;
