@@ -79,7 +79,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""5020fb44-5f38-41af-bcfa-f9e9621f928e"",
-                    ""path"": ""<Joystick>/stick"",
+                    ""path"": ""<Gamepad>/rightStick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -112,7 +112,18 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e7dcba54-4d63-4ebd-8b6c-8dd0cb605928"",
-                    ""path"": """",
+                    ""path"": ""<HID::JC-U3613M - DirectXInput Mode>/button7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b625fa95-ecbf-4ea7-b885-8fd51ec86725"",
+                    ""path"": ""<Keyboard>/shift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -202,16 +213,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ZoomOut"",
-                    ""type"": ""Button"",
-                    ""id"": ""92504fc4-f169-4267-8ee6-fcf384db480f"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""ZoomIn"",
+                    ""name"": ""Zoom"",
                     ""type"": ""Button"",
                     ""id"": ""60827d95-533c-4a88-a429-c837cb6658d5"",
                     ""expectedControlType"": ""Button"",
@@ -248,18 +250,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""ZoomIn"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d1b34f73-b256-446e-8a27-70d9adc1f871"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ZoomOut"",
+                    ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -316,8 +307,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
         // Gun
         m_Gun = asset.FindActionMap("Gun", throwIfNotFound: true);
         m_Gun_Shot = m_Gun.FindAction("Shot", throwIfNotFound: true);
-        m_Gun_ZoomOut = m_Gun.FindAction("ZoomOut", throwIfNotFound: true);
-        m_Gun_ZoomIn = m_Gun.FindAction("ZoomIn", throwIfNotFound: true);
+        m_Gun_Zoom = m_Gun.FindAction("Zoom", throwIfNotFound: true);
         m_Gun_WeaponChange = m_Gun.FindAction("WeaponChange", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
@@ -454,16 +444,14 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Gun;
     private List<IGunActions> m_GunActionsCallbackInterfaces = new List<IGunActions>();
     private readonly InputAction m_Gun_Shot;
-    private readonly InputAction m_Gun_ZoomOut;
-    private readonly InputAction m_Gun_ZoomIn;
+    private readonly InputAction m_Gun_Zoom;
     private readonly InputAction m_Gun_WeaponChange;
     public struct GunActions
     {
         private @GameInputs m_Wrapper;
         public GunActions(@GameInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Shot => m_Wrapper.m_Gun_Shot;
-        public InputAction @ZoomOut => m_Wrapper.m_Gun_ZoomOut;
-        public InputAction @ZoomIn => m_Wrapper.m_Gun_ZoomIn;
+        public InputAction @Zoom => m_Wrapper.m_Gun_Zoom;
         public InputAction @WeaponChange => m_Wrapper.m_Gun_WeaponChange;
         public InputActionMap Get() { return m_Wrapper.m_Gun; }
         public void Enable() { Get().Enable(); }
@@ -477,12 +465,9 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
             @Shot.started += instance.OnShot;
             @Shot.performed += instance.OnShot;
             @Shot.canceled += instance.OnShot;
-            @ZoomOut.started += instance.OnZoomOut;
-            @ZoomOut.performed += instance.OnZoomOut;
-            @ZoomOut.canceled += instance.OnZoomOut;
-            @ZoomIn.started += instance.OnZoomIn;
-            @ZoomIn.performed += instance.OnZoomIn;
-            @ZoomIn.canceled += instance.OnZoomIn;
+            @Zoom.started += instance.OnZoom;
+            @Zoom.performed += instance.OnZoom;
+            @Zoom.canceled += instance.OnZoom;
             @WeaponChange.started += instance.OnWeaponChange;
             @WeaponChange.performed += instance.OnWeaponChange;
             @WeaponChange.canceled += instance.OnWeaponChange;
@@ -493,12 +478,9 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
             @Shot.started -= instance.OnShot;
             @Shot.performed -= instance.OnShot;
             @Shot.canceled -= instance.OnShot;
-            @ZoomOut.started -= instance.OnZoomOut;
-            @ZoomOut.performed -= instance.OnZoomOut;
-            @ZoomOut.canceled -= instance.OnZoomOut;
-            @ZoomIn.started -= instance.OnZoomIn;
-            @ZoomIn.performed -= instance.OnZoomIn;
-            @ZoomIn.canceled -= instance.OnZoomIn;
+            @Zoom.started -= instance.OnZoom;
+            @Zoom.performed -= instance.OnZoom;
+            @Zoom.canceled -= instance.OnZoom;
             @WeaponChange.started -= instance.OnWeaponChange;
             @WeaponChange.performed -= instance.OnWeaponChange;
             @WeaponChange.canceled -= instance.OnWeaponChange;
@@ -575,8 +557,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
     public interface IGunActions
     {
         void OnShot(InputAction.CallbackContext context);
-        void OnZoomOut(InputAction.CallbackContext context);
-        void OnZoomIn(InputAction.CallbackContext context);
+        void OnZoom(InputAction.CallbackContext context);
         void OnWeaponChange(InputAction.CallbackContext context);
     }
     public interface IUIActions

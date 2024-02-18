@@ -107075,7 +107075,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dabde05c619c0054495637368c0e4f00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yPositionConstant: 60
+  yPositionConstant: 50
   iconObject: {fileID: 6624567064914251952}
   targetTransform: {fileID: 934038861538154331}
 --- !u!1 &6625730489939511001

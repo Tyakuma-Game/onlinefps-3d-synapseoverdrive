@@ -57,7 +57,7 @@
                 {
                     "name": "",
                     "id": "5020fb44-5f38-41af-bcfa-f9e9621f928e",
-                    "path": "<Joystick>/stick",
+                    "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -90,7 +90,18 @@
                 {
                     "name": "",
                     "id": "e7dcba54-4d63-4ebd-8b6c-8dd0cb605928",
-                    "path": "",
+                    "path": "<HID::JC-U3613M - DirectXInput Mode>/button7",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b625fa95-ecbf-4ea7-b885-8fd51ec86725",
+                    "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -180,16 +191,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ZoomOut",
-                    "type": "Button",
-                    "id": "92504fc4-f169-4267-8ee6-fcf384db480f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "ZoomIn",
+                    "name": "Zoom",
                     "type": "Button",
                     "id": "60827d95-533c-4a88-a429-c837cb6658d5",
                     "expectedControlType": "Button",
@@ -226,18 +228,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "ZoomIn",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d1b34f73-b256-446e-8a27-70d9adc1f871",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ZoomOut",
+                    "action": "Zoom",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
