@@ -11,9 +11,6 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class EventManager : MonoBehaviourPunCallbacks, IOnEventCallback
 {
-    [SerializeField] GameManager gameManager;
-
-
     /// <summary>
     /// コンポーネントがオンになると実行
     /// </summary>
@@ -64,15 +61,15 @@ public class EventManager : MonoBehaviourPunCallbacks, IOnEventCallback
             switch (eventCode)
             {
                 case EventCodes.NewPlayer:  //マスターが新規ユーザー情報処理する
-                    gameManager.NewPlayerSet(data);
+                    GameManager.instance.NewPlayerSet(data);
                     break;
 
                 case EventCodes.ListPlayers://ユーザー情報を共有
-                    gameManager.ListPlayersSet(data);
+                    GameManager.instance.ListPlayersSet(data);
                     break;
 
                 case EventCodes.UpdateStat: //キルデス数の更新
-                    gameManager.ScoreSet(data);
+                    GameManager.instance.ScoreSet(data);
                     break;
             }
         }

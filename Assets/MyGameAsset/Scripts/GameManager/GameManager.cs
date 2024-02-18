@@ -12,6 +12,8 @@ using ExitGames.Client.Photon;
 /// </summary>
 public class GameManager : MonoBehaviourPunCallbacks
 {
+    public static GameManager instance { get; private set; }
+
     [Header("定数")]
     [Tooltip("クリアするまでのキル数")]
     [SerializeField] int GAMECLEAR_KILL_SCORE = 3;
@@ -31,8 +33,16 @@ public class GameManager : MonoBehaviourPunCallbacks
     [Tooltip("playerinfoのリスト")]
     List<PlayerInformation> playerInfoList = new List<PlayerInformation>();
 
+    private void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else
+            Destroy(instance);
+    }
 
-    private void Start()
+
+    void Start()
     {
         //ネットワーク接続されていない場合
         if (!PhotonNetwork.IsConnected)
@@ -50,7 +60,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
-    private void Update()
+    void Update()
     {
         //タブボタンが押されたとき
         if (Input.GetKeyDown(KeyCode.Tab))

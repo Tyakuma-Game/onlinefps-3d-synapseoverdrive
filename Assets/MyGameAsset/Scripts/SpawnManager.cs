@@ -1,90 +1,83 @@
 using UnityEngine;
 using Photon.Pun;
+using System.Collections;
 
+/// <summary>
+/// プレイヤーのスポーンに関する処理を管理するクラス
+/// </summary>
 public class SpawnManager : MonoBehaviour
 {
     public static SpawnManager instance { get; private set; }
 
-    [Header("定数")]
-    [Tooltip("スポーンするまでの猶予時間")]
-    [SerializeField] float RESPAWN_INTERVAL = 5f;
+    [Header(" Settings ")]
+    [SerializeField] float respawnInterval = 5f;
+    [SerializeField] float respawnDelay = 0.5f;
 
-    [Header("参照")]
-    [Tooltip("スポーンポイントのオブジェクト格納用配列")]
-    [SerializeField] Transform[] spawnPositons;
-
-    [Tooltip("生成するオブジェクト")]
+    [Header(" Elements ")]
+    [SerializeField] Transform[] spawnPositions;
     [SerializeField] GameObject playerPrefab;
-
-    [Tooltip("生成したプレイヤーを格納")]
-    GameObject player;
+    GameObject playerInstance;
 
     void Awake()
     {
         if(instance == null)
             instance = this;
         else
-            Destroy(this.gameObject);
+            Destroy(gameObject);
+
+        // スポーンポイントを初期化して非表示に
+        InitializeSpawnPoints();
     }
 
     void Start()
     {
-        //スポーンポイントオブジェクトをすべて非表示に
-        foreach (var pos in spawnPositons)
-        {
-            pos.gameObject.SetActive(false);
-        }
-
-        //ネットワークに接続されているなら
+        // ネットワーク接続がある場合のみプレイヤーをスポーン
         if (PhotonNetwork.IsConnected)
-        {
-            //プレイヤー生成
             SpawnPlayer();
-        }
     }
 
-
-
     /// <summary>
-    /// リスポーン地点をランダム取得
+    /// スポーンポイントの初期化・非表示に設定
     /// </summary>
-    public Transform GetSpawnPoint()
+    void InitializeSpawnPoints()
     {
-        //ランダムでスポーンポイントを１つ選んで位置情報を返す
-        return spawnPositons[Random.Range(0, spawnPositons.Length)];
+        foreach (var pos in spawnPositions)
+            pos.gameObject.SetActive(false);
     }
 
-
     /// <summary>
-    /// Playerを生成
+    /// プレイヤーをネットワーク上に生成し、位置を設定
     /// </summary>
     public void SpawnPlayer()
     {
-        //スポーン座標をリストの中からランダムに取得
-        Transform spawnPoint = GetSpawnPoint();
-
-        //ネットワーク上にプレイヤーを生成
-        player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPoint.position, spawnPoint.rotation);//削除用に保存
-    }
-
-    void DestryNetWarkPlayer()
-    {
-        //playerをネットワーク上から削除
-        PhotonNetwork.Destroy(player);
+        Transform spawnPoint = GetRandomSpawnPoint();
+        playerInstance = PhotonNetwork.Instantiate(playerPrefab.name, spawnPoint.position, spawnPoint.rotation);
     }
 
     /// <summary>
-    /// Playerのリスポーン処理
+    /// プレイヤーが死亡した際の処理　リスポーンまでの一連の流れ開始
     /// </summary>
-    public void Die()
+    public void StartRespawnProcess()
     {
-        if (player != null)
-        {
-            //一定時間後プレイヤーをスポーン
-            Invoke("SpawnPlayer", RESPAWN_INTERVAL);
-        }
+        StartCoroutine(RespawnPlayer());
+    }
 
-        //一定時間後プレイヤーを破壊
-        Invoke("DestryNetWarkPlayer", RESPAWN_INTERVAL-0.5f);
+    /// <summary>
+    /// プレイヤーのリスポーンを管理するコルーチン
+    /// </summary>
+    IEnumerator RespawnPlayer()
+    {
+        yield return new WaitForSeconds(respawnInterval);   // 死亡演出の為の待ち時間
+        PhotonNetwork.Destroy(playerInstance);
+        yield return new WaitForSeconds(respawnDelay);      // 破壊完了の為の待ち時間
+        SpawnPlayer();
+    }
+
+    /// <summary>
+    /// 使用可能なスポーンポイントからランダムに一つ選択
+    /// </summary>
+    Transform GetRandomSpawnPoint()
+    {
+        return spawnPositions[Random.Range(0, spawnPositions.Length)];
     }
 }

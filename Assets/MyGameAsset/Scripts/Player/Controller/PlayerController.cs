@@ -11,8 +11,6 @@ using MiniMap;
 /// </summary>
 public class PlayerController : MonoBehaviourPunCallbacks
 {
-    GameManager gameManager;    //ƒQ[ƒ€ƒ}ƒl[ƒWƒƒ[
-
     //|||||||||||||||||||||/
     //@Œø—¦‰»’†
     //|||||||||||||||||||||/
@@ -71,22 +69,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public void SpawnEffectNotActive()
     {
         spawnEffect.SetActive(false);
-    }
-
-
-    //|||||||||||||||||||||/
-
-    void Awake()
-    {
-        //©•ªˆÈŠO‚Ìê‡‚Í
-        if (!photonView.IsMine)
-        {
-            //ˆ—I—¹
-            return;
-        }
-
-        //ƒ^ƒO‚©‚çUIManager‚ğ’T‚·
-        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 
     void Start()
@@ -308,10 +290,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
         UIManager.instance.UpdateDeathUI(name);
 
         //©•ª‚ÌƒfƒX”‚ğã¸(©•ª‚Ì¯•Ê”Ô†AƒfƒXA‰ÁZ”’l)
-        gameManager.ScoreGet(PhotonNetwork.LocalPlayer.ActorNumber, 1, 1);
+        GameManager.instance.ScoreGet(PhotonNetwork.LocalPlayer.ActorNumber, 1, 1);
 
         //Œ‚‚Á‚Ä‚«‚½‘Šè‚ÌƒLƒ‹”‚ğã¸(Œ‚‚Á‚Ä‚«‚½“G‚Ì¯•Ê”Ô†AƒLƒ‹A‰ÁZ”’l)
-        gameManager.ScoreGet(actor, 0, 1);
+        GameManager.instance.ScoreGet(actor, 0, 1);
 
         // €–S‰‰o•ÏX
         isShowDeath = true;
@@ -320,7 +302,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         photonView.RPC("SpawnEffectActive",RpcTarget.All);
 
         //€–SŠÖ”‚ğŒÄ‚Ño‚µ
-        SpawnManager.instance.Die();
+        SpawnManager.instance.StartRespawnProcess();
     }
 
 
@@ -329,11 +311,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
     /// </summary>
     public void OutGame()
     {
-        // GameManagerƒIƒuƒWƒFƒNƒg‚ğQÆ
-        gameManager = GameObject.FindObjectOfType<GameManager>();
-
         //ƒvƒŒƒCƒ„[ƒf[ƒ^íœ
-        gameManager.OutPlayerGet(PhotonNetwork.LocalPlayer.ActorNumber);
+        GameManager.instance.OutPlayerGet(PhotonNetwork.LocalPlayer.ActorNumber);
 
         //“¯Šú‚ğØ’f
         PhotonNetwork.AutomaticallySyncScene = false;

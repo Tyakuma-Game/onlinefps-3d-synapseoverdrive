@@ -49,7 +49,7 @@ public class PlayerAbyssRespawner : MonoBehaviourPunCallbacks
     public void AbyssRespawn()
     {
         //€–SŠÖ”‚ğŒÄ‚Ño‚µ
-        SpawnManager.instance.Die();
+        SpawnManager.instance.StartRespawnProcess();
 
         //€–SUI‚ğXV
         UIManager.instance.UpdateDeathUI();

@@ -8300,8 +8300,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55ce9d8d0f28da14e8fb61a3c8e28487, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RESPAWN_INTERVAL: 5
-  spawnPositons:
+  respawnInterval: 5
+  respawnDelay: 0.5
+  spawnPositions:
   - {fileID: 351840386}
   - {fileID: 1264949029}
   - {fileID: 1146190341}
@@ -23354,7 +23355,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55b70a2e15d171548b42a1e7bdef1033, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 1608236343}
 --- !u!1001 &1608759895
 PrefabInstance:
   m_ObjectHideFlags: 0
