@@ -19,9 +19,6 @@ public class UIManager : MonoBehaviour
     [Tooltip("’e–ò‚Ì‘•“U”‚ÆÅ‘å‘•“U‰Â”\”")]
     [SerializeField] Text bulletText;
 
-    [Tooltip("HPƒXƒ‰ƒCƒ_[Ši”[")]
-    [SerializeField] Slider hpSlider;
-
     [Tooltip("HP‚ÌƒeƒLƒXƒgŠi”[")]
     [SerializeField] Text hpText;
 
@@ -77,8 +74,8 @@ public class UIManager : MonoBehaviour
     /// <param name="ammunition">Š’e–ò”</param>
     public void SettingBulletsText(int ammoClipMax,int ammoClip, int ammunition)
     {
-        bulletsIHaveText.text = "~"+ammunition.ToString();
-        bulletText.text = ammoClip + "/" + ammoClipMax;
+        bulletsIHaveText.text = "/ " + ammunition.ToString();
+        bulletText.text = ammoClip.ToString();
     }
 
 
@@ -92,9 +89,7 @@ public class UIManager : MonoBehaviour
         bloodEffect.BloodUpdate(maxhp, currentHp);
 
         // TextXV
-        hpText.text = $"{currentHp.ToString()} / {maxhp.ToString()}";
-        hpSlider.maxValue = maxhp;
-        hpSlider.value = currentHp;
+        hpText.text = currentHp.ToString();
     }
 
 

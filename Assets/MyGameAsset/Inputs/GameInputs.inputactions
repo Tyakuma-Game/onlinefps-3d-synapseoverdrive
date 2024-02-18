@@ -15,15 +15,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Run",
-                    "type": "Button",
-                    "id": "f40328be-cae5-4929-a56c-ccae2198fbbb",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Jump",
                     "type": "Button",
                     "id": "a985fd72-b3b9-4001-8c70-27df283fb7ee",
@@ -46,7 +37,7 @@
                 {
                     "name": "",
                     "id": "71dfe6b0-5873-4b29-a4bc-a3a43c42468f",
-                    "path": "<Mouse>/delta",
+                    "path": "<Mouse>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -68,7 +59,7 @@
                 {
                     "name": "",
                     "id": "8b9e0645-ed08-43f8-9793-2b0827860580",
-                    "path": "<HID::JC-U3613M - DirectXInput Mode>/button3",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -89,30 +80,8 @@
                 },
                 {
                     "name": "",
-                    "id": "e7dcba54-4d63-4ebd-8b6c-8dd0cb605928",
-                    "path": "<HID::JC-U3613M - DirectXInput Mode>/button7",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Run",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b625fa95-ecbf-4ea7-b885-8fd51ec86725",
-                    "path": "<Keyboard>/shift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Run",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "9fbc4aa7-ea5a-4893-a3cf-02bed9fa2a73",
-                    "path": "<HID::JC-U3613M - DirectXInput Mode>/stick",
+                    "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -246,7 +215,7 @@
             ]
         },
         {
-            "name": "UI",
+            "name": "Menu",
             "id": "580f7da9-b8ae-4d28-94e6-b248c4a95bfd",
             "actions": [
                 {

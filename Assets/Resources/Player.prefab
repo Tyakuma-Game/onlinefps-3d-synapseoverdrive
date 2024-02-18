@@ -10614,6 +10614,8 @@ GameObject:
   - component: {fileID: 6765047478441314159}
   - component: {fileID: 648616327}
   - component: {fileID: 8402002310179638983}
+  - component: {fileID: 7837696590405924817}
+  - component: {fileID: 7837696590405924818}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -10942,6 +10944,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerAnimator: {fileID: 8283675028519006409}
+--- !u!114 &7837696590405924817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934038861538154322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eda5896178e6f444c9198c478fa23cfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpForce: 5
+--- !u!114 &7837696590405924818
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934038861538154322}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b139a83b7456a00449012f60f51edbf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveForce: 5
 --- !u!1 &934038861596881045
 GameObject:
   m_ObjectHideFlags: 0
@@ -53972,7 +54000,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shootInterval: 0.1
-  shotDamage: 10
+  shotDamage: 5
   adsZoom: 35
   adsSpeed: 7
   shotSE: {fileID: 7504881900593609018}
