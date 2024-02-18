@@ -11,8 +11,6 @@ using MiniMap;
 /// </summary>
 public class PlayerController : MonoBehaviourPunCallbacks
 {
-    UIManager uIManager;        //UIŠÇ—
-    SpawnManager spawnManager;  //ƒXƒ|[ƒ“ƒ}ƒl[ƒWƒƒ[ŠÇ—
     GameManager gameManager;    //ƒQ[ƒ€ƒ}ƒl[ƒWƒƒ[
 
     //|||||||||||||||||||||/
@@ -23,6 +21,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     [Tooltip("ƒvƒŒƒCƒ„[‚ÌƒXƒe[ƒ^ƒXî•ñ")]
     [SerializeField] PlayerStatus playerStatus;
+
+    [SerializeField] TestEnemyMinimap minimap;
 
     // Player‹@”\
     [Tooltip("Player‚ÌˆÚ“®ˆ—")]
@@ -87,13 +87,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         //ƒ^ƒO‚©‚çUIManager‚ğ’T‚·
         gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-
-        //ƒ^ƒO‚©‚çUIManager‚ğ’T‚·
-        uIManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
-
-        //ƒ^ƒO‚©‚çSpawnManager‚ğ’T‚·
-        spawnManager = GameObject.FindGameObjectWithTag("SpawnManager").GetComponent<SpawnManager>();
-
     }
 
     void Start()
@@ -104,9 +97,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
         //©•ªˆÈŠO‚Ìê‡‚Í
         if (!photonView.IsMine)
         {
+            minimap.OnMinimap();
             //ˆ—I—¹
             return;
         }
+        minimap.NoMinimap();
 
         MiniMapController.instance.SetMiniMapTarget(this.transform);
 
@@ -132,7 +127,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         playerStatus.Init();
 
         //HPƒXƒ‰ƒCƒ_[”½‰f
-        uIManager.UpdateHP(playerStatus.Constants.MaxHP, playerStatus.CurrentHP);
+        UIManager.instance.UpdateHP(playerStatus.Constants.MaxHP, playerStatus.CurrentHP);
 
         // Œ»İ‚ÌHP‚ğƒZƒbƒg
         playerAnimator.SetCurrentHP(playerStatus.CurrentHP);
@@ -238,11 +233,11 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         if (playerStatus.AnimationState == PlayerAnimationState.Run)
         {
-            uIManager.IsRunning();
+            UIManager.instance.IsRunning();
         }
         else
         {
-            uIManager.IsNotRunning();
+            UIManager.instance.IsNotRunning();
         }
 
         //|||||||||||||||||||||/
@@ -300,7 +295,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             }
 
             //HP‚ğƒXƒ‰ƒCƒ_[‚É”½‰f
-            uIManager.UpdateHP(playerStatus.Constants.MaxHP, playerStatus.CurrentHP);
+            UIManager.instance.UpdateHP(playerStatus.Constants.MaxHP, playerStatus.CurrentHP);
         }
     }
 
@@ -310,7 +305,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public void Death(string name, int actor)
     {
         //€–SUI‚ğXV
-        uIManager.UpdateDeathUI(name);
+        UIManager.instance.UpdateDeathUI(name);
 
         //©•ª‚ÌƒfƒX”‚ğã¸(©•ª‚Ì¯•Ê”Ô†AƒfƒXA‰ÁZ”’l)
         gameManager.ScoreGet(PhotonNetwork.LocalPlayer.ActorNumber, 1, 1);
@@ -325,7 +320,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         photonView.RPC("SpawnEffectActive",RpcTarget.All);
 
         //€–SŠÖ”‚ğŒÄ‚Ño‚µ
-        spawnManager.Die();
+        SpawnManager.instance.Die();
     }
 
 

@@ -50,9 +50,6 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     [Tooltip("マガジンに入る最大の数")]
     [SerializeField] int[] maxAmmoClip;
 
-    //UI管理
-    UIManager uIManager;
-
     void Start()
     {
         //自分なのか
@@ -64,9 +61,6 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
                 //リストに追加
                 guns.Add(gun);
             }
-
-            //タグからUIManagerを探す
-            uIManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
         }
         else//他人だったらOtherGunsHolderを表示
         {
@@ -105,7 +99,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
             Reload();
 
         //弾薬テキスト更新
-        uIManager.SettingBulletsText(GetGunAmmoClipMax(), GetGunAmmoClip(), GetGunAmmunition());
+        UIManager.instance.SettingBulletsText(GetGunAmmoClipMax(), GetGunAmmoClip(), GetGunAmmunition());
     }
 
     /// <summary>
@@ -121,7 +115,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         }
 
         //弾薬テキスト更新
-        uIManager.SettingBulletsText(GetGunAmmoClipMax(),ammoClip[selectedGun], ammunition[selectedGun]);
+        UIManager.instance.SettingBulletsText(GetGunAmmoClipMax(),ammoClip[selectedGun], ammunition[selectedGun]);
     }
 
     /// <summary>

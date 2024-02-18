@@ -1,10 +1,13 @@
-using Photon.Realtime;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace MiniMap
 {
+    // TODO
+    // 将来的にその他プレイヤーのトランスフォームも管理し、敵のアイコンと視界を見えるように改良する
+    // 取りあえず、トランスフォームはリスト型で管理し、自分以外の座標などを送信する感じにするか
+    // いっそのことPlayer事態にミニマップ管理のプログラムを組み込む？　
+
     /// <summary>
     /// ミニマップの管理を行うクラス
     /// </summary>
@@ -15,6 +18,7 @@ namespace MiniMap
         [Header("Settings")]
         [SerializeField] float yPositionConstant = 0.0f;
         [SerializeField] float cameraIconDistance = 0.0f;
+        [SerializeField] float IconRotation = 90f;
 
         [Header("Elements")]
         [SerializeField] Transform cameraTransform;
@@ -22,6 +26,7 @@ namespace MiniMap
 
         Transform targetTransform;
         Vector3 miniMapPos;
+        Vector3 targetRotation;
 
         void Awake()
         {
@@ -56,6 +61,10 @@ namespace MiniMap
             // カメラとアイコンの距離を考慮してアイコンの座標更新
             miniMapPos.y -= cameraIconDistance;
             iconTransform.position = miniMapPos;
+
+            // アイコンの回転を更新
+            targetRotation = targetTransform.eulerAngles;
+            iconTransform.eulerAngles = new Vector3(IconRotation, targetRotation.y, targetRotation.z);
         }
 
         // TODO:

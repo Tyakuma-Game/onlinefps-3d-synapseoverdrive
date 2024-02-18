@@ -3,10 +3,11 @@ using Photon.Pun;
 
 public class SpawnManager : MonoBehaviour
 {
+    public static SpawnManager instance { get; private set; }
+
     [Header("定数")]
     [Tooltip("スポーンするまでの猶予時間")]
     [SerializeField] float RESPAWN_INTERVAL = 5f;
-    
 
     [Header("参照")]
     [Tooltip("スポーンポイントのオブジェクト格納用配列")]
@@ -15,14 +16,16 @@ public class SpawnManager : MonoBehaviour
     [Tooltip("生成するオブジェクト")]
     [SerializeField] GameObject playerPrefab;
 
-    [Tooltip("プレイヤーの階層管理用")]
-    [SerializeField] GameObject Players;
-
     [Tooltip("生成したプレイヤーを格納")]
     GameObject player;
 
-    GameObject aaa;
-
+    void Awake()
+    {
+        if(instance == null)
+            instance = this;
+        else
+            Destroy(this.gameObject);
+    }
 
     void Start()
     {

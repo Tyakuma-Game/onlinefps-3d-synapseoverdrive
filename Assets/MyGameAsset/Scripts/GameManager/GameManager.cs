@@ -31,15 +31,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     [Tooltip("playerinfoのリスト")]
     List<PlayerInformation> playerInfoList = new List<PlayerInformation>();
 
-    [Tooltip("UI管理")]
-    UIManager uiManager;
-
-
-    private void Awake()
-    {
-        uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
-    }
-
 
     private void Start()
     {
@@ -70,18 +61,18 @@ public class GameManager : MonoBehaviourPunCallbacks
         //タブボタンが離された時
         else if (Input.GetKeyUp(KeyCode.Tab))
         {
-            uiManager.ChangeScoreUI();
+            UIManager.instance.ChangeScoreUI();
         }
 
         //Homeが押されたとき
         if (Input.GetKeyDown(KeyCode.Home))
         {
-            uiManager.ChangeReturnToTitlePanel();
+            UIManager.instance.ChangeReturnToTitlePanel();
         }
         //タブボタンが離された時
         else if (Input.GetKeyUp(KeyCode.Home))
         {
-            uiManager.ChangeReturnToTitlePanel();
+            UIManager.instance.ChangeReturnToTitlePanel();
         }
     }
 
@@ -254,7 +245,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     void ShowScoreboard()
     {
         //スコアUIを開く
-        uiManager.ChangeScoreUI();
+        UIManager.instance.ChangeScoreUI();
 
         //リストの数分ループ
         foreach (PlayerInformation info in playerInfoList)
@@ -270,7 +261,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         foreach (PlayerInfo player in playerList)
         {
             //プレイヤー情報を表示するオブジェクトを生成
-            PlayerInformation newPlayerDisplay = Instantiate(uiManager.GetPlayerInformation(), uiManager.GetPlayerInformation().transform.parent);
+            PlayerInformation newPlayerDisplay = Instantiate(UIManager.instance.GetPlayerInformation(), UIManager.instance.GetPlayerInformation().transform.parent);
 
             //生成したオブジェクトに戦績を反映
             newPlayerDisplay.SetPlayerDetailes(player.name, player.kills, player.deaths);
@@ -342,7 +333,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
 
         //ゲーム終了パネル表示
-        uiManager.OpenEndPanel();
+        UIManager.instance.OpenEndPanel();
 
         //スコア表示
         ShowScoreboard();

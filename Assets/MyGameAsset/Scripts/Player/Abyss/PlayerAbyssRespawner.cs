@@ -12,12 +12,6 @@ public class PlayerAbyssRespawner : MonoBehaviourPunCallbacks
     [Header("定数")]
     [Tooltip("奈落判定を行う高さ")]
     [SerializeField] float PITFALL_COORDINATE = -25f;
-
-
-    UIManager uIManager;        //UI管理
-    SpawnManager spawnManager;  //スポーンマネージャー管理
-
-
     bool isRespawns = false;
 
     private void Awake()
@@ -28,12 +22,6 @@ public class PlayerAbyssRespawner : MonoBehaviourPunCallbacks
             //処理終了
             return;
         }
-
-        //タグからUIManagerを探す
-        uIManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
-
-        //タグからSpawnManagerを探す
-        spawnManager = GameObject.FindGameObjectWithTag("SpawnManager").GetComponent<SpawnManager>();
     }
 
 
@@ -61,9 +49,9 @@ public class PlayerAbyssRespawner : MonoBehaviourPunCallbacks
     public void AbyssRespawn()
     {
         //死亡関数を呼び出し
-        spawnManager.Die();
+        SpawnManager.instance.Die();
 
         //死亡UIを更新
-        uIManager.UpdateDeathUI();
+        UIManager.instance.UpdateDeathUI();
     }
 }

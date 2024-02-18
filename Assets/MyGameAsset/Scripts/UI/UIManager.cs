@@ -8,6 +8,9 @@ using UnityEngine.UI;
 /// </summary>
 public class UIManager : MonoBehaviour
 {
+    public static UIManager instance { get; private set; }
+
+
     [Header("参照")]
 
     [Tooltip("弾薬の所持数テキスト")]
@@ -46,6 +49,14 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] DashEffect dashEffect;
 
+
+    void Awake()
+    {
+        if(instance == null)
+            instance = this;
+        else
+            Destroy(instance);
+    }
 
     public void IsRunning()
     {
