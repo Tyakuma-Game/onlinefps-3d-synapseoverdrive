@@ -11,7 +11,6 @@ public class SpawnManager : MonoBehaviour
 
     [Header(" Settings ")]
     [SerializeField] float respawnInterval = 5f;
-    [SerializeField] float respawnDelay = 0.5f;
 
     [Header(" Elements ")]
     [SerializeField] Transform[] spawnPositions;
@@ -69,7 +68,6 @@ public class SpawnManager : MonoBehaviour
     {
         yield return new WaitForSeconds(respawnInterval);   // €–S‰‰o‚Ìˆ×‚Ì‘Ò‚¿ŠÔ
         PhotonNetwork.Destroy(playerInstance);
-        yield return new WaitForSeconds(respawnDelay);      // ”j‰óŠ®—¹‚Ìˆ×‚Ì‘Ò‚¿ŠÔ
         SpawnPlayer();
     }
 
