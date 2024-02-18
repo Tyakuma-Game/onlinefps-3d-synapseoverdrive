@@ -10724,7 +10724,7 @@ MonoBehaviour:
   playerStatus: {fileID: 5144562220326655556}
   minimap: {fileID: 565346299123876798}
   playerSoundManager: {fileID: 4336136826343351737}
-  cameraController: {fileID: 1228356572045506384}
+  cameraController: {fileID: 6629137861875794607}
   spawnEffect: {fileID: 1445560665835228500}
 --- !u!114 &957401455
 MonoBehaviour:
@@ -10739,7 +10739,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gunAnimator: {fileID: 1942873053}
-  cameraController: {fileID: 1228356572045506384}
+  cameraController: {fileID: 6629137861875794607}
   playerAnimator: {fileID: 8402002310179638983}
   hitEffect: {fileID: 311715243518430044, guid: bccf130cc6354c24880e283aa6ec5e91, type: 3}
   guns: []
@@ -10951,9 +10951,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 934038861596881044}
-  - component: {fileID: 1228356572045506384}
-  - component: {fileID: 796600846515467453}
-  - component: {fileID: 1940836328562076449}
+  - component: {fileID: 6629137861875794607}
   m_Layer: 0
   m_Name: ViewPoint
   m_TagString: Untagged
@@ -10977,7 +10975,7 @@ Transform:
   m_Father: {fileID: 934038861538154331}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1228356572045506384
+--- !u!114 &6629137861875794607
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10986,36 +10984,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 934038861596881045}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8ea5139e31666c4fbf99275240e7296, type: 3}
+  m_Script: {fileID: 11500000, guid: 25324bd9fbad1bf48b436ccfd465cdc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   CAMERA_APERTURE_BASE_FACTOR: 60
   viewPoint: {fileID: 934038861596881044}
   sabViewPoint: {fileID: 8899767638138654757}
---- !u!114 &796600846515467453
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 934038861596881045}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c047823b50883a4886b7f124ae79c64, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1940836328562076449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 934038861596881045}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c52e4c99ab06dad4fb86aba86e3f18ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &946906224654014236
 GameObject:
   m_ObjectHideFlags: 0

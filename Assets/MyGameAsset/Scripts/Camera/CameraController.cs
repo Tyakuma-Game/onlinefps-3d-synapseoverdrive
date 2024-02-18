@@ -1,13 +1,17 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
+using System;
+
+using Random = UnityEngine.Random;
 
 /// <summary>
 /// ƒJƒƒ‰‚ÉŠÖ‚·‚éˆ—‚ğ‚Ü‚Æ‚ß‚ÄŠÇ—‚·‚éƒNƒ‰ƒX
 /// </summary>
 public class CameraController : MonoBehaviour
 {
+    public static Action onZoom;
+    public static Action<Vector2> onGenerateRay;
+
     [Tooltip("ƒJƒƒ‰‚ÌŒ³‚Ìi‚è”{—¦")]
     [SerializeField] float CAMERA_APERTURE_BASE_FACTOR = 60f;
 
@@ -21,17 +25,10 @@ public class CameraController : MonoBehaviour
     Camera myCamera;
 
 
-    ICameraZoom cameraZoom;
-    ICameraRay cameraRay;
-
     void Start()
     {
         // ƒJƒƒ‰Ši”[
         myCamera = Camera.main;
-
-        // ˆ—æ“¾
-        cameraZoom = GetComponent<ICameraZoom>();
-        cameraRay = GetComponent<ICameraRay>();
     }
 
     /// <summary>
@@ -75,8 +72,6 @@ public class CameraController : MonoBehaviour
     }
 
     //|||||||||||||||||||||/
-
-    //|||||||||||||||||||||/
     // ‹“_‚Ì‰ñ“]—pProgram
     //|||||||||||||||||||||/
 
@@ -111,7 +106,7 @@ public class CameraController : MonoBehaviour
     /// <param name="adsSpeed">ƒY[ƒ€‘¬“x</param>
     public void GunZoomIn(float adsZoom,float adsSpeed)
     {
-        cameraZoom.GunZoomIn(myCamera,adsZoom,adsSpeed);
+        GunZoomIn(myCamera,adsZoom,adsSpeed);
     }
 
     /// <summary>
@@ -120,7 +115,7 @@ public class CameraController : MonoBehaviour
     /// <param name="adsSpeed">ƒY[ƒ€‘¬“x</param>
     public void GunZoomOut(float adsSpeed)
     {
-        cameraZoom.GunZoomOut(myCamera, CAMERA_APERTURE_BASE_FACTOR, adsSpeed);
+        GunZoomOut(myCamera, CAMERA_APERTURE_BASE_FACTOR, adsSpeed);
     }
 
     /// <summary>
@@ -131,6 +126,45 @@ public class CameraController : MonoBehaviour
     /// <returns>¶¬‚µ‚½Ray</returns>
     public Ray GenerateRay(Vector2 generationPos)
     {
-         return cameraRay.GenerateRay(myCamera, generationPos);
+         return GenerateRay(myCamera, generationPos);
+    }
+
+    /// <summary>
+    /// ƒJƒƒ‰‚©‚çêŠ‚ğw’è‚µ‚ÄRay‚ğ¶¬
+    /// </summary>
+    /// <param name="camera">¶¬‚·‚éƒJƒƒ‰</param>
+    /// <param name="generationPos">¶¬‚·‚éÀ•W</param>
+    /// <returns>¶¬‚µ‚½Ray</returns>
+    public Ray GenerateRay(Camera camera, Vector2 generationPos)
+    {
+        return camera.ViewportPointToRay(generationPos);
+    }
+
+
+    /// <summary>
+    /// ŠJn’n“_‚©‚ç™X‚ÉƒY[ƒ€‚·‚é
+    /// </summary>
+    /// <param name="camera">‘ÎÛ‚ÌƒJƒƒ‰</param>
+    /// <param name="adsZoom">ƒY[ƒ€”{—¦</param>
+    /// <param name="adsSpeed">ƒY[ƒ€‘¬“x</param>
+    public void GunZoomIn(Camera camera, float adsZoom, float adsSpeed)
+    {
+        camera.fieldOfView = Mathf.Lerp(
+            camera.fieldOfView,         //ŠJn’n“_
+            adsZoom,                    //–Ú“I’n“_
+            adsSpeed * Time.deltaTime); //•âŠ®”’l
+    }
+
+    /// <summary>
+    /// Œ³‚Ì’n“_‚É™X‚É–ß‚·
+    /// </summary>
+    /// <param name="camera">‘ÎÛ‚ÌƒJƒƒ‰</param>
+    /// <param name="adsSpeed">ƒY[ƒ€‘¬“x</param>
+    public void GunZoomOut(Camera camera, float CameraBaseFactor, float adsSpeed)
+    {
+        camera.fieldOfView = Mathf.Lerp(
+            camera.fieldOfView,         //ŠJn’n“_
+            CameraBaseFactor,           //–Ú“I’n“_
+            adsSpeed * Time.deltaTime); //•âŠ®”’l
     }
 }
