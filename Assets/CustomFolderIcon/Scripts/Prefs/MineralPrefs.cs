@@ -8,25 +8,28 @@ using UnityEditor;
 namespace Tabsil.Mineral
 {
     /// <summary>
-    /// エディタ拡張のための設定を管理するクラス
+    /// エディタ内で使用する設定データ管理クラス
     /// </summary>
     [InitializeOnLoad]
     public static class MineralPrefs
     {
-        const string CustomDataAssetName = "CustomFolderData";
+        const string DATA_ASSET_NAME = "CustomFolderData";
         static string dataPath;
         static Data dataObject;
 
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         static MineralPrefs()
         {
-            dataPath = GetAssetPath(CustomDataAssetName);
+            dataPath = GetAssetPath(DATA_ASSET_NAME);
             LoadData();
         }
 
         /// <summary>
-        /// アセットのパスを取得するメソッド
+        /// 指定されたアセット名に基づいてパス取得
         /// </summary>
-        /// <param name="assetName">アセットの名前</param>
+        /// <param name="assetName">アセット名</param>
         /// <returns>アセットのパス</returns>
         static string GetAssetPath(string assetName)
         {
@@ -44,69 +47,72 @@ namespace Tabsil.Mineral
         }
 
         /// <summary>
-        /// データの読み込み
+        /// データを読み込み
+        /// ・ファイルが存在しない場合は新規作成
         /// </summary>
         static void LoadData()
         {
-            if(!File.Exists(dataPath))
+            try
             {
-                // データファイル作成
-                FileStream fs = new FileStream(dataPath, FileMode.Create);
-                Data dataObject = new Data();
-
-                string data = JsonUtility.ToJson(dataObject);
-                byte[] dataBytes = Encoding.UTF8.GetBytes(data);
-
-                fs.Write(dataBytes);
-                fs.Close();
+                if (!File.Exists(dataPath))
+                {
+                    dataObject = new Data();
+                    SaveData();
+                }
+                else
+                {
+                    string data = File.ReadAllText(dataPath);
+                    dataObject = JsonUtility.FromJson<Data>(data);
+                }
             }
-            else
+            catch (System.Exception e)
             {
-                // データ読み取り
-                string data = File.ReadAllText(dataPath);
-
-                if(data.Length <= 0)
-                    return;
-
-                dataObject = JsonUtility.FromJson<Data>(data);
+                Debug.LogError("データの読み込みに失敗しました: " + e.Message);
             }
         }
 
         /// <summary>
         /// データ保存
-        /// </summary
+        /// </summary>
         static void SaveData()
         {
-            string data = JsonUtility.ToJson(dataObject, true);
-            File.WriteAllText(dataPath, data);
+            try
+            {
+                string data = JsonUtility.ToJson(dataObject, true);
+                File.WriteAllText(dataPath, data);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("データの保存に失敗しました: " + e.Message);
+            }
         }
 
         /// <summary>
-        /// 指定したキーに対応する文字列を取得
+        /// 指定したキーに対応する文字列取得
         /// </summary>
-        /// <param name="key">取得する値のキー</param>
-        /// <param name="defultValue">存在しなかった際に返す値</param>
-        /// <returns>キーに対応する値</returns>
-        public static string GetString(string key, string defultValue)
+        /// <param name="key">キー</param>
+        /// <param name="defaultValue">キーが存在しない場合のデフォルト値</param>
+        /// <returns>キーに対応する文字列、またはデフォルト値</returns>
+        public static string GetString(string key, string defaultValue)
         {
-            return dataObject.GetString(key, defultValue);
+            return dataObject.GetString(key, defaultValue);
         }
 
         /// <summary>
-        /// 指定したキーに対応する文字列を設定
+        /// 指定したキーと文字列設定
         /// </summary>
-        /// <param name="key">保存するキー</param>
-        /// <param name="value">保存する値</param>
-        public static void SetString(string key,string value)
+        /// <param name="key">キー</param>
+        /// <param name="value">設定する文字列</param>
+        public static void SetString(string key, string value)
         {
             dataObject.SetString(key, value);
             SaveData();
         }
 
         /// <summary>
-        /// 指定したキーに対応するデータの削除
+        /// 指定したキーに対応する文字列を削除
         /// </summary>
-        /// <param name="key">削除するキー</param>
+        /// <param name="key">キー</param>
         public static void DeleteKey(string key)
         {
             dataObject.DeleteKey(key);

@@ -18,7 +18,7 @@ namespace MiniMap
         [Header("Settings")]
         [SerializeField] float yPositionConstant = 0.0f;
         [SerializeField] float cameraIconDistance = 0.0f;
-        [SerializeField] float IconRotation = 90f;
+        [SerializeField] float iconRotation = 90f;
 
         [Header("Elements")]
         [SerializeField] Transform cameraTransform;
@@ -64,7 +64,7 @@ namespace MiniMap
 
             // アイコンの回転を更新
             targetRotation = targetTransform.eulerAngles;
-            iconTransform.eulerAngles = new Vector3(IconRotation, targetRotation.y, targetRotation.z);
+            iconTransform.eulerAngles = new Vector3(iconRotation, targetRotation.y, targetRotation.z);
         }
 
         // TODO:

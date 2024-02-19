@@ -39,7 +39,7 @@ namespace Tabsil.Mineral
             // オブジェクト選択が更新された場合、選択されたオブジェクトのGUIDを取得して保存
             if (Event.current.commandName == "ObjectSelectorUpdated" && EditorGUIUtility.GetObjectPickerControlID() == controlID)
             {
-                UnityEngine.Object selectedObject = EditorGUIUtility.GetObjectPickerObject();
+                Object selectedObject = EditorGUIUtility.GetObjectPickerObject();
 
                 string folderTextureGuid = AssetDatabase.GUIDFromAssetPath(AssetDatabase.GetAssetPath(selectedObject)).ToSafeString();
                 MineralPrefs.SetString(selectedFolderGuid, folderTextureGuid);

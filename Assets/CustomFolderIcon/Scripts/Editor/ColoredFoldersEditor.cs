@@ -11,15 +11,16 @@ namespace Tabsil.Mineral
     [InitializeOnLoad]
     static class ColoredFoldersEditor
     {
-        const string NoneIconGUID = "00000000000000000000000000000000";
-        const float SmallScaleOffset = 3f;
-        const float SmallScaleThreshold = 15f;
-        const float SmallScaleHeight = 30f;
-        const float DefaultBackgroundColor = .2f;
-        const float FirstColumnBackgroundColor = 0.22f;
+        const string NONE_ICON_GUID = "00000000000000000000000000000000";
+        const float SMALL_SCALE_OFFSET            = 3f;
+        const float SMALL_SCALE_THRESHOLD         = 15f;
+        const float SMALL_SCALE_HEIGHT            = 30f;
+        const float DEFAULT_BACKGROUND_COLOR      = 0.2f;
+        const float FIRST_COLUMN_BACKGROUND_COLOR = 0.22f;
 
-        static string iconName;
-
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
         static ColoredFoldersEditor()
         {
             // エディタのプロジェクトウィンドウアイテムの描画時にメソッドを呼び出し
@@ -40,7 +41,7 @@ namespace Tabsil.Mineral
             string iconGuid = MineralPrefs.GetString(guid, "");
 
             // 何も設定されていない　OR　Noneが設定されている
-            if (iconGuid == "" || iconGuid == NoneIconGUID)
+            if (iconGuid == "" || iconGuid == NONE_ICON_GUID)
                 return;
 
             // フォルダの背景色を描画
@@ -61,18 +62,18 @@ namespace Tabsil.Mineral
         static Rect GetFolderRect(Rect selectionRect, out Color backgroundColor)
         {
             Rect folderRect;
-            backgroundColor = new Color(DefaultBackgroundColor, DefaultBackgroundColor, DefaultBackgroundColor);
+            backgroundColor = new Color(DEFAULT_BACKGROUND_COLOR, DEFAULT_BACKGROUND_COLOR, DEFAULT_BACKGROUND_COLOR);
 
-            if (selectionRect.x < SmallScaleThreshold)
+            if (selectionRect.x < SMALL_SCALE_THRESHOLD)
             {
                 // 第二列、小さいスケール
-                folderRect = new Rect(selectionRect.x + SmallScaleOffset, selectionRect.y, selectionRect.height, selectionRect.height);
+                folderRect = new Rect(selectionRect.x + SMALL_SCALE_OFFSET, selectionRect.y, selectionRect.height, selectionRect.height);
             }
-            else if (selectionRect.x >= SmallScaleThreshold && selectionRect.height < SmallScaleHeight)
+            else if (selectionRect.x >= SMALL_SCALE_THRESHOLD && selectionRect.height < SMALL_SCALE_HEIGHT)
             {
                 // 第一列
                 folderRect = new Rect(selectionRect.x, selectionRect.y, selectionRect.height, selectionRect.height);
-                backgroundColor = new Color(FirstColumnBackgroundColor, FirstColumnBackgroundColor, FirstColumnBackgroundColor);
+                backgroundColor = new Color(FIRST_COLUMN_BACKGROUND_COLOR, FIRST_COLUMN_BACKGROUND_COLOR, FIRST_COLUMN_BACKGROUND_COLOR);
             }
             else
             {

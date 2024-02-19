@@ -30230,7 +30230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yPositionConstant: 90
   cameraIconDistance: 40
-  IconRotation: 90
+  iconRotation: 90
   cameraTransform: {fileID: 365789957}
   iconTransform: {fileID: 604147040}
 --- !u!1001 &2077161364

@@ -10,13 +10,15 @@ namespace Tabsil.Mineral
     /// </summary>
     static class MenuItems
     {
-        const int priority = 10000;
+        const int MENU_PRIORITY = 10000;
+        const string CUSTOM_ICON_MENU_PATH = "Assets/Custom Folder Icon/Custom Icon...";
+        const string RESET_ICON_MENU_PATH = "Assets/Custom Folder Icon/Reset Icon";
 
         /// <summary>
         /// カスタムアイコンを選択するメニュー項目
         /// </summary>
-        [MenuItem("Assets/Custom Folder Icon/Custom Icon...", false, priority + 11)]
-        static void Custom()
+        [MenuItem(CUSTOM_ICON_MENU_PATH, false, MENU_PRIORITY)]
+        static void SelectCustomIcon()
         {
             IconFoldersEditor.ChooseCustomIcon();
         }
@@ -24,8 +26,8 @@ namespace Tabsil.Mineral
         /// <summary>
         /// フォルダアイコンをリセットするメニュー項目
         /// </summary>
-        [MenuItem("Assets/Custom Folder Icon/Reset Icon", false, priority + 23)]
-        static void ResetIcon()
+        [MenuItem(RESET_ICON_MENU_PATH, false, MENU_PRIORITY + 1)]
+        static void ResetFolderIcon()
         {
             ColoredFoldersEditor.ResetFolderTexture();
         }
@@ -33,9 +35,9 @@ namespace Tabsil.Mineral
         /// <summary>
         /// フォルダメニュー項目の有効性を検証するメソッド
         /// </summary>
-        [MenuItem("Assets/Custom Folder Icon/Custom Icon...", true)]
-        [MenuItem("Assets/Custom Folder Icon/Reset Icon", true)]
-        static bool ValidateFolder()
+        [MenuItem(CUSTOM_ICON_MENU_PATH, true)]
+        [MenuItem(RESET_ICON_MENU_PATH, true)]
+        static bool IsFolderSelected()
         {
             // 選択されたオブジェクトが存在しない場合、メニュー項目を無効
             if (Selection.activeObject == null)
