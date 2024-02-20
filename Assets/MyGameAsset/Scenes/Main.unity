@@ -4798,7 +4798,7 @@ GameObject:
   m_Component:
   - component: {fileID: 375194868}
   m_Layer: 6
-  m_Name: Map_v1
+  m_Name: Map
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32062,6 +32062,18 @@ PrefabInstance:
     - target: {fileID: 934038861538154331, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2845792568705812789, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
+      propertyPath: m_Name
+      value: SniperRifle
+      objectReference: {fileID: 0}
+    - target: {fileID: 2894203302544579112, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
+      propertyPath: m_Name
+      value: AssaultRifle
+      objectReference: {fileID: 0}
+    - target: {fileID: 6332336700313584251, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
+      propertyPath: m_Name
+      value: HandGun
       objectReference: {fileID: 0}
     - target: {fileID: 8574140716887355001, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
       propertyPath: sceneViewId

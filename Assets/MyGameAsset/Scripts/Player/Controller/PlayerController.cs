@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [Tooltip("プレイヤーのステータス情報")]
     [SerializeField] PlayerStatus playerStatus;
 
-    [SerializeField] TestEnemyMinimap minimap;
+    [SerializeField] EnemyIconController enemyIcon;
 
     // Player機能
     [Tooltip("Playerの移動処理")]
@@ -51,7 +51,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
     IMouseCursorLock mouseCursorLock;
 
     Rigidbody myRigidbody;
-    Camera myCamera;
 
     [SerializeField] CameraController cameraController;
 
@@ -79,16 +78,15 @@ public class PlayerController : MonoBehaviourPunCallbacks
         //自分以外の場合は
         if (!photonView.IsMine)
         {
-            minimap.OnMinimap();
+            enemyIcon.SetIconVisibility(true);
             //処理終了
             return;
         }
-        minimap.NoMinimap();
+        enemyIcon.SetIconVisibility(false);
 
         MiniMapController.instance.SetMiniMapTarget(this.transform);
 
         myRigidbody = GetComponent<Rigidbody>();
-        myCamera = Camera.main;
 
         // 入力システム
         keyBoardInput = GetComponent<IKeyBoardInput>();

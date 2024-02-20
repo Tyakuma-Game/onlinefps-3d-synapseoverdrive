@@ -1,17 +1,11 @@
 using System.Collections;
 using UnityEngine;
-using System;
-
-using Random = UnityEngine.Random;
 
 /// <summary>
 /// カメラに関する処理をまとめて管理するクラス
 /// </summary>
 public class CameraController : MonoBehaviour
 {
-    public static Action onZoom;
-    public static Action<Vector2> onGenerateRay;
-
     [Tooltip("カメラの元の絞り倍率")]
     [SerializeField] float CAMERA_APERTURE_BASE_FACTOR = 60f;
 

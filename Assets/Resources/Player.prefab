@@ -10724,7 +10724,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunAnimator: {fileID: 1942873053}
   playerStatus: {fileID: 5144562220326655556}
-  minimap: {fileID: 565346299123876798}
+  enemyIcon: {fileID: 1477410576084713074}
   playerSoundManager: {fileID: 4336136826343351737}
   cameraController: {fileID: 6629137861875794607}
   spawnEffect: {fileID: 1445560665835228500}
@@ -107015,7 +107015,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5582346359163521122}
   - component: {fileID: 2657230255500317103}
-  - component: {fileID: 565346299123876798}
+  - component: {fileID: 1477410576084713074}
   m_Layer: 7
   m_Name: EnemyIcon
   m_TagString: Untagged
@@ -107091,7 +107091,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &565346299123876798
+--- !u!114 &1477410576084713074
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107100,12 +107100,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6624567064914251952}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dabde05c619c0054495637368c0e4f00, type: 3}
+  m_Script: {fileID: 11500000, guid: cbfdcf0e8f803fc49938a5619653a646, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  yPositionConstant: 50
-  iconObject: {fileID: 6624567064914251952}
-  targetTransform: {fileID: 934038861538154331}
+  iconElevation: 50
+  icon: {fileID: 6624567064914251952}
+  enemyTransform: {fileID: 934038861538154331}
 --- !u!1 &6625730489939511001
 GameObject:
   m_ObjectHideFlags: 0

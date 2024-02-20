@@ -11,6 +11,7 @@ public class GunStatus : MonoBehaviour
     //|||||||||||||||||||||/
     // ’è”
     //|||||||||||||||||||||/
+
     [Header("’è”")]
     [Tooltip("ËŒ‚ŠÔŠu")]
     [SerializeField] float shootInterval = 0.1f;
@@ -24,6 +25,8 @@ public class GunStatus : MonoBehaviour
     [Tooltip("”`‚«‚İ‚Ì‘¬“x")]
     [SerializeField] float adsSpeed;
 
+
+    /* ƒp[ƒeƒBƒNƒ‹‚ç‚Ö‚ñ‚ÍƒAƒjƒ[ƒVƒ‡ƒ“‚É‘g‚İ‚ŞŒ`‚Ä‚©‚È‚èŒø—¦‰»o—ˆ‚éI@‚±‚ê‚Åæ‚è‚ ‚¦‚¸AŒø—¦‰»‚µ‚Ä‚±‚ÌScript‚ğ”jŠü‚·‚éŠ´‚¶‚Å—Ç‚³‚°I */
 
     //|||||||||||||||||||||/
     // QÆ
