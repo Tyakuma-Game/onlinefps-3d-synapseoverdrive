@@ -10,6 +10,7 @@ public class SpawnManager : MonoBehaviour
     public static SpawnManager instance { get; private set; }
 
     [Header(" Settings ")]
+    [SerializeField] Transform parentObject;
     [SerializeField] float respawnInterval = 5f;
 
     [Header(" Elements ")]
@@ -45,12 +46,16 @@ public class SpawnManager : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーをネットワーク上に生成し、位置を設定
+    /// プレイヤーをネットワーク上に生成し、位置と親を設定
     /// </summary>
     public void SpawnPlayer()
     {
         Transform spawnPoint = GetRandomSpawnPoint();
         playerInstance = PhotonNetwork.Instantiate(playerPrefab.name, spawnPoint.position, spawnPoint.rotation);
+        
+        //親オブジェクト設定
+        if (parentObject != null)
+            playerInstance.transform.SetParent(parentObject, false);
     }
 
     /// <summary>

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace MiniMap
@@ -10,12 +9,12 @@ namespace MiniMap
     {
         public static MiniMapController instance { get; private set; }
 
-        [Header("Settings")]
+        [Header(" Settings ")]
         [SerializeField] float yPositionConstant = 0.0f;
         [SerializeField] float cameraIconDistance = 0.0f;
         [SerializeField] float iconRotation = 90f;
 
-        [Header("Elements")]
+        [Header(" Elements ")]
         [SerializeField] Transform cameraTransform;
         [SerializeField] Transform iconTransform;
 

@@ -10740,6 +10740,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcaa89413759cd94781b4cbba12d93e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gunAnimator: {fileID: 1942873053}
+  cameraController: {fileID: 6629137861875794607}
+  playerAnimator: {fileID: 8402002310179638983}
   gunDates:
   - {fileID: 11400000, guid: fc33b801ecd4310429278decc1331ebf, type: 2}
   - {fileID: 11400000, guid: d197bb284263f0d4db125fcb0e4fdb92, type: 2}
@@ -10748,13 +10751,10 @@ MonoBehaviour:
   - {fileID: 6332336700313584251}
   - {fileID: 2894203302544579112}
   - {fileID: 2845792568705812789}
-  OtherGunsHolder:
+  otherGunsHolder:
   - {fileID: 2538743549021359465}
   - {fileID: 3589145521329389154}
   - {fileID: 8300119068142589835}
-  gunAnimator: {fileID: 1942873053}
-  cameraController: {fileID: 6629137861875794607}
-  playerAnimator: {fileID: 8402002310179638983}
 --- !u!114 &1087863930571978241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53932,7 +53932,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2894203302544213512
 Transform:
   m_ObjectHideFlags: 0
