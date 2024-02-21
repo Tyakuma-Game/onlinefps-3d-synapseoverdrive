@@ -4,6 +4,13 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Pun.Demo.PunBasics;
 
+enum GunType
+{
+    HandGun,
+    AssaultRifle,
+    SniperRifle
+}
+
 /// <summary>
 /// プレイヤーの銃管理クラス
 /// </summary>
@@ -15,9 +22,15 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     [Tooltip("Playerの視点に関するクラス")]
     [SerializeField] CameraController cameraController;
 
-    [SerializeField] PlayerAnimator playerAnimator;
+    [SerializeField] PlayerAnimator playerAnimator; // Callbackを使用する感じでリファクタリングする！
 
     //－－－－－－－－－－－－－－－－－－－－－/
+
+    [Tooltip(" 銃のStatus管理スクリタブオブジェクト ")]
+    [SerializeField] GunData[] gunDates;
+    GunType selectedGunType = GunType.HandGun;
+
+
 
     [Header("銃関連")]
     [Tooltip("被弾時のエフェクト")]
@@ -31,9 +44,6 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
 
     [Tooltip("銃ホルダー 相手視点用")]
     [SerializeField] GunStatus[] OtherGunsHolder;
-
-    
-
 
     int selectedGun = 0;                                //選択中の武器管理用数値
     float shotTimer;                                    //射撃間隔
@@ -115,7 +125,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         }
 
         //弾薬テキスト更新
-        UIManager.instance.SettingBulletsText(GetGunAmmoClipMax(),ammoClip[selectedGun], ammunition[selectedGun]);
+        UIManager.instance.SettingBulletsText(GetGunAmmoClipMax(),ammoClip[selectedGun], ammunition[selectedGun]);  // これ無駄だから、UIを更新する関数を作って銃発射とかでこうしんする！
     }
 
     /// <summary>
@@ -244,7 +254,8 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
             if (ammoClip[selectedGun] == 0)
             {
                 // 弾切れの音を鳴らす
-                photonView.RPC("NotShotSound", RpcTarget.All);
+                // アニメーションを使用する方法に分ける
+                //photonView.RPC("NotShotSound", RpcTarget.All);
 
                 // オートリロード
                 Reload();
@@ -258,52 +269,6 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         }
     }
 
-    // 弾切れ音処理
-    [PunRPC]
-    void NotShotSound()
-    {
-        //　効果音再生
-        guns[selectedGun].GetNotShotSE().Stop();
-        guns[selectedGun].GetNotShotSE().Play();
-    }
-
-
-    // 発砲時のエフェクト処理
-    [PunRPC]
-    void ShotEffect()
-    {
-        //　効果音の再生
-        guns[selectedGun].GetShotSE().Stop();
-        guns[selectedGun].GetShotSE().Play();
-
-        //　光を表示
-        guns[selectedGun].GetShotLight().enabled = false;
-        guns[selectedGun].GetShotLight().enabled = true;
-
-        // 発射エフェクトを表示
-        guns[selectedGun].ShotEffectNotActive();
-        guns[selectedGun].ActiveShotEffect();
-
-        //　コルーチンで消す処理を実行
-        StartCoroutine(DisableLight());
-        StartCoroutine(DisableEffect());
-
-        //　銃のEffectを消す
-        IEnumerator DisableEffect()
-        {
-            yield return new WaitForSeconds(0.1f);
-            guns[selectedGun].ShotEffectNotActive();
-        }
-
-        //　ライトを消す処理
-        IEnumerator DisableLight()
-        {
-            yield return new WaitForSeconds(0.1f);
-            guns[selectedGun].GetShotLight().enabled = false;
-        }
-    }
-
-
     /// <summary>
     /// 弾丸の発射
     /// </summary>
@@ -316,7 +281,8 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         playerAnimator.Attack(AttackType.Short);
 
         // Effectを散らす
-        photonView.RPC("ShotEffect", RpcTarget.All);
+        // アニメーションを呼び出す感じにする！
+        //photonView.RPC("ShotEffect", RpcTarget.All);
 
         //Ray(光線)をカメラの中央から設定
         Vector2 pos = new Vector2(.5f, .5f);
@@ -340,13 +306,13 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
             }
             else
             {
-                //弾痕エフェクト生成 
-                GameObject bulletImpactObject = Instantiate(guns[selectedGun].GetHitEffect(),
-                    hit.point + (hit.normal * .002f),                   //オブジェクトから少し浮かしてちらつき防止
-                    Quaternion.LookRotation(hit.normal, Vector3.up));   //直角の方向を返してその方向に回転させる
+                ////弾痕エフェクト生成 
+                //GameObject bulletImpactObject = Instantiate(guns[selectedGun].GetHitEffect(),
+                //    hit.point + (hit.normal * .002f),                   //オブジェクトから少し浮かしてちらつき防止
+                //    Quaternion.LookRotation(hit.normal, Vector3.up));   //直角の方向を返してその方向に回転させる
 
-                //時間経過で削除
-                Destroy(bulletImpactObject, 10f);
+                ////時間経過で削除
+                //Destroy(bulletImpactObject, 10f);
             }
         }
 

@@ -26,29 +26,6 @@ public class GunStatus : MonoBehaviour
     [SerializeField] float adsSpeed;
 
 
-    /* ƒp[ƒeƒBƒNƒ‹‚ç‚Ö‚ñ‚ÍƒAƒjƒ[ƒVƒ‡ƒ“‚É‘g‚İ‚ŞŒ`‚Ä‚©‚È‚èŒø—¦‰»o—ˆ‚éI@‚±‚ê‚Åæ‚è‚ ‚¦‚¸AŒø—¦‰»‚µ‚Ä‚±‚ÌScript‚ğ”jŠü‚·‚éŠ´‚¶‚Å—Ç‚³‚°I */
-
-    //|||||||||||||||||||||/
-    // QÆ
-    //|||||||||||||||||||||/
-    [Header("QÆ")]
-    [SerializeField] AudioSource shotSE;    //@”­–C‰¹
-    [SerializeField] AudioSource notShotSE; //@’eØ‚ê
-    [SerializeField] Light shotLight;       //@”­–C‚ÌeŒõ
-    [SerializeField] GameObject shotEffect; //@”­–C‚Ìƒp[ƒeƒBƒNƒ‹
-    [SerializeField] GameObject hitEffect;  //@’e‚ª“–‚½‚Á‚½‚Ìƒp[ƒeƒBƒNƒ‹
-
-    public void ActiveShotEffect()
-    {
-        shotEffect.SetActive(true);
-    }
-
-    public void ShotEffectNotActive()
-    {
-        shotEffect.SetActive(false);
-    }
-
-
 
     //|||||||||||||||||||||/
     // ƒQƒbƒ^[
@@ -86,44 +63,4 @@ public class GunStatus : MonoBehaviour
         get { return adsSpeed; }
     }
 
-    /// <summary>
-    /// e‚Ì”­–C‰¹‚ğæ“¾
-    /// </summary>
-    /// <returns>e‚Ì”­–C‰¹</returns>
-    public AudioSource GetShotSE()
-    {
-        return shotSE;
-    }
-
-    public AudioSource GetNotShotSE()
-    {
-        return notShotSE;
-    }
-
-    /// <summary>
-    /// e”­Ë‚Ì‰‰o—pƒ‰ƒCƒg‚ğæ“¾
-    /// </summary>
-    /// <returns>e”­Ë‚Ì‰‰o—pƒ‰ƒCƒg</returns>
-    public Light GetShotLight()
-    {
-        return shotLight;
-    }
-
-    /// <summary>
-    /// e”­–C‚ÌƒGƒtƒFƒNƒg‚ğæ“¾
-    /// </summary>
-    /// <returns>e”­–C‚ÌƒGƒtƒFƒNƒg</returns>
-    public GameObject GetShotEffect()
-    {
-        return shotEffect;
-    }
-
-    /// <summary>
-    /// ’e’…’e‚ÌEffect‚ğæ“¾
-    /// </summary>
-    /// <returns>’e’…’e‚ÌEffect</returns>
-    public GameObject GetHitEffect()
-    {
-        return hitEffect;
-    }
 }

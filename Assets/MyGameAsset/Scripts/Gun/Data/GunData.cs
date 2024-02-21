@@ -18,6 +18,11 @@ public class GunData : ScriptableObject
     [SerializeField] float adsZoom          = 2.0f;
     [SerializeField] float adsSpeed         = 0.5f;
 
+    [Header("エフェクト関連")]
+    [SerializeField] GameObject playerHitEffect;
+    [SerializeField] GameObject nonPlayerHitEffect;
+
+
     /// <summary>
     /// 所持弾薬数の最大数
     /// </summary>
@@ -65,4 +70,14 @@ public class GunData : ScriptableObject
     /// 照準の動作速度
     /// </summary>
     public float AdsSpeed => adsSpeed;
+
+    /// <summary>
+    /// プレイヤーに弾が当った際に生成するエフェクト
+    /// </summary>
+    public GameObject PlayerHitEffect => playerHitEffect;
+
+    /// <summary>
+    /// プレイヤーではないオブジェクトに弾が当った際に生成するエフェクト
+    /// </summary>
+    public GameObject NonPlayerHitEffect => nonPlayerHitEffect;
 }

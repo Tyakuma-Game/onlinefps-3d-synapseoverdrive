@@ -6,6 +6,8 @@ using UnityEngine;
 /// </summary>
 public class CameraController : MonoBehaviour
 {
+    public static CameraController instance;
+
     [Tooltip("カメラの元の絞り倍率")]
     [SerializeField] float CAMERA_APERTURE_BASE_FACTOR = 60f;
 
@@ -18,6 +20,13 @@ public class CameraController : MonoBehaviour
     // 操作するカメラオブジェクト
     Camera myCamera;
 
+    void Awake()
+    {
+        if(instance == null)
+            instance = this;
+        else 
+            Destroy(gameObject);
+    }
 
     void Start()
     {
