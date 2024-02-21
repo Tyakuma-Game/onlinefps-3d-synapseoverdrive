@@ -11,8 +11,9 @@ namespace Tabsil.Mineral
     static class MenuItems
     {
         const int MENU_PRIORITY = 10000;
-        const string CUSTOM_ICON_MENU_PATH = "Assets/Custom Folder Icon/Custom Icon...";
-        const string RESET_ICON_MENU_PATH = "Assets/Custom Folder Icon/Reset Icon";
+        const string BASE_PATH = "Assets/Custom Folder Icon/";
+        const string CUSTOM_ICON_MENU_PATH = BASE_PATH + "Custom Icon...";
+        const string RESET_ICON_MENU_PATH =  BASE_PATH + "Reset Icon";
 
         /// <summary>
         /// カスタムアイコンを選択するメニュー項目
