@@ -10622,7 +10622,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &934038861538154331
 Transform:
   m_ObjectHideFlags: 0
@@ -10740,23 +10740,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcaa89413759cd94781b4cbba12d93e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gunDates:
+  - {fileID: 11400000, guid: fc33b801ecd4310429278decc1331ebf, type: 2}
+  - {fileID: 11400000, guid: d197bb284263f0d4db125fcb0e4fdb92, type: 2}
+  - {fileID: 11400000, guid: c8f191b0ac24ba242bdccfce79e2981e, type: 2}
+  gunsHolder:
+  - {fileID: 6332336700313584251}
+  - {fileID: 2894203302544579112}
+  - {fileID: 2845792568705812789}
+  OtherGunsHolder:
+  - {fileID: 2538743549021359465}
+  - {fileID: 3589145521329389154}
+  - {fileID: 8300119068142589835}
   gunAnimator: {fileID: 1942873053}
   cameraController: {fileID: 6629137861875794607}
   playerAnimator: {fileID: 8402002310179638983}
-  hitEffect: {fileID: 311715243518430044, guid: bccf130cc6354c24880e283aa6ec5e91, type: 3}
-  guns: []
-  gunsHolder:
-  - {fileID: 3877678876301189193}
-  - {fileID: 8171952539655643316}
-  - {fileID: 8986211473550501277}
-  OtherGunsHolder:
-  - {fileID: 1170606751133572208}
-  - {fileID: 2115056984854896856}
-  - {fileID: 7458785299418377086}
-  ammunition: 320000001400000064000000
-  maxAmmunition: 320000001400000064000000
-  ammoClip: 060000000200000018000000
-  maxAmmoClip: 060000000200000018000000
 --- !u!114 &1087863930571978241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37568,12 +37566,12 @@ GameObject:
   - component: {fileID: 4423824014765238742}
   - component: {fileID: 3293656291144565037}
   m_Layer: 0
-  m_Name: FiredPistol
+  m_Name: Fired_HandGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4423824014765238742
 Transform:
   m_ObjectHideFlags: 0
@@ -37600,7 +37598,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: f6d1241330a3c8345887914d2de6bcd5, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -52954,11 +52952,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2535895318125669665}
-  - component: {fileID: 1170606751133572208}
   - component: {fileID: 3273111573809817876}
   - component: {fileID: 1921921018206414350}
   m_Layer: 0
-  m_Name: Pistol
+  m_Name: HandGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -52985,27 +52982,6 @@ Transform:
   m_Father: {fileID: 5289365913584296004}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -14.717, y: 86.571, z: 90.947}
---- !u!114 &1170606751133572208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2538743549021359465}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35ba0329a62bc064caf4b064d22483ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootInterval: 0.1
-  shotDamage: 10
-  adsZoom: 30
-  adsSpeed: 10
-  shotSE: {fileID: 3273111573809817876}
-  notShotSE: {fileID: 1921921018206414350}
-  shotLight: {fileID: 4419606020764790369}
-  shotEffect: {fileID: 2224151264343612216}
-  hitEffect: {fileID: 1539499003249960569, guid: a6714671b3126564c9840153544ba687, type: 3}
 --- !u!82 &3273111573809817876
 AudioSource:
   m_ObjectHideFlags: 0
@@ -53642,12 +53618,12 @@ GameObject:
   - component: {fileID: 277505063381004893}
   - component: {fileID: 5786617977285078693}
   m_Layer: 0
-  m_Name: FiredShotgun
+  m_Name: Fired_SniperRifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &277505063381004893
 Transform:
   m_ObjectHideFlags: 0
@@ -53674,7 +53650,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: df3c4d0a3ec86514b86d2495f0a5c11e, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -53866,7 +53842,6 @@ GameObject:
   - component: {fileID: 2845792568706307349}
   - component: {fileID: 2845792568705013045}
   - component: {fileID: 2845792568703883253}
-  - component: {fileID: 8171952539655643316}
   m_Layer: 0
   m_Name: SniperRifle
   m_TagString: Untagged
@@ -53940,27 +53915,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8171952539655643316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2845792568705812789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35ba0329a62bc064caf4b064d22483ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootInterval: 1
-  shotDamage: 50
-  adsZoom: 30
-  adsSpeed: 5
-  shotSE: {fileID: 0}
-  notShotSE: {fileID: 0}
-  shotLight: {fileID: 301228723685741276}
-  shotEffect: {fileID: 970126711699885283}
-  hitEffect: {fileID: 6833913590222466750, guid: fb43f82835c452a40be08d45221b1fca, type: 3}
 --- !u!1 &2894203302544579112
 GameObject:
   m_ObjectHideFlags: 0
@@ -53972,7 +53926,6 @@ GameObject:
   - component: {fileID: 2894203302544213512}
   - component: {fileID: 2894203302543443496}
   - component: {fileID: 2894203302542312680}
-  - component: {fileID: 8986211473550501277}
   m_Layer: 0
   m_Name: AssaultRifle
   m_TagString: Untagged
@@ -54047,27 +54000,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8986211473550501277
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2894203302544579112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35ba0329a62bc064caf4b064d22483ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootInterval: 0.1
-  shotDamage: 5
-  adsZoom: 35
-  adsSpeed: 7
-  shotSE: {fileID: 0}
-  notShotSE: {fileID: 0}
-  shotLight: {fileID: 0}
-  shotEffect: {fileID: 647342204528026816}
-  hitEffect: {fileID: 1539499003249960569, guid: a6714671b3126564c9840153544ba687, type: 3}
 --- !u!1 &2894931274562307755
 GameObject:
   m_ObjectHideFlags: 0
@@ -64323,11 +64255,10 @@ GameObject:
   - component: {fileID: 3589145521329152578}
   - component: {fileID: 3589145521332576866}
   - component: {fileID: 3589145521331576994}
-  - component: {fileID: 7458785299418377086}
   - component: {fileID: 5925471748340544662}
   - component: {fileID: 6930390711997990719}
   m_Layer: 0
-  m_Name: Assault
+  m_Name: AssaultRifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64400,27 +64331,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &7458785299418377086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3589145521329389154}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35ba0329a62bc064caf4b064d22483ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootInterval: 0.1
-  shotDamage: 10
-  adsZoom: 35
-  adsSpeed: 7
-  shotSE: {fileID: 5925471748340544662}
-  notShotSE: {fileID: 6930390711997990719}
-  shotLight: {fileID: 4128987865131521931}
-  shotEffect: {fileID: 5339024431284466184}
-  hitEffect: {fileID: 1539499003249960569, guid: a6714671b3126564c9840153544ba687, type: 3}
 --- !u!82 &5925471748340544662
 AudioSource:
   m_ObjectHideFlags: 0
@@ -65387,7 +65297,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5072095755113558898
 Transform:
   m_ObjectHideFlags: 0
@@ -85792,12 +85702,12 @@ GameObject:
   - component: {fileID: 4063153507868466230}
   - component: {fileID: 1798814158115361569}
   m_Layer: 0
-  m_Name: FiredAssault
+  m_Name: Fired_AssaultRifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4063153507868466230
 Transform:
   m_ObjectHideFlags: 0
@@ -85824,7 +85734,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: d9a5492b6989fe74bad4e404a1156907, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 0.1
   m_Pitch: 1
   Loop: 0
@@ -96654,7 +96564,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6335113562944643635}
-  - component: {fileID: 3877678876301189193}
   m_Layer: 0
   m_Name: HandGun
   m_TagString: Untagged
@@ -96683,27 +96592,6 @@ Transform:
   m_Father: {fileID: 934038861093226652}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3877678876301189193
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6332336700313584251}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35ba0329a62bc064caf4b064d22483ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootInterval: 0.3
-  shotDamage: 10
-  adsZoom: 30
-  adsSpeed: 10
-  shotSE: {fileID: 0}
-  notShotSE: {fileID: 0}
-  shotLight: {fileID: 5653366447041561999}
-  shotEffect: {fileID: 8062606995668941744}
-  hitEffect: {fileID: 1539499003249960569, guid: a6714671b3126564c9840153544ba687, type: 3}
 --- !u!1 &6332498835462225255
 GameObject:
   m_ObjectHideFlags: 0
@@ -122620,11 +122508,10 @@ GameObject:
   - component: {fileID: 8300119068142357419}
   - component: {fileID: 8300119068143651723}
   - component: {fileID: 8300119068144781643}
-  - component: {fileID: 2115056984854896856}
   - component: {fileID: 7724615336038556419}
   - component: {fileID: 5671135800180120030}
   m_Layer: 0
-  m_Name: Shotgun
+  m_Name: SniperRifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -122696,27 +122583,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2115056984854896856
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8300119068142589835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35ba0329a62bc064caf4b064d22483ba, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shootInterval: 0.1
-  shotDamage: 50
-  adsZoom: 30
-  adsSpeed: 5
-  shotSE: {fileID: 7724615336038556419}
-  notShotSE: {fileID: 5671135800180120030}
-  shotLight: {fileID: 1323278409196999288}
-  shotEffect: {fileID: 801218106318937135}
-  hitEffect: {fileID: 6833913590222466750, guid: fb43f82835c452a40be08d45221b1fca, type: 3}
 --- !u!82 &7724615336038556419
 AudioSource:
   m_ObjectHideFlags: 0
@@ -123019,7 +122885,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4791998689495434712
 Transform:
   m_ObjectHideFlags: 0
@@ -123046,7 +122912,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 60c1ae6f9cb6ab04b91e837c0cfa02f0, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

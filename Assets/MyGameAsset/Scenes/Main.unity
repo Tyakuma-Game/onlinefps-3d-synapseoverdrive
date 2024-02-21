@@ -4441,7 +4441,7 @@ GameObject:
   - component: {fileID: 365789957}
   - component: {fileID: 365789956}
   m_Layer: 7
-  m_Name: MiniMapCamera
+  m_Name: MiniMap Camera
   m_TagString: MiniMapCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7591,7 +7591,7 @@ GameObject:
   - component: {fileID: 604147040}
   - component: {fileID: 604147039}
   m_Layer: 7
-  m_Name: CharacterIcon
+  m_Name: Character Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8040,7 +8040,7 @@ GameObject:
   - component: {fileID: 618949662}
   - component: {fileID: 618949661}
   m_Layer: 0
-  m_Name: SpawnManager
+  m_Name: Spawn Manager
   m_TagString: SpawnManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8086,7 +8086,7 @@ Transform:
   - {fileID: 1671929022}
   - {fileID: 1825337061}
   m_Father: {fileID: 1805891901}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &622827775
 PrefabInstance:
@@ -16270,7 +16270,7 @@ GameObject:
   - component: {fileID: 1156527970}
   - component: {fileID: 1156527969}
   m_Layer: 0
-  m_Name: MainCamera
+  m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22916,7 +22916,7 @@ GameObject:
   - component: {fileID: 1608236343}
   - component: {fileID: 1608236344}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: Game Manager
   m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22935,7 +22935,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1805891901}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1608236343
 MonoBehaviour:
@@ -23257,6 +23257,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4000012588882868, guid: 55096903922d4314698414d961ceac0c, type: 3}
   m_PrefabInstance: {fileID: 1625518134}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1631498377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1631498378}
+  m_Layer: 0
+  m_Name: Camera Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1631498378
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1631498377}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1805891901}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1634648797
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26112,6 +26143,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1631498378}
   - {fileID: 618949662}
   - {fileID: 1608236342}
   m_Father: {fileID: 0}
@@ -32011,17 +32043,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1687885277}
     m_Modifications:
-    - target: {fileID: 261755472107003918, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
-      propertyPath: sceneViewId
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 934038861538154322, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 934038861538154322, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 934038861538154331, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
       propertyPath: m_RootOrder
@@ -32066,34 +32090,6 @@ PrefabInstance:
     - target: {fileID: 934038861538154331, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2845792568705812789, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
-      propertyPath: m_Name
-      value: SniperRifle
-      objectReference: {fileID: 0}
-    - target: {fileID: 2845792568705812789, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2894203302544579112, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
-      propertyPath: m_Name
-      value: AssaultRifle
-      objectReference: {fileID: 0}
-    - target: {fileID: 2894203302544579112, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6332336700313584251, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
-      propertyPath: m_Name
-      value: HandGun
-      objectReference: {fileID: 0}
-    - target: {fileID: 6332336700313584251, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8574140716887355001, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
-      propertyPath: sceneViewId
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}

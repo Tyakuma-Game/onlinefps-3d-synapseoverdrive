@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using Photon.Pun.Demo.PunBasics;
+using System;
 
 enum GunType
 {
@@ -16,66 +16,61 @@ enum GunType
 /// </summary>
 public class PlayerGunController : MonoBehaviourPunCallbacks
 {
+    [Header(" 銃毎のステータス ")]
+    [SerializeField] GunData[] gunDates;
+    GunType selectedGunType = GunType.HandGun;
+    List<int> ammunition = new List<int>();    // 現在の所持弾薬
+    List<int> ammoClip = new List<int>();      // マガジン内の弾薬
+
+
+    [Header(" 銃の見た目 ")]
+    [Tooltip("自分視点用")]
+    [SerializeField] GameObject[] gunsHolder;
+
+    [Tooltip("相手視点用")]
+    [SerializeField] GameObject[] OtherGunsHolder;
+
+    //－－－－－－－－－－－－－－－－－－－－－/
+
+    // これはアクションに統合する感じで将来的に修正する
     [SerializeField] Animator gunAnimator;
 
     [Header("参照")]
     [Tooltip("Playerの視点に関するクラス")]
     [SerializeField] CameraController cameraController;
-
     [SerializeField] PlayerAnimator playerAnimator; // Callbackを使用する感じでリファクタリングする！
 
     //－－－－－－－－－－－－－－－－－－－－－/
 
-    [Tooltip(" 銃のStatus管理スクリタブオブジェクト ")]
-    [SerializeField] GunData[] gunDates;
-    GunType selectedGunType = GunType.HandGun;
+    List<GameObject> guns = new List<GameObject>();     // 銃Data管理用    
+    float shotTimer;                                    // 射撃間隔
 
-
-
-    [Header("銃関連")]
-    [Tooltip("被弾時のエフェクト")]
-    [SerializeField] GameObject hitEffect;
-
-    [Tooltip("銃の管理配列")]
-    [SerializeField] List<GunStatus> guns = new List<GunStatus>();
     
-    [Tooltip("銃ホルダー 自分視点用")]
-    [SerializeField] GunStatus[] gunsHolder;
-
-    [Tooltip("銃ホルダー 相手視点用")]
-    [SerializeField] GunStatus[] OtherGunsHolder;
-
-    int selectedGun = 0;                                //選択中の武器管理用数値
-    float shotTimer;                                    //射撃間隔
-
-    [Tooltip("所持弾薬")]
-    [SerializeField] int[] ammunition;
-
-    [Tooltip("最高所持弾薬数")]
-    [SerializeField] int[] maxAmmunition;
-
-    [Tooltip("マガジン内の弾数")]
-    [SerializeField] int[] ammoClip;
-
-    [Tooltip("マガジンに入る最大の数")]
-    [SerializeField] int[] maxAmmoClip;
-
     void Start()
     {
         //自分なのか
         if (photonView.IsMine)
         {
             //銃の数分ループ
-            foreach (GunStatus gun in gunsHolder)
+            foreach (GameObject gun in gunsHolder)
             {
                 //リストに追加
                 guns.Add(gun);
+            }
+
+            // GunDataの数だけループして、各銃の弾薬を初期化
+            foreach (var gun in gunDates)
+            {
+                // 所持弾薬を最大に
+                ammunition.Add(gun.MaxAmmunition);
+                // マガジン内弾薬を最大に
+                ammoClip.Add(gun.MaxAmmoClip);
             }
         }
         else//他人だったらOtherGunsHolderを表示
         {
             //銃の数分ループ
-            foreach (GunStatus gun in OtherGunsHolder)
+            foreach (GameObject gun in OtherGunsHolder)
             {
                 //リストに追加
                 guns.Add(gun);
@@ -109,23 +104,8 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
             Reload();
 
         //弾薬テキスト更新
-        UIManager.instance.SettingBulletsText(GetGunAmmoClipMax(), GetGunAmmoClip(), GetGunAmmunition());
-    }
-
-    /// <summary>
-    /// 設定時間毎に実行
-    /// </summary>
-    void FixedUpdate()
-    {
-        //自分以外なら
-        if (!photonView.IsMine)
-        {
-            //処理終了
-            return;
-        }
-
-        //弾薬テキスト更新
-        UIManager.instance.SettingBulletsText(GetGunAmmoClipMax(),ammoClip[selectedGun], ammunition[selectedGun]);  // これ無駄だから、UIを更新する関数を作って銃発射とかでこうしんする！
+        UIManager.instance.SettingBulletsText(gunDates[(int)selectedGunType].MaxAmmoClip,
+            ammoClip[(int)selectedGunType], ammunition[(int)selectedGunType]);
     }
 
     /// <summary>
@@ -136,35 +116,35 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         if (Input.GetAxisRaw("Mouse ScrollWheel") > 0f)
         {
             //扱う銃を管理する数値を増やす
-            selectedGun++;
+            selectedGunType++;
 
             //リストより大きな数値になれば０に戻す
-            if (selectedGun >= guns.Count)
+            if ((int)selectedGunType >= Enum.GetValues(typeof(GunType)).Length)
             {
-                selectedGun = 0;
+                selectedGunType = GunType.HandGun;
             }
 
             // アニメーション
             gunAnimator.SetTrigger("WeaponChange");
 
             //銃の切り替え（ルーム内のプレイヤー全員呼び出し）
-            photonView.RPC("SetGun", RpcTarget.All, selectedGun);
+            photonView.RPC("SetGun", RpcTarget.All, (int)selectedGunType);
         }
         else if (Input.GetAxisRaw("Mouse ScrollWheel") < 0f)
         {
             //扱う銃を管理する数値を減らす
-            selectedGun--;
+            selectedGunType--;
 
             //0より小さければリストの最大数－１の数値に設定
-            if (selectedGun < 0)
+            if (selectedGunType < 0)
             {
-                selectedGun = guns.Count - 1;
+                selectedGunType = (GunType)guns.Count - 1;
             }
             // アニメーション
             gunAnimator.SetTrigger("WeaponChange");
 
             //銃の切り替え（ルーム内のプレイヤー全員呼び出し）
-            photonView.RPC("SetGun", RpcTarget.All, selectedGun);
+            photonView.RPC("SetGun", RpcTarget.All, (int)selectedGunType);
         }
 
         //数値キーの入力検知で武器を切り替える
@@ -174,13 +154,13 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
             if (Input.GetKeyDown((i + 1).ToString()))
             {
                 //銃を扱う数値を設定
-                selectedGun = i;
+                selectedGunType = (GunType)i;
                 
                 // アニメーション
                 gunAnimator.SetTrigger("WeaponChange");
 
                 //銃の切り替え（ルーム内のプレイヤー全員呼び出し）
-                photonView.RPC("SetGun", RpcTarget.All, selectedGun);
+                photonView.RPC("SetGun", RpcTarget.All, (int)selectedGunType);
             }
         }
     }
@@ -191,14 +171,14 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(1f);
 
         //リスト分ループを回す
-        foreach (GunStatus gun in guns)
+        foreach (GameObject gun in guns)
         {
             //銃を非表示
-            gun.gameObject.SetActive(false);
+            gun.SetActive(false);
         }
 
         //選択中の銃のみ表示
-        guns[selectedGun].gameObject.SetActive(true);
+        guns[(int)selectedGunType].SetActive(true);
     }
 
     /// <summary>
@@ -207,14 +187,14 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     void switchGun()
     {
         //リスト分ループを回す
-        foreach (GunStatus gun in guns)
+        foreach (GameObject gun in guns)
         {
             //銃を非表示
             gun.gameObject.SetActive(false);
         }
 
         //選択中の銃のみ表示
-        guns[selectedGun].gameObject.SetActive(true);
+        guns[(int)selectedGunType].SetActive(true);
     }
 
 
@@ -230,7 +210,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
             gunAnimator.SetBool("IsZoom",true);
 
             //ズームイン
-            cameraController.GunZoomIn(guns[selectedGun].AdsZoom, guns[selectedGun].AdsSpeed);
+            cameraController.GunZoomIn(gunDates[(int)selectedGunType].AdsZoom, gunDates[(int)selectedGunType].AdsSpeed);
         }
         else
         {
@@ -238,7 +218,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
             gunAnimator.SetBool("IsZoom", false);
 
             //ズームアウト
-            cameraController.GunZoomOut(guns[selectedGun].AdsSpeed);
+            cameraController.GunZoomOut(gunDates[(int)selectedGunType].AdsSpeed);
         }
     }
 
@@ -251,7 +231,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         if (Input.GetMouseButton(0) && Time.time > shotTimer)
         {
             // 弾薬の残りがあるか判定
-            if (ammoClip[selectedGun] == 0)
+            if (ammoClip[(int)selectedGunType] == 0)
             {
                 // 弾切れの音を鳴らす
                 // アニメーションを使用する方法に分ける
@@ -280,10 +260,6 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         // アニメーション
         playerAnimator.Attack(AttackType.Short);
 
-        // Effectを散らす
-        // アニメーションを呼び出す感じにする！
-        //photonView.RPC("ShotEffect", RpcTarget.All);
-
         //Ray(光線)をカメラの中央から設定
         Vector2 pos = new Vector2(.5f, .5f);
         Ray ray = cameraController.GenerateRay(pos);
@@ -295,32 +271,32 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
             if (hit.collider.gameObject.tag == "Player")
             {
                 //血のエフェクトをネットワーク上に生成
-                PhotonNetwork.Instantiate(hitEffect.name, hit.point, Quaternion.identity);
+                PhotonNetwork.Instantiate(gunDates[(int)selectedGunType].PlayerHitEffect.name, hit.point, Quaternion.identity);
 
                 // ヒット関数を全プレイヤーで呼び出して撃たれたプレイヤーのHPを同期
                 hit.collider.gameObject.GetPhotonView().RPC("Hit",
                     RpcTarget.All,
-                    guns[selectedGun].ShotDamage,
+                    gunDates[(int)selectedGunType].ShotDamage,
                     photonView.Owner.NickName,
                     PhotonNetwork.LocalPlayer.ActorNumber);
             }
             else
             {
-                ////弾痕エフェクト生成 
-                //GameObject bulletImpactObject = Instantiate(guns[selectedGun].GetHitEffect(),
-                //    hit.point + (hit.normal * .002f),                   //オブジェクトから少し浮かしてちらつき防止
-                //    Quaternion.LookRotation(hit.normal, Vector3.up));   //直角の方向を返してその方向に回転させる
+                //弾痕エフェクト生成 
+                GameObject bulletImpactObject = Instantiate(gunDates[(int)selectedGunType].NonPlayerHitEffect,
+                    hit.point + (hit.normal * .002f),                   //オブジェクトから少し浮かしてちらつき防止
+                    Quaternion.LookRotation(hit.normal, Vector3.up));   //直角の方向を返してその方向に回転させる
 
-                ////時間経過で削除
-                //Destroy(bulletImpactObject, 10f);
+                //時間経過で削除
+                Destroy(bulletImpactObject, 10f);
             }
         }
 
         //射撃間隔を設定
-        shotTimer = Time.time + guns[selectedGun].ShootInterval;
+        shotTimer = Time.time + gunDates[(int)selectedGunType].ShootInterval;
 
         //選択中の銃の弾薬減らす
-        ammoClip[selectedGun]--;
+        ammoClip[(int)selectedGunType]--;
     }
 
 
@@ -334,19 +310,20 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
         //gunAnimator.SetTrigger("Reload");
 
         //リロードで補充する弾数を取得
-        int amountNeed = maxAmmoClip[selectedGun] - ammoClip[selectedGun];
+        
+        int amountNeed = gunDates[(int)selectedGunType].MaxAmmoClip - ammoClip[(int)selectedGunType];
 
         //必要な弾薬量と所持弾薬量を比較
-        int ammoAvailable = amountNeed < ammunition[selectedGun] ? amountNeed : ammunition[selectedGun];
+        int ammoAvailable = amountNeed < ammunition[(int)selectedGunType] ? amountNeed : ammunition[(int)selectedGunType];
 
         //弾薬が満タンの時はリロードできない&弾薬を所持しているとき
-        if (amountNeed != 0 && ammunition[selectedGun] != 0)
+        if (amountNeed != 0 && ammunition[(int)selectedGunType] != 0)
         {
             //所持弾薬からリロードする弾薬分を引く
-            ammunition[selectedGun] -= ammoAvailable;
+            ammunition[(int)selectedGunType] -= ammoAvailable;
 
             //銃に装填する
-            ammoClip[selectedGun] += ammoAvailable;
+            ammoClip[(int)selectedGunType] += ammoAvailable;
         }
     }
 
@@ -358,10 +335,10 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     public void SetGun(int gunNo)
     {
         //銃の切り替え
-        if (gunNo < guns.Count)
+        if (gunNo < Enum.GetValues(typeof(GunType)).Length)
         {
             //銃の番号をセット
-            selectedGun = gunNo;
+            selectedGunType = (GunType)gunNo;
 
             // アニメーション
             playerAnimator.IsWeaponChange();
@@ -369,30 +346,5 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
             // 1秒待ってから切り替える
             StartCoroutine(DelayedSwitchGun());
         }
-    }
-
-    /// <summary>
-    /// 選択している銃の所持弾薬
-    /// </summary>
-    public int GetGunAmmunition()
-    {
-        return ammunition[selectedGun];
-    }
-
-
-    /// <summary>
-    /// 選択している銃のマガジン内弾薬
-    /// </summary>
-    public int GetGunAmmoClip()
-    {
-        return ammoClip[selectedGun];
-    }
-
-    /// <summary>
-    /// 選択している銃のマガジン内弾薬最大数
-    /// </summary>
-    public int GetGunAmmoClipMax()
-    {
-        return maxAmmoClip[selectedGun];
     }
 }

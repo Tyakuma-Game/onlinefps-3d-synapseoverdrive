@@ -18,3 +18,5 @@ MonoBehaviour:
   shootInterval: 1.5
   adsZoom: 30
   adsSpeed: 5
+  playerHitEffect: {fileID: 311715243518430044, guid: bccf130cc6354c24880e283aa6ec5e91, type: 3}
+  nonPlayerHitEffect: {fileID: 1539499003249960569, guid: a6714671b3126564c9840153544ba687, type: 3}
