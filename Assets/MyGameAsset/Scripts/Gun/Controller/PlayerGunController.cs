@@ -209,15 +209,15 @@ namespace Guns
                 gunAnimator.SetBool("IsZoom", true);
 
                 //ズームイン
-                cameraController.GunZoomIn(gunDates[(int)selectedGunType].AdsZoom, gunDates[(int)selectedGunType].AdsSpeed);
+                cameraController.AdjustCameraZoom(gunDates[(int)selectedGunType].AdsZoom, gunDates[(int)selectedGunType].AdsSpeed);
             }
             else
             {
                 // アニメーション
                 gunAnimator.SetBool("IsZoom", false);
 
-                //ズームアウト
-                cameraController.GunZoomOut(gunDates[(int)selectedGunType].AdsSpeed);
+                //ズームアウト(60f = カメラのデフォルト絞り値 後ほど修正する)
+                cameraController.AdjustCameraZoom(60f,gunDates[(int)selectedGunType].AdsSpeed);
             }
         }
 

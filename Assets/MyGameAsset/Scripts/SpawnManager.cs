@@ -25,7 +25,7 @@ public class SpawnManager : MonoBehaviour
         else
             Destroy(gameObject);
 
-        // スポーンポイントを初期化して非表示に
+        // スポーンポイントを初期化
         InitializeSpawnPoints();
     }
 
@@ -37,7 +37,7 @@ public class SpawnManager : MonoBehaviour
     }
 
     /// <summary>
-    /// スポーンポイントの初期化・非表示に設定
+    /// スポーンポイントの初期化
     /// </summary>
     void InitializeSpawnPoints()
     {
@@ -59,7 +59,7 @@ public class SpawnManager : MonoBehaviour
     }
 
     /// <summary>
-    /// プレイヤーが死亡した際の処理　リスポーンまでの一連の流れ開始
+    /// プレイヤーが死亡した際リスポーンまでの一連の処理
     /// </summary>
     public void StartRespawnProcess()
     {
@@ -71,7 +71,7 @@ public class SpawnManager : MonoBehaviour
     /// </summary>
     IEnumerator RespawnPlayer()
     {
-        yield return new WaitForSeconds(respawnInterval);   // 死亡演出の為の待ち時間
+        yield return new WaitForSeconds(respawnInterval);   // 死亡演出用の待ち時間
         PhotonNetwork.Destroy(playerInstance);
         SpawnPlayer();
     }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -25,9 +23,7 @@ public class PlayerLandDetector : MonoBehaviour
     {
         // 地面に接触していない & 衝突したオブジェクトが指定された地面のレイヤーに含まれているかチェック
         if (isGrounded == false && ((1 << collision.gameObject.layer) & groundLayers) != 0)
-        {
             isGrounded = true;
-        }
     }
 
     /// <summary>

@@ -1,10 +1,20 @@
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using UnityEngine.Playables;
-using Unity.VisualScripting;
-using UnityEngine.EventSystems;
 using MiniMap;
+using System;
+
+public static class PlayerEvent
+{
+    public static Action onDamage;
+
+
+    // スポーン
+    // デスポーン
+    // 座標移動
+    // 視点移動
+    // ジャンプ
+}
+
 
 /// <summary>
 /// Player管理クラス
@@ -265,7 +275,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             playerAnimator.Damage();
 
             //カメラを揺らす
-            cameraController.Shake();
+            PlayerEvent.onDamage?.Invoke();
 
             //現在のHPが0以下の場合
             if (playerStatus.CurrentHP <= 0 && isShowDeath == false)
@@ -303,19 +313,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
         SpawnManager.instance.StartRespawnProcess();
     }
 
-
     /// <summary>
     /// Playerの始末処理
     /// </summary>
     public void OutGame()
     {
-        //プレイヤーデータ削除
-        GameManager.instance.OutPlayerGet(PhotonNetwork.LocalPlayer.ActorNumber);
-
-        //同期を切断
-        PhotonNetwork.AutomaticallySyncScene = false;
-
-        //ルームから退出
-        PhotonNetwork.LeaveRoom();
+        GameManager.instance.OutPlayerGet(PhotonNetwork.LocalPlayer.ActorNumber); // プレイヤーデータ削除
+        PhotonNetwork.AutomaticallySyncScene = false;                             // 同期切断
+        PhotonNetwork.LeaveRoom();                                                // ルーム退出
     }
 }
