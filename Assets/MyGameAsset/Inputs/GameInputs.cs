@@ -160,7 +160,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                     ""id"": ""71dfe6b0-5873-4b29-a4bc-a3a43c42468f"",
                     ""path"": ""<Pointer>/delta"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""ScaleVector2(x=0.1,y=0.1)"",
                     ""groups"": """",
                     ""action"": ""Look"",
                     ""isComposite"": false,

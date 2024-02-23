@@ -5,18 +5,14 @@ using System;
 
 public static class PlayerEvent
 {
-    public static Action onDamage;
-
+    public static Action onIdol;
     public static Action onWalk;
     public static Action onDash;
 
-    // スポーン
-    // デスポーン
-    // 座標移動
-    // 視点移動
-    // ジャンプ
+    public static Action onDamage;
+    public static Action onSpawn;
+    public static Action onDisappear;
 }
-
 
 /// <summary>
 /// Player管理クラス
@@ -34,8 +30,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     [SerializeField] EnemyIconController enemyIcon;
 
-    [Tooltip("Playerのジャンプ処理")]
-    IPlayerJump playerJump;
+    
 
     [Tooltip("Playerのアニメーション処理")]
     PlayerAnimator playerAnimator;
@@ -48,20 +43,22 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     // 入力システム
     [Tooltip("キーボードの入力処理")]
-    IKeyBoardInput keyBoardInput;
-    
-    [Tooltip("マウスの入力処理")]
-    IMouseInput mouseInput;
+    KeyBoardInput keyBoardInput;
+   
 
     IMouseCursorLock mouseCursorLock;
 
-    Rigidbody myRigidbody;
+    
 
     [SerializeField] CameraController cameraController;
-
     [SerializeField] GameObject spawnEffect;
 
 
+    [Tooltip("Playerのジャンプ処理")]
+    IPlayerJump playerJump;
+
+
+    Rigidbody myRigidbody;
     bool isShowDeath = false;
 
     [PunRPC]
@@ -94,8 +91,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         myRigidbody = GetComponent<Rigidbody>();
 
         // 入力システム
-        keyBoardInput = GetComponent<IKeyBoardInput>();
-        mouseInput = GetComponent<IMouseInput>();
+        keyBoardInput = GetComponent<KeyBoardInput>();
         mouseCursorLock = GetComponent<IMouseCursorLock>();
         mouseCursorLock.LockScreen();
 
@@ -173,7 +169,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         // PLAYER処理
         //－－－－－－－－－－－－－－－－－－－－－/
         {
-            // 移動
+            // 移動　それぞれにアニメーション設定する処理をやって適用する感じにやる？　それをアクションに渡して移動のやつが呼び出すなど
             Vector3 moveDirection = keyBoardInput.GetWASDAndArrowKeyInput();
             if (moveDirection != Vector3.zero)
             {
@@ -200,7 +196,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 playerAnimator.IsGround(playerLandDetector.IsGrounded);
                 float moveSpeed = moveDirection.magnitude * playerStatus.ActiveMoveSpeed;
                 playerAnimator.UpdateMoveSpeed(moveSpeed);
-                gunAnimator.SetFloat("MoveSpeed",moveSpeed);
+                gunAnimator.SetFloat("MoveSpeed", moveSpeed);
             }
             
             if (playerLandDetector.IsGrounded == false)

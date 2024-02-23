@@ -1,20 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
 /// キーボードの入力処理を管理するクラス
 /// </summary>
-public class KeyBoardInput : MonoBehaviour, IKeyBoardInput
+public class KeyBoardInput : MonoBehaviour,IKeyBoardInput
 {
-    /// <summary>
-    /// WASDキー＋矢印キーの入力を取得
-    /// </summary>
-    /// <returns>WASDキー＋矢印キーの入力</returns>
     public Vector3 GetWASDAndArrowKeyInput()
     {
         return new Vector3(Input.GetAxisRaw("Horizontal"),
-                           0, Input.GetAxisRaw("Vertical"));
+                                       0, Input.GetAxisRaw("Vertical"));
     }
 
     /// <summary>

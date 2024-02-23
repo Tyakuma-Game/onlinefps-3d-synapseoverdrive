@@ -1,19 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 /// <summary>
 /// マウスのロック状態を管理するクラス
 /// </summary>
-public class MouseCursorLock : MonoBehaviour, IMouseCursorLock
+public class MouseCursorLock : MonoBehaviourPunCallbacks, IMouseCursorLock
 {
     void Start()
     {
+        // 自身が操作するオブジェクトでなければ処理をスキップ
+        if (!photonView.IsMine)
+            return;
+
         LockScreen();
     }
 
     void OnDestroy()
     {
+        // 自身が操作するオブジェクトでなければ処理をスキップ
+        if (!photonView.IsMine)
+            return;
+
         UnlockScreen();
     }
 
