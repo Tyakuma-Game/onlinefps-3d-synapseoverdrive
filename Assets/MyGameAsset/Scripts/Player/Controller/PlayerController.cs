@@ -34,9 +34,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     [SerializeField] EnemyIconController enemyIcon;
 
-    [Tooltip("Player‚Ì‰ñ“]ˆ—")]
-    IPlayerRotation playerRotation;
-
     [Tooltip("Player‚ÌƒWƒƒƒ“ƒvˆ—")]
     IPlayerJump playerJump;
 
@@ -108,10 +105,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
 
         playerJump = GetComponent<IPlayerJump>();
-        playerRotation = GetComponent<IPlayerRotation>();
 
         // ƒXƒe[ƒ^ƒX‰Šú‰»
-        //playerMove.Init(myRigidbody);
         playerJump.Init(myRigidbody);
         playerStatus.Init();
 
@@ -178,14 +173,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
         // PLAYERˆ—
         //|||||||||||||||||||||/
         {
-            // ‰ñ“]
-            Vector2 roteDirection = mouseInput.GetMouseMove();
-            if (roteDirection != Vector2.zero)
-            {
-                playerRotation.Rotation(roteDirection, playerStatus.Constants.RotationSpeed);
-                cameraController.Rotation(roteDirection, playerStatus.Constants.RotationSpeed, playerStatus.Constants.VerticalRotationRange);
-            }
-
             // ˆÚ“®
             Vector3 moveDirection = keyBoardInput.GetWASDAndArrowKeyInput();
             if (moveDirection != Vector3.zero)

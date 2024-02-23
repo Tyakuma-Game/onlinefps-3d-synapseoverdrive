@@ -7,6 +7,7 @@ using Photon.Pun;
 /// </summary>
 public class PlayerMove : MonoBehaviourPunCallbacks
 {
+    [Header(" Settings ")]
     [SerializeField] float walkSpeed = 4f;
     [SerializeField] float dashSpeed = 8f;
     
@@ -55,7 +56,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     void FixedUpdate()
     {
         // 自身が操作するオブジェクトでなければ処理をスキップ
-        if (!photonView.IsMine)
+        if (!photonView.IsMine || moveDirection == Vector2.zero)
             return;
 
         // 移動処理を実行

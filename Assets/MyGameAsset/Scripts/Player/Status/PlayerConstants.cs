@@ -23,33 +23,6 @@ public class PlayerConstants : MonoBehaviour
         get { return CAMERA_APERTURE_BASE_FACTOR; }
     }
 
-    [Tooltip("Player‚Ì‹“_ã‰º‰ñ“]”ÍˆÍ")]
-    [SerializeField] float VERTICAL_ROTATION_RANGE = 60f;
-
-    /// <summary>
-    /// Player‚Ì‹“_ã‰º‰ñ“]”ÍˆÍ
-    /// </summary>
-    public float VerticalRotationRange
-    {
-        get { return VERTICAL_ROTATION_RANGE; }
-    }
-
-    [Tooltip("‹“_ˆÚ“®‚Ì‘¬“x")]
-    [SerializeField] float MOUSE_SENSITIVITY = 1f;
-
-    /// <summary>
-    /// ‹“_ˆÚ“®‚Ì‘¬“x
-    /// </summary>
-    public float MouseSensitivity
-    {
-        get { return MOUSE_SENSITIVITY; }
-    }
-
-    public void ApplyMouseSensitivity(float newSpeed)
-    {
-        MOUSE_SENSITIVITY = newSpeed;
-    }
-
     //|||||||||||||||||||||/
     // ‘Ì—ÍŠÖ˜A
     //|||||||||||||||||||||/

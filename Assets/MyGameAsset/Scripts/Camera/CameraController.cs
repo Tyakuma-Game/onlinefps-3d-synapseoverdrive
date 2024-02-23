@@ -26,34 +26,6 @@ public class CameraController : MonoBehaviour
     }
 
     //|||||||||||||||||||||/
-    // ‹“_‚Ì‰ñ“]—pProgram
-    //|||||||||||||||||||||/
-
-    // y²‚Ì‰ñ“]‚ğŠi”[@‰ñ“]§Œä—p
-    float verticalMouseInput;
-
-    /// <summary>
-    /// Player‚Ì‹“_‰ñ“]ˆ—
-    /// </summary>
-    /// <param name="rotaInput">‰ñ“]‚Ì‚½‚ß‚Ì“ü—Íî•ñ</param>
-    /// <param name="rotaSpeed">‰ñ“]‘¬“x</param>
-    /// <param name="rotationRange">‰ñ“]”ÍˆÍ</param>
-    public void Rotation(Vector2 rotaInput, float rotaSpeed, float rotationRange)
-    {
-        //•Ï”‚Éy²‚Ìƒ}ƒEƒX“ü—Í•ª‚Ì”’l‚ğ‘«‚·
-        verticalMouseInput += rotaInput.y * rotaSpeed;
-
-        //•Ï”‚Ì”’l‚ğŠÛ‚ß‚éiã‰º‚Ì‹“_”ÍˆÍ§Œäj
-        verticalMouseInput = Mathf.Clamp(verticalMouseInput, -rotationRange, rotationRange);
-
-        //c‚Ì‹“_‰ñ“]‚ğ”½‰f
-        viewPoint.rotation = Quaternion.Euler
-            (-verticalMouseInput,                       //-‚ğ•t‚¯‚È‚¢‚Æã‰º”½“]
-            viewPoint.transform.rotation.eulerAngles.y,
-            viewPoint.transform.rotation.eulerAngles.z);
-    }
-
-    //|||||||||||||||||||||/
     // ƒY[ƒ€ŠÖ˜A
     //|||||||||||||||||||||/
 
