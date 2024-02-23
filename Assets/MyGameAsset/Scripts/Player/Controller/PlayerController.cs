@@ -7,6 +7,8 @@ public static class PlayerEvent
 {
     public static Action onDamage;
 
+    public static Action onWalk;
+    public static Action onDash;
 
     // スポーン
     // デスポーン
@@ -31,10 +33,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [SerializeField] PlayerStatus playerStatus;
 
     [SerializeField] EnemyIconController enemyIcon;
-
-    // Player機能
-    [Tooltip("Playerの移動処理")]
-    IPlayerMove playerMove;
 
     [Tooltip("Playerの回転処理")]
     IPlayerRotation playerRotation;
@@ -107,12 +105,13 @@ public class PlayerController : MonoBehaviourPunCallbacks
         // Playerシステム
         playerLandDetector = GetComponent<PlayerLandDetector>();
         playerAnimator = GetComponent<PlayerAnimator>();
-        playerMove = GetComponent<IPlayerMove>();
+
+
         playerJump = GetComponent<IPlayerJump>();
         playerRotation = GetComponent<IPlayerRotation>();
 
         // ステータス初期化
-        playerMove.Init(myRigidbody);
+        //playerMove.Init(myRigidbody);
         playerJump.Init(myRigidbody);
         playerStatus.Init();
 
@@ -159,12 +158,19 @@ public class PlayerController : MonoBehaviourPunCallbacks
             if (keyBoardInput.GetRunKeyInput())
             {
                 if (playerStatus.AnimationState != PlayerAnimationState.Run)
+                {
                     playerStatus.IsRunning();
+                    PlayerEvent.onDash?.Invoke();
+                }
             }
             else
             {
                 if (playerStatus.AnimationState != PlayerAnimationState.Walk)
+                {
                     playerStatus.IsWalking();
+                    PlayerEvent.onWalk?.Invoke();
+                }
+                    
             }
         }
 
@@ -184,7 +190,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
             Vector3 moveDirection = keyBoardInput.GetWASDAndArrowKeyInput();
             if (moveDirection != Vector3.zero)
             {
-                playerMove.Move(moveDirection, playerStatus.ActiveMoveSpeed);
             }
             else
             {

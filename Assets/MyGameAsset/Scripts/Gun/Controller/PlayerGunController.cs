@@ -26,7 +26,7 @@ namespace Guns
         //|||||||||||||||||||||||||||/
 
         [SerializeField] Animator gunAnimator;                  // ƒAƒNƒVƒ‡ƒ“‚É“‡‚·‚éŠ´‚¶‚ÅƒŠƒtƒ@ƒNƒ^ƒŠƒ“ƒO‚·‚éI
-        [SerializeField] CameraController cameraController;     // ƒVƒ“ƒOƒ‹ƒgƒ“À‘•‚ÅŒÄ‚Ño‚·Š´‚¶‚É•ÏX‚·‚é
+        [SerializeField] CameraController cameraController;     // ƒAƒNƒVƒ‡ƒ“‚É“‡‚·‚éŠ´‚¶‚ÅƒŠƒtƒ@ƒNƒ^ƒŠƒ“ƒO‚·‚é!
         [SerializeField] PlayerAnimator playerAnimator;         // ƒAƒNƒVƒ‡ƒ“‚É“‡‚·‚éŠ´‚¶‚ÅƒŠƒtƒ@ƒNƒ^ƒŠƒ“ƒO‚·‚éI
 
         //|||||||||||||||||||||||||||/
