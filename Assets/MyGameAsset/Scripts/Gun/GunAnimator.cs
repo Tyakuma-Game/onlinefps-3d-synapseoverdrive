@@ -1,3 +1,4 @@
+using Guns;
 using Photon.Pun;
 using UnityEngine;
 
@@ -9,7 +10,7 @@ public class GunAnimator : MonoBehaviourPunCallbacks
     //string hashAttackType = "AttackType";
     //string hashAttack = "Attack";
     string hashMoveSpeed = "MoveSpeed";
-    //string hashIsGround = "IsGround";
+    string hashIsZoom = "IsZoom";
     //string hashWeaponChange = "WeaponChange";
 
     void Start()
@@ -18,8 +19,9 @@ public class GunAnimator : MonoBehaviourPunCallbacks
         if (!photonView.IsMine)
             return;
 
-        gunAnimator = GetComponent<Animator>();
+        // 処理登録
         PlayerMove.OnSpeedChanged += UpdateMoveSpeed;
+        PlayerGunController.OnGunZoomStateChanged += GunZoomStateChange;
     }
 
     void OnDestroy()
@@ -28,7 +30,9 @@ public class GunAnimator : MonoBehaviourPunCallbacks
         if (!photonView.IsMine)
             return;
 
+        // 処理解除
         PlayerMove.OnSpeedChanged -= UpdateMoveSpeed;
+        PlayerGunController.OnGunZoomStateChanged -= GunZoomStateChange;
     }
 
     /// <summary>
@@ -38,6 +42,10 @@ public class GunAnimator : MonoBehaviourPunCallbacks
     void UpdateMoveSpeed(float speed) =>
         gunAnimator.SetFloat(hashMoveSpeed, speed, 0.1f, Time.deltaTime);
 
-
-
+    /// <summary>
+    /// ズーム状態変更
+    /// </summary>
+    /// <param name="isZoom">ズーム中なのかどうか</param>
+    void GunZoomStateChange(bool isZoom) =>
+        gunAnimator.SetBool(hashIsZoom, isZoom);
 }

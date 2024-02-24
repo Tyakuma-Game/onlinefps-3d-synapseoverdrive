@@ -21,10 +21,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     [Tooltip("プレイヤーのステータス情報")]
     [SerializeField] PlayerStatus playerStatus;
-
     [SerializeField] EnemyIconController enemyIcon;
-
-    
 
     [Tooltip("Playerのアニメーション処理")]
     PlayerAnimator playerAnimator;
@@ -172,11 +169,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
             //ダメージ
             playerStatus.OnDamage(damage);
 
-            // アニメーション
+            // HP更新処理
             playerAnimator.SetCurrentHP(playerStatus.CurrentHP);
-            playerAnimator.Damage();
 
-            //カメラを揺らす
+            // 死亡のその他処理
             PlayerEvent.onDamage?.Invoke();
 
             //現在のHPが0以下の場合

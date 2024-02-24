@@ -19,7 +19,7 @@ public class PlayerAnimator : MonoBehaviourPunCallbacks
     [Header(" Elements ")]
     [SerializeField] Animator playerAnimator;
     
-
+    // Še—v‘f‚ÌÚ‘±ƒpƒX
     string hashDamage = "Damage";
     string hashHP = "HP";
     string hashAttackType = "AttackType";
@@ -30,24 +30,24 @@ public class PlayerAnimator : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        // ©g‚ª‘€ì‚·‚éƒIƒuƒWƒFƒNƒg‚Å‚È‚¯‚ê‚Îˆ—‚ğƒXƒLƒbƒv
         if (!photonView.IsMine)
             return;
 
         // ˆ—“o˜^
         PlayerMove.OnSpeedChanged += UpdateMoveSpeed;
         PlayerJump.OnGroundContactChange += OnGroundContactChange;
+        PlayerEvent.onDamage += OnDamage;
     }
 
     void OnDestroy()
     {
-        // ©g‚ª‘€ì‚·‚éƒIƒuƒWƒFƒNƒg‚Å‚È‚¯‚ê‚Îˆ—‚ğƒXƒLƒbƒv
         if (!photonView.IsMine)
             return;
 
         // ˆ—‰ğœ
         PlayerMove.OnSpeedChanged -= UpdateMoveSpeed;
         PlayerJump.OnGroundContactChange -= OnGroundContactChange;
+        PlayerEvent.onDamage -= OnDamage;
     }
 
     /// <summary>
@@ -63,6 +63,20 @@ public class PlayerAnimator : MonoBehaviourPunCallbacks
     /// <param name="isGround">ÚG‚µ‚Ä‚¢‚é‚©</param>
     void OnGroundContactChange(bool isGround) =>
         playerAnimator.SetBool(hashIsGround, isGround);
+
+    /// <summary>
+    /// ”í’e
+    /// </summary>
+    void OnDamage() =>
+        playerAnimator.SetTrigger(hashDamage);
+
+    /// <summary>
+    /// •ŠíŒğŠ·
+    /// </summary>
+    void OnWeaponChange() =>
+        playerAnimator.SetTrigger(hashWeaponChange);
+
+    
 
     //|||||||||||||||||||||||||||/
     // ƒŠƒtƒ@ƒNƒ^ƒŠƒ“ƒO’†
@@ -93,13 +107,5 @@ public class PlayerAnimator : MonoBehaviourPunCallbacks
     {
         playerAnimator.SetInteger(hashAttackType, (int)typeID);
         playerAnimator.SetTrigger(hashAttack);
-    }
-
-    /// <summary>
-    /// ”í’e‚ÌƒgƒŠƒK[‚ğ—§‚Ä‚é
-    /// </summary>
-    public void Damage()
-    {
-        playerAnimator.SetTrigger(hashDamage);
     }
 }

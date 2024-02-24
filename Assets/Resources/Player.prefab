@@ -10948,6 +10948,7 @@ GameObject:
   - component: {fileID: 6629137861875794607}
   - component: {fileID: 3174461237252244818}
   - component: {fileID: 2268440001789559204}
+  - component: {fileID: 1079370877213003359}
   m_Layer: 0
   m_Name: ViewPoint
   m_TagString: Untagged
@@ -11015,6 +11016,18 @@ MonoBehaviour:
   verticalRotationRange: 60
   sensitivity: 3
   viewPoint: {fileID: 934038861596881044}
+--- !u!114 &1079370877213003359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 934038861596881045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cfafcd2ee12df34aa09c2566270f0ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &946906224654014236
 GameObject:
   m_ObjectHideFlags: 0

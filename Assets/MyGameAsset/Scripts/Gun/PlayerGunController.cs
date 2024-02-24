@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using System;
+using UnityEngine.InputSystem;
 
 namespace Guns
 {
@@ -25,6 +26,7 @@ namespace Guns
         //　改善部分
         //－－－－－－－－－－－－－－－－－－－－－－－－－－－/
 
+
         [SerializeField] Animator gunAnimator;                  // アクションに統合する感じでリファクタリングする！
         [SerializeField] CameraController cameraController;     // アクションに統合する感じでリファクタリングする!
         [SerializeField] PlayerAnimator playerAnimator;         // アクションに統合する感じでリファクタリングする！
@@ -46,6 +48,15 @@ namespace Guns
 
         void Start()
         {
+            if (!photonView.IsMine)
+                return;
+
+            // ズーム関連処理登録
+            InputManager.Controls.Gun.Zoom.started += ZoomIn;
+            InputManager.Controls.Gun.Zoom.canceled += ZoomOut;
+
+
+
             // 使用する銃ホルダー選択（自分視点か相手視点かを基に決定）
             GameObject[] selectedGunsHolder = photonView.IsMine ? gunsHolder : otherGunsHolder;
 
@@ -66,6 +77,18 @@ namespace Guns
             // 銃の表示切替
             ChangeActiveGun();
         }
+        void OnDestroy()
+        {
+            // 自身が操作するオブジェクトでなければ処理をスキップ
+            if (!photonView.IsMine)
+                return;
+
+            // ズーム関連処理解除
+            InputManager.Controls.Gun.Zoom.started -= ZoomIn;
+            InputManager.Controls.Gun.Zoom.canceled -= ZoomOut;
+        }
+
+
 
         void Update()
         {
@@ -75,9 +98,6 @@ namespace Guns
 
             // 銃の切り替え
             SwitchingGuns();
-
-            // 覗き込み
-            Aim();
 
             // 射撃関数
             Fire();
@@ -198,27 +218,26 @@ namespace Guns
         //－－－－－－－－－－－－－－－－－－－－－－－－－－－/
 
         /// <summary>
-        /// 右クリックで覗き込み
+        /// 銃のズーム状態変更時のイベントハンドラ
         /// </summary>
-        public void Aim()
+        public static Action<bool> OnGunZoomStateChanged;
+
+        /// <summary>
+        /// ズーム開始
+        /// </summary>
+        void ZoomIn(InputAction.CallbackContext context)
         {
-            //マウス右ボタン押しているとき
-            if (Input.GetMouseButton(1))
-            {
-                // アニメーション
-                gunAnimator.SetBool("IsZoom", true);
+            OnGunZoomStateChanged?.Invoke(true);
+            CameraZoom.OnZoomStateChanged?.Invoke(gunDates[(int)selectedGunType].AdsZoom, gunDates[(int)selectedGunType].AdsSpeed);
+        }
 
-                //ズームイン
-                cameraController.AdjustCameraZoom(gunDates[(int)selectedGunType].AdsZoom, gunDates[(int)selectedGunType].AdsSpeed);
-            }
-            else
-            {
-                // アニメーション
-                gunAnimator.SetBool("IsZoom", false);
-
-                //ズームアウト(60f = カメラのデフォルト絞り値 後ほど修正する)
-                cameraController.AdjustCameraZoom(60f,gunDates[(int)selectedGunType].AdsSpeed);
-            }
+        /// <summary>
+        /// ズーム終了
+        /// </summary>
+        void ZoomOut(InputAction.CallbackContext context)
+        {
+            OnGunZoomStateChanged?.Invoke(false);
+            CameraZoom.OnZoomStateChanged?.Invoke(60f, gunDates[(int)selectedGunType].AdsSpeed);
         }
 
 

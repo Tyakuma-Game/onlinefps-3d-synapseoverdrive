@@ -229,13 +229,22 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""3b769d9a-bc9c-4c1f-a419-413811d54758"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
                     ""id"": ""9fac4631-3761-4439-82cb-9d750357891d"",
-                    ""path"": """",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -245,8 +254,19 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""c40a026c-b163-4645-9a74-149016094f9d"",
-                    ""path"": """",
+                    ""id"": ""e95c101f-537e-471c-808e-97ece4c3ba82"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7cf27772-ef5e-45b1-8def-f7b4191a0431"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -262,6 +282,28 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""WeaponChange"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""19d51818-588f-4839-b20f-5f3733cacaa9"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c40a026c-b163-4645-9a74-149016094f9d"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Zoom"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -281,6 +323,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
         m_Gun_Shot = m_Gun.FindAction("Shot", throwIfNotFound: true);
         m_Gun_Zoom = m_Gun.FindAction("Zoom", throwIfNotFound: true);
         m_Gun_WeaponChange = m_Gun.FindAction("WeaponChange", throwIfNotFound: true);
+        m_Gun_Reload = m_Gun.FindAction("Reload", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -415,6 +458,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gun_Shot;
     private readonly InputAction m_Gun_Zoom;
     private readonly InputAction m_Gun_WeaponChange;
+    private readonly InputAction m_Gun_Reload;
     public struct GunActions
     {
         private @GameInputs m_Wrapper;
@@ -422,6 +466,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
         public InputAction @Shot => m_Wrapper.m_Gun_Shot;
         public InputAction @Zoom => m_Wrapper.m_Gun_Zoom;
         public InputAction @WeaponChange => m_Wrapper.m_Gun_WeaponChange;
+        public InputAction @Reload => m_Wrapper.m_Gun_Reload;
         public InputActionMap Get() { return m_Wrapper.m_Gun; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -440,6 +485,9 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
             @WeaponChange.started += instance.OnWeaponChange;
             @WeaponChange.performed += instance.OnWeaponChange;
             @WeaponChange.canceled += instance.OnWeaponChange;
+            @Reload.started += instance.OnReload;
+            @Reload.performed += instance.OnReload;
+            @Reload.canceled += instance.OnReload;
         }
 
         private void UnregisterCallbacks(IGunActions instance)
@@ -453,6 +501,9 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
             @WeaponChange.started -= instance.OnWeaponChange;
             @WeaponChange.performed -= instance.OnWeaponChange;
             @WeaponChange.canceled -= instance.OnWeaponChange;
+            @Reload.started -= instance.OnReload;
+            @Reload.performed -= instance.OnReload;
+            @Reload.canceled -= instance.OnReload;
         }
 
         public void RemoveCallbacks(IGunActions instance)
@@ -482,5 +533,6 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
         void OnShot(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
         void OnWeaponChange(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
     }
 }

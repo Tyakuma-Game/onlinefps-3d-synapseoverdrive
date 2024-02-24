@@ -9,7 +9,7 @@ using UnityEngine.InputSystem;
 public class PlayerJump : MonoBehaviourPunCallbacks
 {
     /// <summary>
-    /// 地面に接触しているかどうかを通知するイベント
+    /// 地面に接触しているかどうかの通知イベント
     /// </summary>
     public static event Action<bool> OnGroundContactChange;
 
