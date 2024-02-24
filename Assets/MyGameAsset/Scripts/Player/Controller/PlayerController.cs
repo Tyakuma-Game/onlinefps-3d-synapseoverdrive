@@ -5,10 +5,6 @@ using System;
 
 public static class PlayerEvent
 {
-    public static Action onIdol;
-    public static Action onWalk;
-    public static Action onDash;
-
     public static Action onDamage;
     public static Action onSpawn;
     public static Action onDisappear;
@@ -23,8 +19,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
     //@Œø—¦‰»’†
     //|||||||||||||||||||||/
 
-    [SerializeField] Animator gunAnimator;
-
     [Tooltip("ƒvƒŒƒCƒ„[‚ÌƒXƒe[ƒ^ƒXî•ñ")]
     [SerializeField] PlayerStatus playerStatus;
 
@@ -34,9 +28,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     [Tooltip("Player‚ÌƒAƒjƒ[ƒVƒ‡ƒ“ˆ—")]
     PlayerAnimator playerAnimator;
-
-    [Tooltip("’…’n‚µ‚Ä‚¢‚é‚©”»’èˆ—")]
-    PlayerLandDetector playerLandDetector;
 
     [SerializeField] PlayerSoundManager playerSoundManager;
 
@@ -48,17 +39,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     IMouseCursorLock mouseCursorLock;
 
-    
-
-    [SerializeField] CameraController cameraController;
+   
     [SerializeField] GameObject spawnEffect;
 
-
-    [Tooltip("Player‚ÌƒWƒƒƒ“ƒvˆ—")]
-    IPlayerJump playerJump;
-
-
-    Rigidbody myRigidbody;
     bool isShowDeath = false;
 
     [PunRPC]
@@ -85,25 +68,14 @@ public class PlayerController : MonoBehaviourPunCallbacks
             return;
         }
         enemyIcon.SetIconVisibility(false);
-
         MiniMapController.instance.SetMiniMapTarget(this.transform);
-
-        myRigidbody = GetComponent<Rigidbody>();
 
         // “ü—ÍƒVƒXƒeƒ€
         keyBoardInput = GetComponent<KeyBoardInput>();
         mouseCursorLock = GetComponent<IMouseCursorLock>();
         mouseCursorLock.LockScreen();
 
-        // PlayerƒVƒXƒeƒ€
-        playerLandDetector = GetComponent<PlayerLandDetector>();
         playerAnimator = GetComponent<PlayerAnimator>();
-
-
-        playerJump = GetComponent<IPlayerJump>();
-
-        // ƒXƒe[ƒ^ƒX‰Šú‰»
-        playerJump.Init(myRigidbody);
         playerStatus.Init();
 
         //HPƒXƒ‰ƒCƒ_[”½‰f
@@ -144,86 +116,31 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 else
                     mouseCursorLock.UnlockScreen();
             }
-
-            // ó‘Ô‘JˆÚ
-            if (keyBoardInput.GetRunKeyInput())
-            {
-                if (playerStatus.AnimationState != PlayerAnimationState.Run)
-                {
-                    playerStatus.IsRunning();
-                    PlayerEvent.onDash?.Invoke();
-                }
-            }
-            else
-            {
-                if (playerStatus.AnimationState != PlayerAnimationState.Walk)
-                {
-                    playerStatus.IsWalking();
-                    PlayerEvent.onWalk?.Invoke();
-                }
-                    
-            }
         }
 
         //|||||||||||||||||||||/
         // PLAYERˆ—
         //|||||||||||||||||||||/
-        {
-            // ˆÚ“®@‚»‚ê‚¼‚ê‚ÉƒAƒjƒ[ƒVƒ‡ƒ“İ’è‚·‚éˆ—‚ğ‚â‚Á‚Ä“K—p‚·‚éŠ´‚¶‚É‚â‚éH@‚»‚ê‚ğƒAƒNƒVƒ‡ƒ“‚É“n‚µ‚ÄˆÚ“®‚Ì‚â‚Â‚ªŒÄ‚Ño‚·‚È‚Ç
-            Vector3 moveDirection = keyBoardInput.GetWASDAndArrowKeyInput();
-            if (moveDirection != Vector3.zero)
-            {
-            }
-            else
-            {
-                playerStatus.IsIdol();
-            }
+        //{
+        //    // ˆÚ“®@‚»‚ê‚¼‚ê‚ÉƒAƒjƒ[ƒVƒ‡ƒ“İ’è‚·‚éˆ—‚ğ‚â‚Á‚Ä“K—p‚·‚éŠ´‚¶‚É‚â‚éH@‚»‚ê‚ğƒAƒNƒVƒ‡ƒ“‚É“n‚µ‚ÄˆÚ“®‚Ì‚â‚Â‚ªŒÄ‚Ño‚·‚È‚Ç
+        //    Vector3 moveDirection = keyBoardInput.GetWASDAndArrowKeyInput();
+        //    if (moveDirection != Vector3.zero)
+        //    {
+        //    }
+        //    else
+        //    {
+        //        playerStatus.IsIdol();
+        //    }
+        //}
 
-            // ƒWƒƒƒ“ƒv
-            if (playerLandDetector.IsGrounded)
-            {
-                if (keyBoardInput.GetJumpKeyInput())
-                {
-                    playerJump.Jump(playerStatus.ActiveJumpForth);
-                    playerLandDetector.OnJunpingChangeFlag();
-                }
-            }
-
-            //|||||||||||||||||||||/
-            // ƒAƒjƒ[ƒVƒ‡ƒ“XV
-            //|||||||||||||||||||||/
-            {
-                playerAnimator.IsGround(playerLandDetector.IsGrounded);
-                float moveSpeed = moveDirection.magnitude * playerStatus.ActiveMoveSpeed;
-                playerAnimator.UpdateMoveSpeed(moveSpeed);
-                gunAnimator.SetFloat("MoveSpeed", moveSpeed);
-            }
-            
-            if (playerLandDetector.IsGrounded == false)
-            {
-                playerStatus.IsIdol();
-                gunAnimator.SetFloat("MoveSpeed", 0f);
-            }
-
-            // Soundˆ—
-            playerSoundManager.SoundPlays(playerStatus.AnimationState);
-        }
-
-        if (playerStatus.AnimationState == PlayerAnimationState.Run)
-        {
-            UIManager.instance.IsRunning();
-        }
-        else
-        {
-            UIManager.instance.IsNotRunning();
-        }
-
-        //|||||||||||||||||||||/
-        // ƒJƒƒ‰ˆ—
-        //|||||||||||||||||||||/
-
-        // ƒJƒƒ‰‚ÌÀ•WXV
-        cameraController.UpdatePosition();
+        //if (playerStatus.AnimationState == PlayerAnimationState.Run)
+        //{
+        //    UIManager.instance.IsRunning(); //Event“o˜^Œ^‚É•ÏX‚·‚é
+        //}
+        //else
+        //{
+        //    UIManager.instance.IsNotRunning();
+        //}
     }
 
 
@@ -252,9 +169,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
         //©•ª‚È‚ç
         if (photonView.IsMine)
         {
-            // Damage‚ğó‚¯‚½Û‚Ì‰¹‚ğ–Â‚ç‚·
-            playerSoundManager.DamageSound();
-
             //ƒ_ƒ[ƒW
             playerStatus.OnDamage(damage);
 

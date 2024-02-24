@@ -1,33 +1,71 @@
-using System.Collections;
-using System.Collections.Generic;
+using Photon.Pun;
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Playerのジャンプに関するクラス
 /// </summary>
-public class PlayerJump : MonoBehaviour, IPlayerJump
+public class PlayerJump : MonoBehaviourPunCallbacks
 {
-    Rigidbody myRigidbody;
-
     /// <summary>
-    /// 初期化処理
+    /// 地面に接触しているかどうかを通知するイベント
     /// </summary>
-    /// <param name="rigidbody"></param>
-    public void Init(Rigidbody rigidbody)
+    public static event Action<bool> OnGroundContactChange;
+
+    [Header(" Settings ")]
+    [SerializeField] Vector3 jumpForce;
+    [SerializeField] LayerMask groundLayers;
+
+    Rigidbody rb;
+    InputAction jumpAction;
+    bool isGround = true;
+
+    void Start()
     {
-        myRigidbody = rigidbody;
+        if (!photonView.IsMine)
+            return;
+
+        // 取得
+        rb = GetComponent<Rigidbody>();
+        jumpAction = InputManager.Controls.Player.Jump;
+
+        // 処理登録
+        jumpAction.started += OnJump;
+    }
+
+    void OnDestroy()
+    {
+        if (!photonView.IsMine)
+            return;
+        
+        // 処理解除
+        jumpAction.started -= OnJump;
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        // 地面に接触していない & 衝突したオブジェクトが指定された地面のレイヤーに含まれているかチェック
+        if (!isGround && ((1 << collision.gameObject.layer) & groundLayers) != 0)
+        {
+            // 変更と通知
+            isGround = true;
+            OnGroundContactChange?.Invoke(isGround);
+        }
     }
 
     /// <summary>
     /// ジャンプ処理
     /// </summary>
-    public void Jump(Vector3 jumpForth)
+    void OnJump(InputAction.CallbackContext context)
     {
-        // 重複防止策
-        if (myRigidbody.velocity.y < jumpForth.y / 2)
+        if (isGround)
         {
-            // 力を加える
-            myRigidbody.AddForce(jumpForth, ForceMode.VelocityChange);
+            rb.AddForce(jumpForce, ForceMode.VelocityChange);
+
+            // 変更と通知
+            isGround = false;
+            OnGroundContactChange?.Invoke(isGround);
         }
     }
 }

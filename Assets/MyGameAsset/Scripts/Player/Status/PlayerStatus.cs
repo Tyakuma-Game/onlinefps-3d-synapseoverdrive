@@ -19,9 +19,6 @@ public class PlayerStatus: MonoBehaviour
     [Tooltip("ƒWƒƒƒ“ƒv—Í")]
     Vector3 activeJumpForth;
 
-    [Tooltip("Œ»İ‚ÌƒAƒjƒ[ƒVƒ‡ƒ“ó‘Ô")]
-    PlayerAnimationState animationState;
-
     
     /// <summary>
     /// ƒXƒe[ƒ^ƒX‰Šú‰»
@@ -31,7 +28,6 @@ public class PlayerStatus: MonoBehaviour
         currentHp = playerConstants.MaxHP;            // ‘Ì—Í
         activeMoveSpeed = playerConstants.WalkSpeed;  // ˆÚ“®‘¬“x
         activeJumpForth = playerConstants.JumpForce;  // ƒWƒƒƒ“ƒv—Í
-        animationState = PlayerAnimationState.Idol;   // ó‘Ô
     }
 
     /// <summary>
@@ -46,33 +42,6 @@ public class PlayerStatus: MonoBehaviour
             currentHp = 0;
         }
     }
-
-    /// <summary>
-    /// ‘Ò‹@ó‘Ô‚Ö‘JˆÚ
-    /// </summary>
-    public void IsIdol()
-    {
-        animationState = PlayerAnimationState.Idol;
-    }
-
-    /// <summary>
-    /// •à‚«ó‘Ô‚Ö‘JˆÚ
-    /// </summary>
-    public void IsWalking()
-    {
-        activeMoveSpeed = playerConstants.WalkSpeed;
-        animationState = PlayerAnimationState.Walk;
-    }
-
-    /// <summary>
-    /// ‘–‚èó‘Ô‚Ö‘JˆÚ
-    /// </summary>
-    public void IsRunning()
-    {
-        activeMoveSpeed = playerConstants.RunSpeed;
-        animationState = PlayerAnimationState.Run;
-    }
-
 
     //|||||||||||||||||||||/
     // ƒQƒbƒ^[
@@ -100,12 +69,4 @@ public class PlayerStatus: MonoBehaviour
     /// Œ»İ‚ÌƒWƒƒƒ“ƒv—Í
     /// </summary>
     public Vector3 ActiveJumpForth { get { return activeJumpForth; } }
-
-    /// <summary>
-    /// Œ»İ‚ÌƒAƒjƒ[ƒVƒ‡ƒ“ó‘Ô
-    /// </summary>
-    public PlayerAnimationState AnimationState
-    {
-        get { return animationState; }
-    }
 }

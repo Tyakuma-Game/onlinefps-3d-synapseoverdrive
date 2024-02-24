@@ -1,5 +1,7 @@
 using UnityEngine;
 
+// TODO: ‚±‚ê‚àEvent‹ì“®Œ^‚É•ÏX‚µ‚ÄŒø—¦‰»‚·‚éI
+
 /// <summary>
 /// ƒJƒƒ‰‚ÉŠÖ‚·‚éˆ—‚ğ‚Ü‚Æ‚ß‚ÄŠÇ—‚·‚éƒNƒ‰ƒX
 /// </summary>
@@ -11,18 +13,15 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        // ƒJƒƒ‰Ši”[
+        // æ“¾
         myCamera = Camera.main;
     }
 
-    /// <summary>
-    /// ƒJƒƒ‰‚ÌXVˆ—
-    /// </summary>
-    public void UpdatePosition()
-    {
-        // ƒJƒƒ‰ˆÊ’uXV
-        myCamera.transform.position = viewPoint.position;//À•W
-        myCamera.transform.rotation = viewPoint.rotation;//‰ñ“]
+    void Update()
+    { 
+        // ˆÊ’uXV
+        myCamera.transform.position = viewPoint.position;
+        myCamera.transform.rotation = viewPoint.rotation;
     }
 
     //|||||||||||||||||||||/

@@ -1,75 +1,66 @@
 using UnityEngine;
 
 /// <summary>
-/// プレイヤーの移動状態
+/// プレイヤーの音に関する処理を管理するクラス
 /// </summary>
-public enum PlayerMoveState
-{
-    Idol,
-    Walk,
-    Run
-}
-
-
-/// <summary>
-/// プレイヤーの状態一覧
-/// </summary>
-public enum PlayerAnimationState
-{
-    Idol,   // 待機状態
-    Walk,   // 歩き状態
-    Run,    // 走り状態
-    Jump    // ジャンプ状態
-}
-
-
 public class PlayerSoundManager : MonoBehaviour
 {
-    [SerializeField] AudioSource walkSound;
-    [SerializeField] AudioSource runSound;
-    [SerializeField] AudioSource damegeSound;
+    // 追加音
+    // ジャンプ
+    // 着地
 
-    public void DamageSound()
+    [SerializeField] AudioSource walkSound;
+    [SerializeField] AudioSource sprintSound;
+    [SerializeField] AudioSource damageSound;
+
+
+    void Start()
     {
-        damegeSound.Stop();
-        damegeSound.Play();
+
+        // 処理登録
+        PlayerEvent.onDamage += OnDamage;
     }
 
-    public void SoundPlays(PlayerAnimationState playerAnimationState)
+    void OnDestroy()
     {
-        // TO DO : 仮のSound管理（後で修正する）
-        if (playerAnimationState == PlayerAnimationState.Run)
-        {
-            if (!runSound.isPlaying)
-            {
-                runSound.loop = true;
-                runSound.Play();
-            }
-        }
-        else
-        {
-            if (runSound.isPlaying)
-            {
-                runSound.loop = false;
-                runSound.Stop();
-            }
-        }
+        // 処理解除
+        PlayerEvent.onDamage -= OnDamage;
+    }
 
-        if (playerAnimationState == PlayerAnimationState.Walk)
-        {
-            if (!walkSound.isPlaying)
-            {
-                walkSound.loop = true;
-                walkSound.Play();
-            }
-        }
-        else
-        {
-            if (walkSound.isPlaying)
-            {
-                walkSound.loop = false;
-                walkSound.Stop();
-            }
-        }
+    /// <summary>
+    /// ダメージを受けた際の音
+    /// </summary>
+    void OnDamage()
+    {
+        damageSound.Stop();
+        damageSound.Play();
+    }
+
+    /// <summary>
+    /// 歩き状態の音
+    /// </summary>
+    void OnWalk()
+    {
+        // 停止
+        sprintSound.loop = false;
+        sprintSound.Stop();
+
+        // 再生
+        walkSound.loop = true;
+        walkSound.Play();
+    }
+
+    /// <summary>
+    /// 疾走状態の音
+    /// </summary>
+    void OnSprint()
+    {
+        // 停止
+        walkSound.loop = false;
+        walkSound.Stop();
+
+        // 自分の再生
+        sprintSound.loop = true;
+        sprintSound.Play();
     }
 }

@@ -12,25 +12,11 @@ public class PlayerAbyssRespawner : MonoBehaviourPunCallbacks
     [SerializeField] float PITFALL_COORDINATE = -25f;
     bool isRespawns = false;
 
-    private void Awake()
-    {
-        //自分以外の場合は
-        if (!photonView.IsMine)
-        {
-            //処理終了
-            return;
-        }
-    }
-
-
     void Update()
     {
         //自分以外の場合は
         if (!photonView.IsMine)
-        {
-            //処理終了
             return;
-        }
 
         //下限突破しているなら
         if (transform.position.y <= PITFALL_COORDINATE && isRespawns == false)
@@ -40,11 +26,10 @@ public class PlayerAbyssRespawner : MonoBehaviourPunCallbacks
         }
     }
 
-
     /// <summary>
     /// Playerの奈落処理
     /// </summary>
-    public void AbyssRespawn()
+    void AbyssRespawn()
     {
         //死亡関数を呼び出し
         SpawnManager.instance.StartRespawnProcess();

@@ -63,8 +63,7 @@ public class CameraRotation : MonoBehaviourPunCallbacks
     /// </summary>
     void OnLookPerformed(InputAction.CallbackContext context)
     {
-        rotationInput = context.ReadValue<Vector2>(); // 入力値更新
-        Debug.Log("視点回転の入力を受け付けました！回転量："+ rotationInput);
+        rotationInput = context.ReadValue<Vector2>();
     }
 
     /// <summary>
@@ -73,8 +72,7 @@ public class CameraRotation : MonoBehaviourPunCallbacks
     /// <param name="context"></param>
     void OnLookCanceled(InputAction.CallbackContext context)
     {
-        rotationInput = Vector2.zero; // 入力値リセット
-        Debug.Log("視点回転の入力が終わりました"+ rotationInput);
+        rotationInput = Vector2.zero;
     }
 
     /// <summary>

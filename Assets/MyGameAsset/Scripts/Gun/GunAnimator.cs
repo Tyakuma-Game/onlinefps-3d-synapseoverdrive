@@ -1,0 +1,43 @@
+using Photon.Pun;
+using UnityEngine;
+
+public class GunAnimator : MonoBehaviourPunCallbacks
+{
+    [SerializeField] Animator gunAnimator;
+
+    //string hashDamage = "Damage";
+    //string hashAttackType = "AttackType";
+    //string hashAttack = "Attack";
+    string hashMoveSpeed = "MoveSpeed";
+    //string hashIsGround = "IsGround";
+    //string hashWeaponChange = "WeaponChange";
+
+    void Start()
+    {
+        // 自身が操作するオブジェクトでなければ処理をスキップ
+        if (!photonView.IsMine)
+            return;
+
+        gunAnimator = GetComponent<Animator>();
+        PlayerMove.OnSpeedChanged += UpdateMoveSpeed;
+    }
+
+    void OnDestroy()
+    {
+        // 自身が操作するオブジェクトでなければ処理をスキップ
+        if (!photonView.IsMine)
+            return;
+
+        PlayerMove.OnSpeedChanged -= UpdateMoveSpeed;
+    }
+
+    /// <summary>
+    /// 現在の移動速度更新
+    /// </summary>
+    /// <param name="speed">現在の移動速度</param>
+    void UpdateMoveSpeed(float speed) =>
+        gunAnimator.SetFloat(hashMoveSpeed, speed, 0.1f, Time.deltaTime);
+
+
+
+}

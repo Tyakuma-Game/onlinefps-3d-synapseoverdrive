@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 /// <summary>
@@ -13,35 +14,59 @@ public enum AttackType : int
 /// <summary>
 /// ƒAƒjƒ[ƒVƒ‡ƒ“‚ğŠÇ—‚·‚éƒNƒ‰ƒX
 /// </summary>
-public class PlayerAnimator : MonoBehaviour
+public class PlayerAnimator : MonoBehaviourPunCallbacks
 {
+    [Header(" Elements ")]
     [SerializeField] Animator playerAnimator;
     
-    // ƒ_ƒ[ƒWŠÖ˜A
+
     string hashDamage = "Damage";
     string hashHP = "HP";
-
-    // UŒ‚ŠÖ˜A
     string hashAttackType = "AttackType";
     string hashAttack = "Attack";
-
-    // ˆÚ“®ŠÖ˜A
     string hashMoveSpeed = "MoveSpeed";
-
-    // JumpŠÖ˜A
     string hashIsGround = "IsGround";
-
-    // •ŠíŒğŠ·
     string hashWeaponChange = "WeaponChange";
 
-    /// <summary>
-    /// Œ»İ‚ÌˆÚ“®‘¬“x‚ğXV
-    /// </summary>
-    /// <param name="moveSpeed">ˆÚ“®‘¬“x</param>
-    public void UpdateMoveSpeed(float moveSpeed)
+    void Start()
     {
-        playerAnimator.SetFloat(hashMoveSpeed, moveSpeed, 0.1f, Time.deltaTime);
+        // ©g‚ª‘€ì‚·‚éƒIƒuƒWƒFƒNƒg‚Å‚È‚¯‚ê‚Îˆ—‚ğƒXƒLƒbƒv
+        if (!photonView.IsMine)
+            return;
+
+        // ˆ—“o˜^
+        PlayerMove.OnSpeedChanged += UpdateMoveSpeed;
+        PlayerJump.OnGroundContactChange += OnGroundContactChange;
     }
+
+    void OnDestroy()
+    {
+        // ©g‚ª‘€ì‚·‚éƒIƒuƒWƒFƒNƒg‚Å‚È‚¯‚ê‚Îˆ—‚ğƒXƒLƒbƒv
+        if (!photonView.IsMine)
+            return;
+
+        // ˆ—‰ğœ
+        PlayerMove.OnSpeedChanged -= UpdateMoveSpeed;
+        PlayerJump.OnGroundContactChange -= OnGroundContactChange;
+    }
+
+    /// <summary>
+    /// Œ»İ‚ÌˆÚ“®‘¬“xXV
+    /// </summary>
+    /// <param name="speed">Œ»İ‚ÌˆÚ“®‘¬“x</param>
+    void UpdateMoveSpeed(float speed) =>
+        playerAnimator.SetFloat(hashMoveSpeed, speed, 0.1f, Time.deltaTime);
+
+    /// <summary>
+    /// ’n–Ê‚ÉÚG‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ÌXV
+    /// </summary>
+    /// <param name="isGround">ÚG‚µ‚Ä‚¢‚é‚©</param>
+    void OnGroundContactChange(bool isGround) =>
+        playerAnimator.SetBool(hashIsGround, isGround);
+
+    //|||||||||||||||||||||||||||/
+    // ƒŠƒtƒ@ƒNƒ^ƒŠƒ“ƒO’†
+    //|||||||||||||||||||||||||||/
 
     /// <summary>
     /// Œ»İ‚ÌHP‚ğ“ü‚ê‚é
@@ -58,15 +83,6 @@ public class PlayerAnimator : MonoBehaviour
     public void IsWeaponChange()
     {
         playerAnimator.SetTrigger(hashWeaponChange);
-    }
-
-    /// <summary>
-    /// ’n–Ê‚É’…’n‚µ‚Ä‚¢‚é‚©‚ğİ’è
-    /// </summary>
-    /// <param name="isGround">Œ»İ’…’n‚µ‚Ä‚¢‚é‚©</param>
-    public void IsGround(bool isGround)
-    {
-        playerAnimator.SetBool(hashIsGround, isGround);
     }
 
     /// <summary>
