@@ -2092,7 +2092,6 @@ Transform:
   - {fileID: 1197707168}
   - {fileID: 1370834444}
   - {fileID: 1795723649}
-  - {fileID: 344624790}
   - {fileID: 21012016}
   - {fileID: 2124221346}
   - {fileID: 1839916472}
@@ -8926,11 +8925,6 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000012506713666, guid: 58d97d456aead63499ac7d5316541f78, type: 3}
   m_PrefabInstance: {fileID: 417898941}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &344624790 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9223372036854775806, guid: 5679dbafae207c647bfe22b5551bbeba, type: 3}
-  m_PrefabInstance: {fileID: 596186799}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &346959984
 PrefabInstance:
