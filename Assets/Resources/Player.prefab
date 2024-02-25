@@ -10808,6 +10808,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerModel:
+  - {fileID: 4499635593735343061}
   - {fileID: 2621048993841978037}
   - {fileID: 8630307668694925003}
   - {fileID: 2126069355536730150}

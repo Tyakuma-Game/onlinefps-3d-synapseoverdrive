@@ -308,6 +308,34 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Mouse"",
+            ""id"": ""f8ab6277-c9ec-49c9-9815-ea7984e181b5"",
+            ""actions"": [
+                {
+                    ""name"": ""Cursorlock"",
+                    ""type"": ""Button"",
+                    ""id"": ""f076e9b7-1033-496f-9c94-592aa9bf6ccc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""8a5c59a2-61cd-4fb6-aa62-6b3a494cf1db"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cursorlock"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -324,6 +352,9 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
         m_Gun_Zoom = m_Gun.FindAction("Zoom", throwIfNotFound: true);
         m_Gun_WeaponChange = m_Gun.FindAction("WeaponChange", throwIfNotFound: true);
         m_Gun_Reload = m_Gun.FindAction("Reload", throwIfNotFound: true);
+        // Mouse
+        m_Mouse = asset.FindActionMap("Mouse", throwIfNotFound: true);
+        m_Mouse_Cursorlock = m_Mouse.FindAction("Cursorlock", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -521,6 +552,52 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
         }
     }
     public GunActions @Gun => new GunActions(this);
+
+    // Mouse
+    private readonly InputActionMap m_Mouse;
+    private List<IMouseActions> m_MouseActionsCallbackInterfaces = new List<IMouseActions>();
+    private readonly InputAction m_Mouse_Cursorlock;
+    public struct MouseActions
+    {
+        private @GameInputs m_Wrapper;
+        public MouseActions(@GameInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Cursorlock => m_Wrapper.m_Mouse_Cursorlock;
+        public InputActionMap Get() { return m_Wrapper.m_Mouse; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MouseActions set) { return set.Get(); }
+        public void AddCallbacks(IMouseActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MouseActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MouseActionsCallbackInterfaces.Add(instance);
+            @Cursorlock.started += instance.OnCursorlock;
+            @Cursorlock.performed += instance.OnCursorlock;
+            @Cursorlock.canceled += instance.OnCursorlock;
+        }
+
+        private void UnregisterCallbacks(IMouseActions instance)
+        {
+            @Cursorlock.started -= instance.OnCursorlock;
+            @Cursorlock.performed -= instance.OnCursorlock;
+            @Cursorlock.canceled -= instance.OnCursorlock;
+        }
+
+        public void RemoveCallbacks(IMouseActions instance)
+        {
+            if (m_Wrapper.m_MouseActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMouseActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MouseActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MouseActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MouseActions @Mouse => new MouseActions(this);
     public interface IPlayerActions
     {
         void OnLook(InputAction.CallbackContext context);
@@ -534,5 +611,9 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
         void OnZoom(InputAction.CallbackContext context);
         void OnWeaponChange(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
+    }
+    public interface IMouseActions
+    {
+        void OnCursorlock(InputAction.CallbackContext context);
     }
 }

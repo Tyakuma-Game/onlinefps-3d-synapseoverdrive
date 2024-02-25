@@ -286,6 +286,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Mouse",
+            "id": "f8ab6277-c9ec-49c9-9815-ea7984e181b5",
+            "actions": [
+                {
+                    "name": "Cursorlock",
+                    "type": "Button",
+                    "id": "f076e9b7-1033-496f-9c94-592aa9bf6ccc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "8a5c59a2-61cd-4fb6-aa62-6b3a494cf1db",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cursorlock",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

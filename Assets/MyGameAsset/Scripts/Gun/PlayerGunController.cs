@@ -48,15 +48,6 @@ namespace Guns
 
         void Start()
         {
-            if (!photonView.IsMine)
-                return;
-
-            // ズーム関連処理登録
-            InputManager.Controls.Gun.Zoom.started += ZoomIn;
-            InputManager.Controls.Gun.Zoom.canceled += ZoomOut;
-
-
-
             // 使用する銃ホルダー選択（自分視点か相手視点かを基に決定）
             GameObject[] selectedGunsHolder = photonView.IsMine ? gunsHolder : otherGunsHolder;
 
@@ -72,6 +63,10 @@ namespace Guns
                     ammunition.Add(gun.MaxAmmunition);  // 所持弾薬
                     ammoClip.Add(gun.MaxAmmoClip);      // マガジン内弾薬
                 }
+
+                // ズーム関連処理登録
+                InputManager.Controls.Gun.Zoom.started += ZoomIn;
+                InputManager.Controls.Gun.Zoom.canceled += ZoomOut;
             }
 
             // 銃の表示切替
@@ -87,8 +82,6 @@ namespace Guns
             InputManager.Controls.Gun.Zoom.started -= ZoomIn;
             InputManager.Controls.Gun.Zoom.canceled -= ZoomOut;
         }
-
-
 
         void Update()
         {

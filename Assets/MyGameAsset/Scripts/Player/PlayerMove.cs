@@ -65,6 +65,9 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
         // 移動処理を実行
         Move(moveDirection);
+
+        // Animationの関係上...
+        OnSpeedChanged?.Invoke(currentSpeed * moveDirection.magnitude);
     }
 
     /// <summary>
@@ -73,7 +76,6 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     void OnWalk(InputAction.CallbackContext context)
     {
         currentSpeed = walkSpeed;
-        OnSpeedChanged?.Invoke(currentSpeed);
     }
 
     /// <summary>
@@ -82,15 +84,17 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     void OnDash(InputAction.CallbackContext context)
     {
         currentSpeed = dashSpeed;
-        OnSpeedChanged?.Invoke(currentSpeed);
     }
 
     /// <summary>
     /// 入力に基づいて移動方向更新
     /// </summary>
     /// <param name="context">入力のコンテキスト</param>
-    void UpdateMoveDirection(InputAction.CallbackContext context) =>
+    void UpdateMoveDirection(InputAction.CallbackContext context)
+    {
         moveDirection = context.ReadValue<Vector2>();
+    }
+        
 
     /// <summary>
     /// プレイヤーを指定された方向と速度で移動させる
