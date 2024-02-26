@@ -8,7 +8,8 @@ using UnityEngine.InputSystem;
 public class PlayerRotation : MonoBehaviourPunCallbacks
 {
     [Header(" Settings ")]
-    [SerializeField] float rotationSpeed = 100f;
+    [SerializeField] RotationSettings rotationSettings; //TODO： リファクタリングする！
+
     Vector2 rotationInput = Vector2.zero;
     InputAction lookAction;
 
@@ -71,7 +72,7 @@ public class PlayerRotation : MonoBehaviourPunCallbacks
     void Rotate(Vector2 rotaInput)
     {
         // 計算
-        Vector2 rotation = new Vector2(rotaInput.x * rotationSpeed, 0);
+        Vector2 rotation = new Vector2(rotaInput.x * rotationSettings.rotationSpeed, 0);
 
         //横回転を反映
         transform.rotation = Quaternion.Euler           // オイラー角としての角度が返される

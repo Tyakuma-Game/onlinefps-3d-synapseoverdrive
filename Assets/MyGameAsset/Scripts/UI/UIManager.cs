@@ -1,5 +1,3 @@
-using System;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,6 +45,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] BloodEffect bloodEffect;
 
+    [SerializeField] GameObject settingPanel;
 
 
     void Awake()
@@ -161,5 +160,19 @@ public class UIManager : MonoBehaviour
     public PlayerInformation GetPlayerInformation()
     {
         return this.info;
+    }
+
+    //Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|/
+    //Å@ÉSÉäÇ®ÇµÉRÅ[ÉhÇ»ÇΩÇﬂèCê≥Ç∑ÇÈ
+    //Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|Å|/
+
+    public void ONSetting()
+    {
+        settingPanel.SetActive(true);
+    }
+
+    public void OffSetting()
+    {
+        settingPanel.SetActive(false);
     }
 }

@@ -15,7 +15,7 @@ public class InputManager : MonoBehaviour
     void Awake()
     {
         Controls = new GameInputs();    // GameInputsインスタンス生成
-        Controls.Enable();              // 入力システム有効化
+        Controls?.Enable();              // 入力システム有効化
     }
 
     void OnDestroy()

@@ -5962,6 +5962,7 @@ MonoBehaviour:
   - {fileID: 2538743549021359465}
   - {fileID: 3589145521329389154}
   - {fileID: 8300119068142589835}
+  autoFireRate: 0.1
 --- !u!114 &1087863930571978241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6066,7 +6067,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d26d3dfdc9f09bd42bd255f81e386312, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 3
+  rotationSettings: {fileID: 11400000, guid: 1f05bd520a6b45040bb7210fa877c9f6, type: 2}
 --- !u!114 &8402002310179638983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6158,7 +6159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   verticalRotationRange: 60
-  sensitivity: 3
+  rotationSettings: {fileID: 11400000, guid: 1f05bd520a6b45040bb7210fa877c9f6, type: 2}
   viewPoint: {fileID: 934038861596881044}
 --- !u!114 &1079370877213003359
 MonoBehaviour:

@@ -9,7 +9,7 @@ public class CameraRotation : MonoBehaviourPunCallbacks
 {
     [Header(" Settings ")]
     [SerializeField] float verticalRotationRange = 60f;
-    [SerializeField] float sensitivity = 1f;
+    [SerializeField] RotationSettings rotationSettings; //TODO： リファクタリングする！
 
     [Header(" Elements ")]
     [SerializeField] Transform viewPoint;
@@ -81,7 +81,7 @@ public class CameraRotation : MonoBehaviourPunCallbacks
     void Rotate()
     {
         // 回転計算
-        verticalMouseInput += rotationInput.y * sensitivity;
+        verticalMouseInput += rotationInput.y * rotationSettings.rotationSpeed;
         verticalMouseInput = Mathf.Clamp(verticalMouseInput,
                                 -verticalRotationRange, verticalRotationRange);
 
