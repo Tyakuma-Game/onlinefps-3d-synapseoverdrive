@@ -44,7 +44,6 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] BloodEffect bloodEffect;
 
-    [SerializeField] DashEffect dashEffect;
 
 
     void Awake()
@@ -54,17 +53,6 @@ public class UIManager : MonoBehaviour
         else
             Destroy(instance);
     }
-
-    public void IsRunning()
-    {
-        dashEffect.SetImageVisible(true);
-    }
-
-    public void IsNotRunning()
-    {
-        dashEffect.SetImageVisible(false);
-    }
-
 
     /// <summary>
     /// ‘•”õ’†‚Ìe‚Ì’e””½‰f

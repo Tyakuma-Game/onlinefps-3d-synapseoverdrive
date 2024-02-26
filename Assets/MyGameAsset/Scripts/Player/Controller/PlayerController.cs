@@ -114,30 +114,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     mouseCursorLock.UnlockScreen();
             }
         }
-
-        //|||||||||||||||||||||/
-        // PLAYERˆ—
-        //|||||||||||||||||||||/
-        //{
-        //    // ˆÚ“®@‚»‚ê‚¼‚ê‚ÉƒAƒjƒ[ƒVƒ‡ƒ“İ’è‚·‚éˆ—‚ğ‚â‚Á‚Ä“K—p‚·‚éŠ´‚¶‚É‚â‚éH@‚»‚ê‚ğƒAƒNƒVƒ‡ƒ“‚É“n‚µ‚ÄˆÚ“®‚Ì‚â‚Â‚ªŒÄ‚Ño‚·‚È‚Ç
-        //    Vector3 moveDirection = keyBoardInput.GetWASDAndArrowKeyInput();
-        //    if (moveDirection != Vector3.zero)
-        //    {
-        //    }
-        //    else
-        //    {
-        //        playerStatus.IsIdol();
-        //    }
-        //}
-
-        //if (playerStatus.AnimationState == PlayerAnimationState.Run)
-        //{
-        //    UIManager.instance.IsRunning(); //Event“o˜^Œ^‚É•ÏX‚·‚é
-        //}
-        //else
-        //{
-        //    UIManager.instance.IsNotRunning();
-        //}
     }
 
 

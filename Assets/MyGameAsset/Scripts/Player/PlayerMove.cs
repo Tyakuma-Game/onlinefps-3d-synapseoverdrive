@@ -13,6 +13,11 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     /// </summary>
     public static event Action<float> OnSpeedChanged;
 
+    /// <summary>
+    /// à⁄ìÆèÛë‘ïœçXìoò^ÇÃCallback
+    /// </summary>
+    public static event Action<bool> OnStateChanged;
+
     [Header(" Settings ")]
     [SerializeField] float walkSpeed = 4f;
     [SerializeField] float dashSpeed = 8f;
@@ -76,6 +81,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     void OnWalk(InputAction.CallbackContext context)
     {
         currentSpeed = walkSpeed;
+        OnStateChanged?.Invoke(false);
     }
 
     /// <summary>
@@ -84,6 +90,7 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     void OnDash(InputAction.CallbackContext context)
     {
         currentSpeed = dashSpeed;
+        OnStateChanged?.Invoke(true);
     }
 
     /// <summary>
