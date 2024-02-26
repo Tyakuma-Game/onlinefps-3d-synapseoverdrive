@@ -3,6 +3,8 @@ using ExitGames.Client.Photon;
 using Photon.Realtime;
 using UnityEngine.SceneManagement;
 
+// TODO: 同じく大規模に作り直す
+
 /// <summary>
 /// ゲーム中に発生したイベント処理クラス
 /// </summary>

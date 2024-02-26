@@ -3,6 +3,11 @@ using Photon.Pun;
 using MiniMap;
 using System;
 
+// TODO: ì‚è’¼‚·
+
+/// <summary>
+/// ƒvƒŒƒCƒ„[‚ÌEventˆ—
+/// </summary>
 public static class PlayerEvent
 {
     public static Action onDamage;
@@ -25,15 +30,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
 
     [SerializeField] PlayerSoundManager playerSoundManager;
-
-
-    // “ü—ÍƒVƒXƒeƒ€
-    [Tooltip("ƒL[ƒ{[ƒh‚Ì“ü—Íˆ—")]
-    KeyBoardInput keyBoardInput;
-   
-
-    IMouseCursorLock mouseCursorLock;
-
    
     [SerializeField] GameObject spawnEffect;
 
@@ -65,11 +61,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
         enemyIcon.SetIconVisibility(false);
         MiniMapController.instance.SetMiniMapTarget(this.transform);
 
-        // “ü—ÍƒVƒXƒeƒ€
-        keyBoardInput = GetComponent<KeyBoardInput>();
-        mouseCursorLock = GetComponent<IMouseCursorLock>();
-        mouseCursorLock.LockScreen();
-
         playerStatus.Init();
 
         //HPƒXƒ‰ƒCƒ_[”½‰f
@@ -92,20 +83,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
             // ˆ—I—¹
             return;
-        }
-
-        //|||||||||||||||||||||/
-        // ó‘Ô•ÏXˆ—
-        //|||||||||||||||||||||/
-        {
-            // ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ÌƒƒbƒNó‘Ô•ÏX
-            if (keyBoardInput.GetCursorLockKeyInput())
-            {
-                if (mouseCursorLock.IsLocked())
-                    mouseCursorLock.LockScreen();
-                else
-                    mouseCursorLock.UnlockScreen();
-            }
         }
     }
 

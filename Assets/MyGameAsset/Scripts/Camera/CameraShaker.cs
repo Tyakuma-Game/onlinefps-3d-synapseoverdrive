@@ -17,29 +17,21 @@ public class CameraShaker : MonoBehaviourPunCallbacks
     Camera myCamera;
     float shakeCount = 0;
 
-    /// <summary>
-    /// 初期化
-    /// </summary>
     void Start()
     {
-        // 自身が操作するオブジェクトでなければ処理をスキップ
         if (!photonView.IsMine)
             return;
 
         myCamera = Camera.main;         // メインカメラを取得
-        PlayerEvent.onDamage += Shake;  // ダメージイベントにカメラの揺れ関数を追加
+        PlayerEvent.onDamage += Shake;  // 処理登録
     }
 
-    /// <summary>
-    /// 破棄時
-    /// </summary>
     void OnDestroy()
     {
-        // 自身でない場合は処理終了
         if (!photonView.IsMine)
             return;
 
-        // ダメージイベントからカメラの揺れ関数を削除
+        // 処理解除
         PlayerEvent.onDamage -= Shake;
     }
 
@@ -69,6 +61,7 @@ public class CameraShaker : MonoBehaviourPunCallbacks
             shakeCount += Time.deltaTime;
             yield return null;
         }
+
         // 揺れが終わったらカメラを元の位置に
         viewPoint.transform.position = sabViewPoint.transform.position;
     }

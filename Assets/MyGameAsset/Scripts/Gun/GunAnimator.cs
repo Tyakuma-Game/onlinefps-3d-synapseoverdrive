@@ -1,18 +1,20 @@
-using Guns;
 using Photon.Pun;
 using UnityEngine;
 
+/// <summary>
+/// 銃のアニメーションに関する管理クラス
+/// </summary>
 public class GunAnimator : MonoBehaviourPunCallbacks
 {
     [Header(" Elements ")]
     [SerializeField] Animator gunAnimator;
 
-    // アクセス値
-    const string hashAttackType     = "AttackType";
-    const string hashAttack         = "Attack";
-    const string hashMoveSpeed      = "MoveSpeed";
-    const string hashIsZoom         = "IsZoom";
-    const string hashWeaponChange   = "WeaponChange";
+    // アニメーションパラメータのハッシュ
+    const string HASH_ATTACK_TYPE   = "AttackType";
+    const string HASH_ATTACK        = "Attack";
+    const string HASH_MOVE_SPEED    = "MoveSpeed";
+    const string HASH_IS_ZOOM       = "IsZoom";
+    const string HASH_WEAPON_CHANGE = "WeaponChange";
 
     void Start()
     {
@@ -45,20 +47,20 @@ public class GunAnimator : MonoBehaviourPunCallbacks
     /// </summary>
     /// <param name="speed">現在の移動速度</param>
     void UpdateMoveSpeed(float speed) =>
-        gunAnimator.SetFloat(hashMoveSpeed, speed, 0.1f, Time.deltaTime);
+        gunAnimator.SetFloat(HASH_MOVE_SPEED, speed, 0.1f, Time.deltaTime);
 
     /// <summary>
     /// ズーム状態変更
     /// </summary>
     /// <param name="isZoom">ズーム中なのかどうか</param>
     void GunZoomStateChange(bool isZoom) =>
-        gunAnimator.SetBool(hashIsZoom, isZoom);
+        gunAnimator.SetBool(HASH_IS_ZOOM, isZoom);
 
     /// <summary>
     /// 武器交換
     /// </summary>
     void OnWeaponChange() =>
-        gunAnimator.SetTrigger(hashWeaponChange);
+        gunAnimator.SetTrigger(HASH_WEAPON_CHANGE);
 
     /// <summary>
     /// 銃発射
@@ -66,7 +68,7 @@ public class GunAnimator : MonoBehaviourPunCallbacks
     /// <param name="attackType">銃の種類</param>
     void OnGunShot(int attackType)
     {
-        gunAnimator.SetInteger(hashAttackType, attackType);
-        gunAnimator.SetTrigger(hashAttack);
+        gunAnimator.SetInteger(HASH_ATTACK_TYPE, attackType);
+        gunAnimator.SetTrigger(HASH_ATTACK);
     }
 }

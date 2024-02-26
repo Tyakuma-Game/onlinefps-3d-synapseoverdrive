@@ -61,6 +61,7 @@ public class PlayerJump : MonoBehaviourPunCallbacks
     {
         if (isGround)
         {
+            // —Í‚ğ‰Á‚¦‚é
             rb.AddForce(jumpForce, ForceMode.VelocityChange);
 
             // •ÏX‚Æ’Ê’m

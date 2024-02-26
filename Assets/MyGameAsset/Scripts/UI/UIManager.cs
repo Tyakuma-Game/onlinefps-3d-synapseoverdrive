@@ -3,6 +3,9 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
+// TODO:全体的に大規模に作り直す
+// 各種処理を分割しそれぞれをEventから呼び出す感じに
+
 /// <summary>
 /// UI管理クラス
 /// </summary>

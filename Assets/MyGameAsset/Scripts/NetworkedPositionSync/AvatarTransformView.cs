@@ -7,14 +7,15 @@ using Photon.Pun;
 public class AvatarTransformView : MonoBehaviourPunCallbacks, IPunObservable
 {
     [Header(" Settings ")]
-    [SerializeField, Tooltip("補間にかける時間")] float INTERPOLATION_PERIOD = 0.1f;
-    [SerializeField, Tooltip("他プレイヤーの移動判定基準値")] float MIN_MOVEMENT_THRESHOLD = 0.01f;
+    [SerializeField, Tooltip("補間にかける時間")]
+    float INTERPOLATION_PERIOD = 0.1f;
 
-    // 経過時間
-    float elapsedTime;
+    [SerializeField, Tooltip("他プレイヤーの移動判定基準値")]
+    float MIN_MOVEMENT_THRESHOLD = 0.01f;
 
-    // 他のプレイヤーが停止しているか
-    bool isOtherPlayerMoving = true;
+    
+    float elapsedTime;              // 経過時間
+    bool isOtherPlayerMoving = true;// 他のプレイヤーが停止しているか
 
     // 補間の座標
     Vector3 startPosition;

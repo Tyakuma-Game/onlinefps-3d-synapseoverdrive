@@ -3,8 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
-using System.Net.NetworkInformation;
 
+// TODO:大規模な修正が必要
+// 全体的にスクリプトを分割し、MVCモデル形式で作り直す
 
 public class RoomDataSettingTest
 {

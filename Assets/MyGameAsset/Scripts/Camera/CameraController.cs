@@ -1,31 +1,25 @@
 using UnityEngine;
-using System;
 using Photon.Pun;
-
-// TODO: ‚±‚ê‚àEvent‹ì“®Œ^‚É•ÏX‚µ‚ÄŒø—¦‰»‚·‚éI
 
 /// <summary>
 /// ƒJƒƒ‰‚ÉŠÖ‚·‚éˆ—‚ğ‚Ü‚Æ‚ß‚ÄŠÇ—‚·‚éƒNƒ‰ƒX
 /// </summary>
 public class CameraController : MonoBehaviourPunCallbacks
 {
-    [Tooltip("ƒJƒƒ‰‚ÌˆÊ’uƒIƒuƒWƒFƒNƒg")]
+    [Header(" Elements ")]
     [SerializeField] Transform viewPoint;
     Camera myCamera;
 
     void Start()
     {
-        // ©g‚ª‘€ì‚·‚éƒIƒuƒWƒFƒNƒg‚Å‚È‚¯‚ê‚Îˆ—‚ğƒXƒLƒbƒv
         if (!photonView.IsMine)
             return;
 
-        // æ“¾
         myCamera = Camera.main;
     }
 
     void Update()
-    {
-        // ©g‚ª‘€ì‚·‚éƒIƒuƒWƒFƒNƒg‚Å‚È‚¯‚ê‚Îˆ—‚ğƒXƒLƒbƒv
+    { 
         if (!photonView.IsMine)
             return;
 
@@ -37,6 +31,9 @@ public class CameraController : MonoBehaviourPunCallbacks
     //|||||||||||||||||||||||||||/
     //@Ray¶¬
     //|||||||||||||||||||||||||||/
+
+    // TODO:
+    // ‚±‚Ìˆ—‚ğ•ÊƒNƒ‰ƒX‚É•ªŠ„‚·‚éI
 
     /// <summary>
     /// ƒJƒƒ‰‚©‚çêŠ‚ğw’è‚µ‚ÄRay‚ğ¶¬

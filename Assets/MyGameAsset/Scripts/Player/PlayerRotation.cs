@@ -3,21 +3,21 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
-/// Playerの回転クラス
+/// Playerの回転を管理するクラス
 /// </summary>
 public class PlayerRotation : MonoBehaviourPunCallbacks
 {
-    [Header("Settings")]
+    [Header(" Settings ")]
     [SerializeField] float rotationSpeed = 100f;
     Vector2 rotationInput = Vector2.zero;
     InputAction lookAction;
 
     void Start()
     {
-        // 自身が操作するオブジェクトでなければ処理をスキップ
         if (!photonView.IsMine)
             return;
 
+        // 取得
         lookAction = InputManager.Controls.Player.Look;
 
         // メソッドをイベントに登録
@@ -28,7 +28,6 @@ public class PlayerRotation : MonoBehaviourPunCallbacks
 
     void OnDestroy()
     {
-        // 自身が操作するオブジェクトでなければ処理をスキップ
         if (!photonView.IsMine)
             return;
 
@@ -40,20 +39,26 @@ public class PlayerRotation : MonoBehaviourPunCallbacks
 
     void FixedUpdate()
     {
-        // 自身が操作するオブジェクトでなければ処理をスキップ
         if (!photonView.IsMine)
             return;
 
-        if (rotationInput == Vector2.zero) return;
+        if (rotationInput == Vector2.zero)
+            return;
 
         Rotate(rotationInput);
     }
 
+    /// <summary>
+    /// 入力時に傾き値を受け取る
+    /// </summary>
     void OnLookPerformed(InputAction.CallbackContext context)
     {
         rotationInput = context.ReadValue<Vector2>();
     }
 
+    /// <summary>
+    /// 入力終了時に呼び出す
+    /// </summary>
     void OnLookCanceled(InputAction.CallbackContext context)
     {
         rotationInput = Vector2.zero;
@@ -63,15 +68,15 @@ public class PlayerRotation : MonoBehaviourPunCallbacks
     /// Playerの回転処理
     /// </summary>
     /// <param name="rotaInput">回転のための入力情報</param>
-    public void Rotate(Vector2 rotaInput)
+    void Rotate(Vector2 rotaInput)
     {
         // 計算
         Vector2 rotation = new Vector2(rotaInput.x * rotationSpeed, 0);
 
         //横回転を反映
-        transform.rotation = Quaternion.Euler           //オイラー角としての角度が返される
+        transform.rotation = Quaternion.Euler           // オイラー角としての角度が返される
                 (transform.eulerAngles.x,
-                transform.eulerAngles.y + rotation.x,   //マウスのx軸の入力を足す
+                transform.eulerAngles.y + rotation.x,   // x軸の入力を足す
                 transform.eulerAngles.z);
     }
 }

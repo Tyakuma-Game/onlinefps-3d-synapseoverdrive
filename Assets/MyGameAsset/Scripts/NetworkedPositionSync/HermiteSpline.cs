@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Hermiteスプライン補間を行う静的クラス
+/// スプライン補間を行う静的クラス
 /// </summary>
 public static class HermiteSpline
 {

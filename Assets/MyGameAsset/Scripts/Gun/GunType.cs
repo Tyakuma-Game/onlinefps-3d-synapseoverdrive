@@ -2,7 +2,7 @@
 /// <summary>
 /// 銃の種類を表す列挙体
 /// </summary>
-enum GunType
+public enum GunType
 {
     HandGun,        // ハンドガン
     AssaultRifle,   // アサルトライフル

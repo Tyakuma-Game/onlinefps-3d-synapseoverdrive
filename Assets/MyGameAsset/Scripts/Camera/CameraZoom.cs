@@ -8,13 +8,14 @@ using System.Collections;
 /// </summary>
 public class CameraZoom : MonoBehaviourPunCallbacks
 {
-    [Header(" Settings ")]
-    [SerializeField] float zoomThreshold = 0.01f;
-
     /// <summary>
     /// ズーム状態が変更されたときに発火するイベント
     /// </summary>
     public static Action<float, float> OnZoomStateChanged;
+
+    [Header(" Settings ")]
+    [SerializeField] float zoomThreshold = 0.01f;
+
     Camera myCamera;
     Coroutine zoomCoroutine;
 
@@ -32,7 +33,6 @@ public class CameraZoom : MonoBehaviourPunCallbacks
 
     void OnDestroy()
     {
-        // 自身が操作するオブジェクトでなければ処理をスキップ
         if (!photonView.IsMine)
             return;
 
@@ -65,8 +65,7 @@ public class CameraZoom : MonoBehaviourPunCallbacks
     /// <returns>コルーチンの実行制御に使用されるIEnumerator</returns>
     IEnumerator AdjustCameraZoom(float targetZoom, float zoomSpeed)
     {
-        // myCamera.fieldOfViewがtargetZoomになるまでループ
-        while (Mathf.Abs(myCamera.fieldOfView - targetZoom) > zoomThreshold)
+        while (Mathf.Abs(myCamera.fieldOfView - targetZoom) > zoomThreshold) // ズーム倍率に到達するまでループ
         {
             myCamera.fieldOfView = Mathf.Lerp(myCamera.fieldOfView, targetZoom, zoomSpeed * Time.deltaTime);
             yield return null;

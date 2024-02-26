@@ -2,6 +2,8 @@ using UnityEngine;
 
 /// <summary>
 /// 銃のパラメータクラス
+/// 新規銃を作成する場合はこのデータを作成し
+/// Controllerクラスに登録する
 /// </summary>
 [CreateAssetMenu(fileName = "NewGunData", menuName = "MyFPSGameDate/Gun Data", order = 0)]
 public class GunData : ScriptableObject
@@ -13,6 +15,8 @@ public class GunData : ScriptableObject
     [Header(" 射撃関連 ")]
     [SerializeField] int shotDamage = 10;           // 一発当たりのダメージ量
     [SerializeField] float shootInterval = 0.1f;    // 銃の発射間隔
+
+    [Header(" ズーム関連 ")]
     [SerializeField] float adsZoom = 2.0f;          // ズーム倍率
     [SerializeField] float adsSpeed = 0.5f;         // ズーム速度
 

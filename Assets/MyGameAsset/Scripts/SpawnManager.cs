@@ -50,10 +50,11 @@ public class SpawnManager : MonoBehaviour
     /// </summary>
     public void SpawnPlayer()
     {
+        // プレイヤー生成
         Transform spawnPoint = GetRandomSpawnPoint();
         playerInstance = PhotonNetwork.Instantiate(playerPrefab.name, spawnPoint.position, spawnPoint.rotation);
         
-        //親オブジェクト設定
+        // 親オブジェクト設定
         if (parentObject != null)
             playerInstance.transform.SetParent(parentObject, false);
     }
@@ -61,10 +62,8 @@ public class SpawnManager : MonoBehaviour
     /// <summary>
     /// プレイヤーが死亡した際リスポーンまでの一連の処理
     /// </summary>
-    public void StartRespawnProcess()
-    {
+    public void StartRespawnProcess() =>
         StartCoroutine(RespawnPlayer());
-    }
 
     /// <summary>
     /// プレイヤーのリスポーンを管理するコルーチン

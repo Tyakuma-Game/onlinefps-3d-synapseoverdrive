@@ -2,6 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Realtime;
 
+// TODO:
+// イベント駆動式にリファクタリングし直す
+
 /// <summary>
 /// ルーム情報クラス
 /// </summary>

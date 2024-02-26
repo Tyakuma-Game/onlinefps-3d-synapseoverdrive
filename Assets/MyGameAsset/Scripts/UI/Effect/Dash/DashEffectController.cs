@@ -1,7 +1,11 @@
 using UnityEngine;
 
+/// <summary>
+/// ダッシュエフェクトの管理クラス
+/// </summary>
 public class DashEffectController : MonoBehaviour
 {
+    [Header(" Elements ")]
     [SerializeField] GameObject dashEffect;
 
     void Start()
@@ -15,7 +19,7 @@ public class DashEffectController : MonoBehaviour
     }
 
     /// <summary>
-    /// ダッシュエフェクトの表示切替
+    /// ダッシュエフェクト表示切替
     /// </summary>
     /// <param name="isActive">表示状態</param>
     void SetDashEffectActive(bool isActive) =>

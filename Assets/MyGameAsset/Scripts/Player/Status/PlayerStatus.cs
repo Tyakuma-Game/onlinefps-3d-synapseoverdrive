@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO: 作り直す
+// データクラスはスクリプタブオブジェクトで作り直す
+
 /// <summary>
 /// プレイヤーのステータス値を管理するクラス
 /// </summary>

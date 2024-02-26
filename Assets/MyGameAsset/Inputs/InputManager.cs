@@ -2,7 +2,7 @@ using UnityEngine;
 
 /// <summary>
 /// ゲーム中の入力処理管理クラス
-/// ゲームの入力システムを初期化し、有効化・無効化する責務を持つ
+/// ゲームの入力システムを初期化し有効化・無効化する責務を持つ
 /// </summary>
 public class InputManager : MonoBehaviour
 {
@@ -15,11 +15,11 @@ public class InputManager : MonoBehaviour
     void Awake()
     {
         Controls = new GameInputs();    // GameInputsインスタンス生成
-        Controls.Enable();              // 入力システムを有効化
+        Controls.Enable();              // 入力システム有効化
     }
 
     void OnDestroy()
     {
-        Controls?.Disable();// 入力システムが存在する場合に無効化
+        Controls?.Disable();    // 入力システム無効化
     }
 }

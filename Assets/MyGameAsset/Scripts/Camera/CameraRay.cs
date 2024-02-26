@@ -2,8 +2,11 @@ using Photon.Pun;
 using System;
 using UnityEngine;
 
+// TODO:
+// リファクタリングしてそれを作り直す！
+
 /// <summary>
-/// 作り直す！
+/// カメラのRay生成を管理するクラス
 /// </summary>
 public class CameraRay : MonoBehaviourPunCallbacks
 {

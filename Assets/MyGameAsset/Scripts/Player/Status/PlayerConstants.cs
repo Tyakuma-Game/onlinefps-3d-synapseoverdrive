@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// TODO: 作り直す
+
 /// <summary>
 /// プレイヤーの定数を管理するクラス
 /// </summary>

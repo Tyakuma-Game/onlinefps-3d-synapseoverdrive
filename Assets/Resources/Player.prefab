@@ -5800,6 +5800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lightDuration: 0.2
   particlesDuration: 0.1
+  particlesStartDelay: 0.2
   shootingLight: {fileID: 9105354821277877432}
   shootingParticles: {fileID: 1110253741646140648}
 --- !u!1 &934038861538154322
@@ -5824,8 +5825,6 @@ GameObject:
   - component: {fileID: 6225019319151826619}
   - component: {fileID: 552142755365448907}
   - component: {fileID: 5928588269494762908}
-  - component: {fileID: 6727318584958256230}
-  - component: {fileID: 6765047478441314159}
   - component: {fileID: 8402002310179638983}
   m_Layer: 0
   m_Name: Player
@@ -6068,30 +6067,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 3
---- !u!114 &6727318584958256230
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 934038861538154322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a849cfd17a217741996e4f69b9b5eac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &6765047478441314159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 934038861538154322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e1eda807ecaf804588144de1390d2dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8402002310179638983
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+// TODO: 作り直す
+// Event登録型でOnダメージ時のHPCallback実装に処理を付ける感じで良さげ！
+
 public class BloodEffect : MonoBehaviour
 {
     [Tooltip("血の画像")]

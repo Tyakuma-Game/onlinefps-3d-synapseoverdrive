@@ -8,8 +8,9 @@ using UnityEngine;
 public class GunEffects : MonoBehaviour
 {
     [Header(" Settings ")]
-    [SerializeField]float lightDuration = 0.1f;
-    [SerializeField]float particlesDuration = 1.0f;
+    [SerializeField] float lightDuration = 0.1f;
+    [SerializeField] float particlesDuration = 1.0f;
+    [SerializeField] float particlesStartDelay = 0.2f;
 
     [Header(" Elements ")]
     [SerializeField] Light shootingLight;
@@ -18,7 +19,7 @@ public class GunEffects : MonoBehaviour
     /// <summary>
     /// 発射用ライトをONにし、指定時間後にOFFにする
     /// </summary>
-    public void TurnOnShootingLight()
+    void TurnOnShootingLight()
     {
         StartCoroutine(TurnOffLightAfterDelay(lightDuration));
         shootingLight.enabled = true;
@@ -36,10 +37,10 @@ public class GunEffects : MonoBehaviour
     /// <summary>
     /// パーティクルを再生し、指定時間後に停止する
     /// </summary>
-    public void PlayShootingParticles()
+    void PlayShootingParticles()
     {
         StartCoroutine(StopParticlesAfterDelay(particlesDuration));
-        shootingParticles.Simulate(0.2f); // 0.2秒間再生を飛ばして開始する
+        shootingParticles.Simulate(particlesStartDelay); // フレームの関係上指定時間スキップ
         shootingParticles.Play();
     }
 

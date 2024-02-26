@@ -1,6 +1,8 @@
 using UnityEngine;
 using Photon.Pun;
 
+// TODO: 作り直す
+
 /// <summary>
 /// プレイヤーのモデルに関する処理を行うクラス
 /// </summary>

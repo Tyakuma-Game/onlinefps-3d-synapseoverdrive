@@ -1,4 +1,3 @@
-using Guns;
 using Photon.Pun;
 using UnityEngine;
 
@@ -11,12 +10,12 @@ public class PlayerAnimator : MonoBehaviourPunCallbacks
     [SerializeField] Animator playerAnimator;
 
     // アニメーションパラメータのハッシュ
-    const string HASH_DAMAGE = "Damage";
-    const string HASH_HP = "HP";
-    const string HASH_ATTACK_TYPE = "AttackType";
-    const string HASH_ATTACK = "Attack";
-    const string HASH_MOVE_SPEED = "MoveSpeed";
-    const string HASH_IS_GROUND = "IsGround";
+    const string HASH_DAMAGE        = "Damage";
+    const string HASH_HP            = "HP";
+    const string HASH_ATTACK_TYPE   = "AttackType";
+    const string HASH_ATTACK        = "Attack";
+    const string HASH_MOVE_SPEED    = "MoveSpeed";
+    const string HASH_IS_GROUND     = "IsGround";
     const string HASH_WEAPON_CHANGE = "WeaponChange";
 
     void Start()
