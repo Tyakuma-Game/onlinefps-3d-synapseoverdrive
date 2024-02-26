@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class GunAnimator : MonoBehaviourPunCallbacks
 {
+    [Header(" Elements ")]
     [SerializeField] Animator gunAnimator;
 
-    //string hashDamage = "Damage";
-    //string hashAttackType = "AttackType";
-    //string hashAttack = "Attack";
+    // アクセス用のハッシュ値
+    string hashAttackType = "AttackType";
+    string hashAttack = "Attack";
     string hashMoveSpeed = "MoveSpeed";
     string hashIsZoom = "IsZoom";
-    //string hashWeaponChange = "WeaponChange";
+    string hashWeaponChange = "WeaponChange";
 
     void Start()
     {
@@ -21,7 +22,10 @@ public class GunAnimator : MonoBehaviourPunCallbacks
 
         // 処理登録
         PlayerMove.OnSpeedChanged += UpdateMoveSpeed;
+
         PlayerGunController.OnGunZoomStateChanged += GunZoomStateChange;
+        PlayerGunController.OnWeaponChangeCallback += OnWeaponChange;
+        PlayerGunController.OnGunShotAnimationCallback += OnGunShot;
     }
 
     void OnDestroy()
@@ -32,7 +36,10 @@ public class GunAnimator : MonoBehaviourPunCallbacks
 
         // 処理解除
         PlayerMove.OnSpeedChanged -= UpdateMoveSpeed;
+
         PlayerGunController.OnGunZoomStateChanged -= GunZoomStateChange;
+        PlayerGunController.OnWeaponChangeCallback -= OnWeaponChange;
+        PlayerGunController.OnGunShotAnimationCallback -= OnGunShot;
     }
 
     /// <summary>
@@ -48,4 +55,20 @@ public class GunAnimator : MonoBehaviourPunCallbacks
     /// <param name="isZoom">ズーム中なのかどうか</param>
     void GunZoomStateChange(bool isZoom) =>
         gunAnimator.SetBool(hashIsZoom, isZoom);
+
+    /// <summary>
+    /// 武器交換
+    /// </summary>
+    void OnWeaponChange() =>
+        gunAnimator.SetTrigger(hashWeaponChange);
+
+    /// <summary>
+    /// 銃発射
+    /// </summary>
+    /// <param name="attackType">銃の種類</param>
+    void OnGunShot(int attackType)
+    {
+        gunAnimator.SetInteger(hashAttackType, attackType);
+        gunAnimator.SetTrigger(hashAttack);
+    }
 }

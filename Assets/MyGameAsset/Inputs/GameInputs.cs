@@ -210,7 +210,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Zoom"",
@@ -223,21 +223,12 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""WeaponChange"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""cf9e95e9-0821-45cf-b844-ba2b85bec878"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Reload"",
-                    ""type"": ""Button"",
-                    ""id"": ""3b769d9a-bc9c-4c1f-a419-413811d54758"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -277,7 +268,7 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""b79f47a5-80c1-4219-a7da-ada8a3f66611"",
-                    ""path"": """",
+                    ""path"": ""<Gamepad>/dpad"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -287,12 +278,12 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""19d51818-588f-4839-b20f-5f3733cacaa9"",
-                    ""path"": """",
+                    ""id"": ""e3e6daf9-db03-478e-b9b2-41168fe7c161"",
+                    ""path"": ""<Mouse>/scroll"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Reload"",
+                    ""action"": ""WeaponChange"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -351,7 +342,6 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
         m_Gun_Shot = m_Gun.FindAction("Shot", throwIfNotFound: true);
         m_Gun_Zoom = m_Gun.FindAction("Zoom", throwIfNotFound: true);
         m_Gun_WeaponChange = m_Gun.FindAction("WeaponChange", throwIfNotFound: true);
-        m_Gun_Reload = m_Gun.FindAction("Reload", throwIfNotFound: true);
         // Mouse
         m_Mouse = asset.FindActionMap("Mouse", throwIfNotFound: true);
         m_Mouse_Cursorlock = m_Mouse.FindAction("Cursorlock", throwIfNotFound: true);
@@ -489,7 +479,6 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gun_Shot;
     private readonly InputAction m_Gun_Zoom;
     private readonly InputAction m_Gun_WeaponChange;
-    private readonly InputAction m_Gun_Reload;
     public struct GunActions
     {
         private @GameInputs m_Wrapper;
@@ -497,7 +486,6 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
         public InputAction @Shot => m_Wrapper.m_Gun_Shot;
         public InputAction @Zoom => m_Wrapper.m_Gun_Zoom;
         public InputAction @WeaponChange => m_Wrapper.m_Gun_WeaponChange;
-        public InputAction @Reload => m_Wrapper.m_Gun_Reload;
         public InputActionMap Get() { return m_Wrapper.m_Gun; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -516,9 +504,6 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
             @WeaponChange.started += instance.OnWeaponChange;
             @WeaponChange.performed += instance.OnWeaponChange;
             @WeaponChange.canceled += instance.OnWeaponChange;
-            @Reload.started += instance.OnReload;
-            @Reload.performed += instance.OnReload;
-            @Reload.canceled += instance.OnReload;
         }
 
         private void UnregisterCallbacks(IGunActions instance)
@@ -532,9 +517,6 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
             @WeaponChange.started -= instance.OnWeaponChange;
             @WeaponChange.performed -= instance.OnWeaponChange;
             @WeaponChange.canceled -= instance.OnWeaponChange;
-            @Reload.started -= instance.OnReload;
-            @Reload.performed -= instance.OnReload;
-            @Reload.canceled -= instance.OnReload;
         }
 
         public void RemoveCallbacks(IGunActions instance)
@@ -610,7 +592,6 @@ public partial class @GameInputs: IInputActionCollection2, IDisposable
         void OnShot(InputAction.CallbackContext context);
         void OnZoom(InputAction.CallbackContext context);
         void OnWeaponChange(InputAction.CallbackContext context);
-        void OnReload(InputAction.CallbackContext context);
     }
     public interface IMouseActions
     {

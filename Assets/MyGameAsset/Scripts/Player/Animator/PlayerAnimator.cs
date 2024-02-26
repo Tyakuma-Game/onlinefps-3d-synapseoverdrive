@@ -1,15 +1,6 @@
+using Guns;
 using Photon.Pun;
 using UnityEngine;
-
-/// <summary>
-/// UŒ‚‚Ìí—Ş
-/// </summary>
-public enum AttackType : int
-{
-    Short = 0,
-    Normal = 1,
-    Power = 2,
-}
 
 /// <summary>
 /// ƒAƒjƒ[ƒVƒ‡ƒ“‚ğŠÇ—‚·‚éƒNƒ‰ƒX
@@ -37,6 +28,9 @@ public class PlayerAnimator : MonoBehaviourPunCallbacks
         PlayerMove.OnSpeedChanged += UpdateMoveSpeed;
         PlayerJump.OnGroundContactChange += OnGroundContactChange;
         PlayerEvent.onDamage += OnDamage;
+
+        PlayerGunController.OnWeaponChangeCallback += OnWeaponChange;
+        PlayerGunController.OnGunShotAnimationCallback += OnGunShot;
     }
 
     void OnDestroy()
@@ -48,6 +42,9 @@ public class PlayerAnimator : MonoBehaviourPunCallbacks
         PlayerMove.OnSpeedChanged -= UpdateMoveSpeed;
         PlayerJump.OnGroundContactChange -= OnGroundContactChange;
         PlayerEvent.onDamage -= OnDamage;
+
+        PlayerGunController.OnWeaponChangeCallback -= OnWeaponChange;
+        PlayerGunController.OnGunShotAnimationCallback -= OnGunShot;
     }
 
     /// <summary>
@@ -76,7 +73,15 @@ public class PlayerAnimator : MonoBehaviourPunCallbacks
     void OnWeaponChange() =>
         playerAnimator.SetTrigger(hashWeaponChange);
 
-    
+    /// <summary>
+    /// e”­Ë
+    /// </summary>
+    /// <param name="attackType">e‚Ìí—Ş</param>
+    void OnGunShot(int attackType)
+    {
+        playerAnimator.SetInteger(hashAttackType, attackType);
+        playerAnimator.SetTrigger(hashAttack);
+    }
 
     //|||||||||||||||||||||||||||/
     // ƒŠƒtƒ@ƒNƒ^ƒŠƒ“ƒO’†
@@ -89,23 +94,5 @@ public class PlayerAnimator : MonoBehaviourPunCallbacks
     public void SetCurrentHP(int hp)
     {
         playerAnimator.SetInteger(hashHP, hp);
-    }
-
-    /// <summary>
-    /// •ŠíŒğŠ·‚ÌƒgƒŠƒK[‚ğ—§‚Ä‚é
-    /// </summary>
-    public void IsWeaponChange()
-    {
-        playerAnimator.SetTrigger(hashWeaponChange);
-    }
-
-    /// <summary>
-    /// UŒ‚ƒAƒjƒ[ƒVƒ‡ƒ“‚ğÄ¶
-    /// </summary>
-    /// <param name="typeID">UŒ‚‚Ìí—Ş</param>
-    public void Attack(AttackType typeID)
-    {
-        playerAnimator.SetInteger(hashAttackType, (int)typeID);
-        playerAnimator.SetTrigger(hashAttack);
     }
 }

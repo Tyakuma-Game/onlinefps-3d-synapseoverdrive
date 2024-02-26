@@ -667,7 +667,7 @@ Material:
     - _UseReflection: 0
     - _UseRim: 0
     - _UseRimShade: 0
-    - _UseShadow: 1
+    - _UseShadow: 0
     - _UvAnimRotation: 0
     - _UvAnimScrollX: 0
     - _UvAnimScrollY: 0

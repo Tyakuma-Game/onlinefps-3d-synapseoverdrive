@@ -8,16 +8,6 @@ using UnityEngine.InputSystem;
 namespace Guns
 {
     /// <summary>
-    /// e‚Ìí—Ş‚ğ•\‚·—ñ‹“‘Ì
-    /// </summary>
-    enum GunType
-    {
-        HandGun,        // ƒnƒ“ƒhƒKƒ“
-        AssaultRifle,   // ƒAƒTƒ‹ƒgƒ‰ƒCƒtƒ‹
-        SniperRifle     // ƒXƒiƒCƒp[ƒ‰ƒtƒ‹
-    }
-
-    /// <summary>
     /// ƒvƒŒƒCƒ„[‚ÌeŠÇ—ƒNƒ‰ƒX
     /// </summary>
     public class PlayerGunController : MonoBehaviourPunCallbacks
@@ -25,11 +15,7 @@ namespace Guns
         //|||||||||||||||||||||||||||/
         //@‰ü‘P•”•ª
         //|||||||||||||||||||||||||||/
-
-
-        [SerializeField] Animator gunAnimator;                  // ƒAƒNƒVƒ‡ƒ“‚É“‡‚·‚éŠ´‚¶‚ÅƒŠƒtƒ@ƒNƒ^ƒŠƒ“ƒO‚·‚éI
         [SerializeField] CameraController cameraController;     // ƒAƒNƒVƒ‡ƒ“‚É“‡‚·‚éŠ´‚¶‚ÅƒŠƒtƒ@ƒNƒ^ƒŠƒ“ƒO‚·‚é!
-        [SerializeField] PlayerAnimator playerAnimator;         // ƒAƒNƒVƒ‡ƒ“‚É“‡‚·‚éŠ´‚¶‚ÅƒŠƒtƒ@ƒNƒ^ƒŠƒ“ƒO‚·‚éI
 
         //|||||||||||||||||||||||||||/
 
@@ -67,6 +53,13 @@ namespace Guns
                 // ƒY[ƒ€ŠÖ˜Aˆ—“o˜^
                 InputManager.Controls.Gun.Zoom.started += ZoomIn;
                 InputManager.Controls.Gun.Zoom.canceled += ZoomOut;
+
+                // •ŠíŒğŠ·ˆ—“o˜^
+                InputManager.Controls.Gun.WeaponChange.performed += SwitchingGuns;
+
+                // ”­Ëˆ—“o˜^
+                InputManager.Controls.Gun.Shot.started += Shot;
+                InputManager.Controls.Gun.Shot.performed += Shot;
             }
 
             // e‚Ì•\¦Ø‘Ö
@@ -81,6 +74,13 @@ namespace Guns
             // ƒY[ƒ€ŠÖ˜Aˆ—‰ğœ
             InputManager.Controls.Gun.Zoom.started -= ZoomIn;
             InputManager.Controls.Gun.Zoom.canceled -= ZoomOut;
+
+            // •ŠíŒğŠ·ˆ—‰ğœ
+            InputManager.Controls.Gun.WeaponChange.performed -= SwitchingGuns;
+
+            // ”­Ëˆ—‰ğœ
+            InputManager.Controls.Gun.Shot.started -= Shot;
+            InputManager.Controls.Gun.Shot.performed -= Shot;
         }
 
         void Update()
@@ -88,12 +88,6 @@ namespace Guns
             // ©•ªˆÈŠO‚È‚çˆ—I—¹
             if (!photonView.IsMine)
                 return;
-
-            // e‚ÌØ‚è‘Ö‚¦
-            SwitchingGuns();
-
-            // ËŒ‚ŠÖ”
-            Fire();
 
             // ƒŠƒ[ƒhŠÖ”
             if (Input.GetKeyDown(KeyCode.R))
@@ -108,26 +102,37 @@ namespace Guns
         //@•ŠíØ‚è‘Ö‚¦
         //|||||||||||||||||||||||||||/
 
+        // TODO:ƒŠƒtƒ@ƒNƒ^‚·‚éI
+
+        /// <summary>
+        /// •Ší•ÏX‚ÌƒR[ƒ‹ƒoƒbƒNˆ—
+        /// </summary>
+        public static Action OnWeaponChangeCallback;
+
         /// <summary>
         /// e‚ÌØ‚è‘Ö‚¦ƒL[“ü—Í‚ğŒŸ’m
         /// </summary>
-        public void SwitchingGuns()
+        void SwitchingGuns(InputAction.CallbackContext context)
         {
-            int gunCount = Enum.GetValues(typeof(GunType)).Length;
+            Vector2 inputVector = context.ReadValue<Vector2>();
+            int direction = 0;
 
-            // ƒ}ƒEƒXƒzƒC[ƒ‹‚Å‚Ìe‚ÌØ‚è‘Ö‚¦
-            float mouseScroll = Input.GetAxisRaw("Mouse ScrollWheel");
-            if (mouseScroll != 0f)
-                UpdateSelectedGunType((int)Mathf.Sign(mouseScroll), gunCount);
-
-            // ”’lƒL[‚Å‚Ìe‚ÌØ‚è‘Ö‚¦
-            for (int i = 0; i < guns.Count; i++)
+            // y¬•ª‚ğg‚Á‚Ä•ûŒü‚ğŒˆ’èiãƒXƒNƒ[ƒ‹‚Ü‚½‚Í\šƒL[ã‚ÅŸ‚Ì•Ší‚ÉA‰ºƒXƒNƒ[ƒ‹‚Ü‚½‚Í\šƒL[‰º‚Å‘O‚Ì•Ší‚Éj
+            if (inputVector.y > 0)
             {
-                if (Input.GetKeyDown((i + 1).ToString()))
-                {
-                    SetGunTypeAndNotify((GunType)i);
-                    break; // ƒL[‚ª‰Ÿ‚³‚ê‚½‚çƒ‹[ƒv‚ğ”²‚¯‚é
-                }
+                // Ÿ‚Ì•Ší‚Ö
+                direction = 1;
+            }
+            else if (inputVector.y < 0)
+            {
+                // ‘O‚Ì•Ší‚Ö
+                direction = -1;
+            }
+
+            // •Ší‚ÌØ‚è‘Ö‚¦‚ğs‚¤ƒƒ\ƒbƒh‚ğŒÄ‚Ño‚·iŠù‘¶‚ÌƒƒWƒbƒN‚ğ—˜—pj
+            if (direction != 0)
+            {
+                UpdateSelectedGunType(direction, Enum.GetValues(typeof(GunType)).Length);
             }
         }
 
@@ -158,8 +163,9 @@ namespace Guns
         /// </summary>
         void SetGunTypeAndNotify(GunType gunType)
         {
+            OnWeaponChangeCallback?.Invoke();
+
             selectedGunType = gunType;
-            gunAnimator.SetTrigger("WeaponChange");
             photonView.RPC("SetGun", RpcTarget.All, (int)selectedGunType);
         }
 
@@ -174,9 +180,6 @@ namespace Guns
             {
                 //e‚Ì”Ô†‚ğƒZƒbƒg
                 selectedGunType = (GunType)gunNo;
-
-                // ƒAƒjƒ[ƒVƒ‡ƒ“
-                playerAnimator.IsWeaponChange();
 
                 // w’èŠÔŒãØ‚è‘Ö‚¦
                 StartCoroutine(DelayedSwitchGun(1f));
@@ -239,25 +242,30 @@ namespace Guns
         //|||||||||||||||||||||||||||/
 
         /// <summary>
+        /// •ŠíUŒ‚‚ÌƒR[ƒ‹ƒoƒbƒNˆ—
+        /// </summary>
+        public static Action<int> OnGunShotAnimationCallback;
+
+        /// <summary>
         /// ¶ƒNƒŠƒbƒN‚ÌŒŸ’m
         /// </summary>
-        public void Fire()
+        void Shot(InputAction.CallbackContext context)
         {
-            if (Input.GetMouseButton(0) && Time.time > shotTimer)
+            // ButtonŒ^‚Ífloat‚ÅƒvƒŒƒXó‘Ô‚ğ•\‚·‚±‚Æ‚ª‘½‚¢i‰Ÿ‚³‚ê‚Ä‚¢‚é=1A‰Ÿ‚³‚ê‚Ä‚¢‚È‚¢=0j
+            if (Time.time > shotTimer)
             {
                 // ’e–ò‚Ìc‚è‚ª‚ ‚é‚©”»’è
                 if (ammoClip[(int)selectedGunType] == 0)
                 {
-                    // ’eØ‚ê‚Ì‰¹‚ğ–Â‚ç‚·
-                    // ƒAƒjƒ[ƒVƒ‡ƒ“‚ğg—p‚·‚é•û–@‚É•ª‚¯‚é
-                    //photonView.RPC("NotShotSound", RpcTarget.All);
-
                     // ƒI[ƒgƒŠƒ[ƒh
                     Reload();
 
                     // ˆ—I—¹
                     return;
                 }
+
+                // ƒAƒjƒ[ƒVƒ‡ƒ“
+                OnGunShotAnimationCallback?.Invoke((int)selectedGunType);
 
                 //e‚Ì”­Ëˆ—
                 FiringBullet();
@@ -269,11 +277,6 @@ namespace Guns
         /// </summary>
         void FiringBullet()
         {
-            // ƒAƒjƒ[ƒVƒ‡ƒ“
-            gunAnimator.SetTrigger("Attack");
-
-            // ƒAƒjƒ[ƒVƒ‡ƒ“
-            playerAnimator.Attack(AttackType.Short);
 
             //Ray(Œõü)‚ğƒJƒƒ‰‚Ì’†‰›‚©‚çİ’è
             Vector2 pos = new Vector2(.5f, .5f);
