@@ -7,16 +7,15 @@ public class GunAnimator : MonoBehaviourPunCallbacks
     [Header(" Elements ")]
     [SerializeField] Animator gunAnimator;
 
-    // アクセス用のハッシュ値
-    string hashAttackType = "AttackType";
-    string hashAttack = "Attack";
-    string hashMoveSpeed = "MoveSpeed";
-    string hashIsZoom = "IsZoom";
-    string hashWeaponChange = "WeaponChange";
+    // アクセス値
+    const string hashAttackType     = "AttackType";
+    const string hashAttack         = "Attack";
+    const string hashMoveSpeed      = "MoveSpeed";
+    const string hashIsZoom         = "IsZoom";
+    const string hashWeaponChange   = "WeaponChange";
 
     void Start()
     {
-        // 自身が操作するオブジェクトでなければ処理をスキップ
         if (!photonView.IsMine)
             return;
 
@@ -30,7 +29,6 @@ public class GunAnimator : MonoBehaviourPunCallbacks
 
     void OnDestroy()
     {
-        // 自身が操作するオブジェクトでなければ処理をスキップ
         if (!photonView.IsMine)
             return;
 

@@ -199,9 +199,6 @@ AnimatorStateMachine:
   - {fileID: -4013010581241571174}
   - {fileID: 7394712057029744006}
   m_StateMachineTransitions:
-  - first: {fileID: 6013399188356318878}
-    second:
-    - {fileID: -5215888934036653109}
   - first: {fileID: 6554291424775374388}
     second:
     - {fileID: -3660996537101505384}
@@ -209,6 +206,9 @@ AnimatorStateMachine:
   - first: {fileID: -8970686365792562581}
     second:
     - {fileID: 3137703040934142768}
+  - first: {fileID: 6013399188356318878}
+    second:
+    - {fileID: -5215888934036653109}
   - first: {fileID: 7570338304974462610}
     second:
     - {fileID: -1830675036862400005}
@@ -465,7 +465,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shot_AssaultRifle
+  m_Name: Shot_HandGun
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -479,7 +479,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 6ccbbced58b937048ace28f6a315d378, type: 2}
+  m_Motion: {fileID: 7400000, guid: aaef5f6fc69ec9945b8cd5b1d021337f, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -655,7 +655,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shot_HandGun
+  m_Name: Shot_AssaultRifle
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -669,7 +669,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: aaef5f6fc69ec9945b8cd5b1d021337f, type: 2}
+  m_Motion: {fileID: 7400000, guid: 6ccbbced58b937048ace28f6a315d378, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

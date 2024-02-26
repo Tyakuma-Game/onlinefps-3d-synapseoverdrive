@@ -9,15 +9,15 @@ public class PlayerAnimator : MonoBehaviourPunCallbacks
 {
     [Header(" Elements ")]
     [SerializeField] Animator playerAnimator;
-    
-    // Še—v‘f‚ÌÚ‘±ƒpƒX
-    string hashDamage = "Damage";
-    string hashHP = "HP";
-    string hashAttackType = "AttackType";
-    string hashAttack = "Attack";
-    string hashMoveSpeed = "MoveSpeed";
-    string hashIsGround = "IsGround";
-    string hashWeaponChange = "WeaponChange";
+
+    // ƒAƒjƒ[ƒVƒ‡ƒ“ƒpƒ‰ƒ[ƒ^‚ÌƒnƒbƒVƒ…
+    const string HASH_DAMAGE = "Damage";
+    const string HASH_HP = "HP";
+    const string HASH_ATTACK_TYPE = "AttackType";
+    const string HASH_ATTACK = "Attack";
+    const string HASH_MOVE_SPEED = "MoveSpeed";
+    const string HASH_IS_GROUND = "IsGround";
+    const string HASH_WEAPON_CHANGE = "WeaponChange";
 
     void Start()
     {
@@ -31,6 +31,8 @@ public class PlayerAnimator : MonoBehaviourPunCallbacks
 
         PlayerGunController.OnWeaponChangeCallback += OnWeaponChange;
         PlayerGunController.OnGunShotAnimationCallback += OnGunShot;
+
+        PlayerController.OnHPChanged += SetCurrentHP;
     }
 
     void OnDestroy()
@@ -45,33 +47,42 @@ public class PlayerAnimator : MonoBehaviourPunCallbacks
 
         PlayerGunController.OnWeaponChangeCallback -= OnWeaponChange;
         PlayerGunController.OnGunShotAnimationCallback -= OnGunShot;
+
+        PlayerController.OnHPChanged -= SetCurrentHP;
     }
 
     /// <summary>
-    /// Œ»İ‚ÌˆÚ“®‘¬“xXV
+    /// ˆÚ“®‘¬“x‚ÌXV
     /// </summary>
-    /// <param name="speed">Œ»İ‚ÌˆÚ“®‘¬“x</param>
+    /// <param name="speed">ˆÚ“®‘¬“x</param>
     void UpdateMoveSpeed(float speed) =>
-        playerAnimator.SetFloat(hashMoveSpeed, speed, 0.1f, Time.deltaTime);
+        playerAnimator.SetFloat(HASH_MOVE_SPEED, speed, 0.1f, Time.deltaTime);
 
     /// <summary>
-    /// ’n–Ê‚ÉÚG‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ÌXV
+    /// ’n–ÊÚGó‘Ô‚ÌXV
     /// </summary>
-    /// <param name="isGround">ÚG‚µ‚Ä‚¢‚é‚©</param>
+    /// <param name="isGround">’n–ÊÚGó‘Ô</param>
     void OnGroundContactChange(bool isGround) =>
-        playerAnimator.SetBool(hashIsGround, isGround);
+        playerAnimator.SetBool(HASH_IS_GROUND, isGround);
 
     /// <summary>
     /// ”í’e
     /// </summary>
     void OnDamage() =>
-        playerAnimator.SetTrigger(hashDamage);
+        playerAnimator.SetTrigger(HASH_DAMAGE);
+
+    /// <summary>
+    /// HP‚ÌXV
+    /// </summary>
+    /// <param name="hp">HP</param>
+    void SetCurrentHP(int hp) =>
+        playerAnimator.SetInteger(HASH_HP, hp);
 
     /// <summary>
     /// •ŠíŒğŠ·
     /// </summary>
     void OnWeaponChange() =>
-        playerAnimator.SetTrigger(hashWeaponChange);
+        playerAnimator.SetTrigger(HASH_WEAPON_CHANGE);
 
     /// <summary>
     /// e”­Ë
@@ -79,20 +90,7 @@ public class PlayerAnimator : MonoBehaviourPunCallbacks
     /// <param name="attackType">e‚Ìí—Ş</param>
     void OnGunShot(int attackType)
     {
-        playerAnimator.SetInteger(hashAttackType, attackType);
-        playerAnimator.SetTrigger(hashAttack);
-    }
-
-    //|||||||||||||||||||||||||||/
-    // ƒŠƒtƒ@ƒNƒ^ƒŠƒ“ƒO’†
-    //|||||||||||||||||||||||||||/
-
-    /// <summary>
-    /// Œ»İ‚ÌHP‚ğ“ü‚ê‚é
-    /// </summary>
-    /// <param name="hp">Œ»İ‚ÌHP</param>
-    public void SetCurrentHP(int hp)
-    {
-        playerAnimator.SetInteger(hashHP, hp);
+        playerAnimator.SetInteger(HASH_ATTACK_TYPE, attackType);
+        playerAnimator.SetTrigger(HASH_ATTACK);
     }
 }

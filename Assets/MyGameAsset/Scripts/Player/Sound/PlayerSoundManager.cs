@@ -1,5 +1,7 @@
 using UnityEngine;
 
+// 一旦後回しで演出を先に入れる
+
 /// <summary>
 /// プレイヤーの音に関する処理を管理するクラス
 /// </summary>
@@ -16,7 +18,6 @@ public class PlayerSoundManager : MonoBehaviour
 
     void Start()
     {
-
         // 処理登録
         PlayerEvent.onDamage += OnDamage;
     }

@@ -23,8 +23,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
     [SerializeField] PlayerStatus playerStatus;
     [SerializeField] EnemyIconController enemyIcon;
 
-    [Tooltip("Playerのアニメーション処理")]
-    PlayerAnimator playerAnimator;
 
     [SerializeField] PlayerSoundManager playerSoundManager;
 
@@ -72,25 +70,20 @@ public class PlayerController : MonoBehaviourPunCallbacks
         mouseCursorLock = GetComponent<IMouseCursorLock>();
         mouseCursorLock.LockScreen();
 
-        playerAnimator = GetComponent<PlayerAnimator>();
         playerStatus.Init();
 
         //HPスライダー反映
         UIManager.instance.UpdateHP(playerStatus.Constants.MaxHP, playerStatus.CurrentHP);
 
         // 現在のHPをセット
-        playerAnimator.SetCurrentHP(playerStatus.CurrentHP);
+        OnHPChanged?.Invoke(playerStatus.CurrentHP);
     }
 
 
     void Update()
     {
-        // 自分以外の場合は
         if (!photonView.IsMine)
-        {
-            //処理終了
             return;
-        }
 
         // 死亡演出中なら
         if (isShowDeath)
@@ -130,6 +123,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
         ReceiveDamage(name, damage, actor);
     }
 
+    /// <summary>
+    /// HPの更新処理
+    /// </summary>
+    public static event Action<int> OnHPChanged;
 
     /// <summary>
     /// ダメージを受ける処理
@@ -146,7 +143,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             playerStatus.OnDamage(damage);
 
             // HP更新処理
-            playerAnimator.SetCurrentHP(playerStatus.CurrentHP);
+            OnHPChanged?.Invoke(playerStatus.CurrentHP);
 
             // 死亡のその他処理
             PlayerEvent.onDamage?.Invoke();

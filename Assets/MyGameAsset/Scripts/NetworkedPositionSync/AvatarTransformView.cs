@@ -6,11 +6,9 @@ using Photon.Pun;
 ///</summary>
 public class AvatarTransformView : MonoBehaviourPunCallbacks, IPunObservable
 {
-    [SerializeField, Tooltip("補間にかける時間")]
-    float INTERPOLATION_PERIOD = 0.1f;
-
-    [SerializeField, Tooltip("他のプレイヤーが移動しているかの判定値")]
-    float MIN_MOVEMENT_THRESHOLD = 0.01f;
+    [Header(" Settings ")]
+    [SerializeField, Tooltip("補間にかける時間")] float INTERPOLATION_PERIOD = 0.1f;
+    [SerializeField, Tooltip("他プレイヤーの移動判定基準値")] float MIN_MOVEMENT_THRESHOLD = 0.01f;
 
     // 経過時間
     float elapsedTime;
@@ -31,17 +29,24 @@ public class AvatarTransformView : MonoBehaviourPunCallbacks, IPunObservable
     Quaternion endRotation;
 
     ///<summary>
-    /// 初期化処理
+    /// 初期化
     ///</summary>
     void Start()
     {
-        startPosition = transform.position;
-        endPosition = startPosition;
-        startSpeed = Vector3.zero;
-        endSpeed = startSpeed;
-        startRotation = transform.rotation;
-        endRotation = startRotation;
-        elapsedTime = Time.deltaTime;
+        // 座標
+        startPosition   = transform.position;
+        endPosition     = startPosition;
+
+        // 速度
+        startSpeed      = Vector3.zero;
+        endSpeed        = startSpeed;
+
+        // 回転
+        startRotation   = transform.rotation;
+        endRotation     = startRotation;
+
+        // 経過時間
+        elapsedTime     = Time.deltaTime;
     }
 
     ///<summary>
@@ -51,32 +56,28 @@ public class AvatarTransformView : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (photonView.IsMine)
         {
-            // 自身は、毎フレームの移動量と経過時間を記録
+            // 自プレイヤーは毎フレームの移動量と経過時間を記録
             startPosition = endPosition;
-            endPosition = transform.position;
+            endPosition   = transform.position;
             startRotation = endRotation;
-            endRotation = transform.rotation;
-            elapsedTime = Time.deltaTime;
+            endRotation   = transform.rotation;
+            elapsedTime   = Time.deltaTime;
         }
         else
         {
-            // 他プレイヤーは、補間処理
+            // 他プレイヤーは補間処理
             elapsedTime += Time.deltaTime;
 
-            // 座標移動の補間
+            // 座標移動補間
             if (isOtherPlayerMoving)
             {
                 if (elapsedTime < INTERPOLATION_PERIOD)
-                {
                     transform.position = HermiteSpline.Interpolate(startPosition, endPosition, startSpeed, endSpeed, elapsedTime / INTERPOLATION_PERIOD);
-                }
                 else
-                {
                     transform.position = Vector3.LerpUnclamped(startPosition, endPosition, elapsedTime / INTERPOLATION_PERIOD);
-                }
             }
 
-            // 回転の補間
+            // 回転補間
             transform.rotation = Quaternion.SlerpUnclamped(startRotation, endRotation, elapsedTime / INTERPOLATION_PERIOD);
         }
     }
@@ -118,7 +119,7 @@ public class AvatarTransformView : MonoBehaviourPunCallbacks, IPunObservable
             // 経過時間リセット
             elapsedTime = 0f;
 
-            // 他のプレイヤーが停止しているかどうか判定
+            // 他プレイヤーの停止判定
             isOtherPlayerMoving = networkVelocity.magnitude > MIN_MOVEMENT_THRESHOLD;
         }
     }

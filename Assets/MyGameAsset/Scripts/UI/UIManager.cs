@@ -117,7 +117,7 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// ƒfƒXUI”ñ•\Ž¦
     /// </summary>
-    private void CloseDeathUI()
+    void CloseDeathUI()
     {
         deathPanel.SetActive(false);
     }
