@@ -60,7 +60,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
 
             // 発射処理登録
             InputManager.Controls.Gun.Shot.started += Shot;
-            InputManager.Controls.Gun.Shot.performed += Shot;
+            InputManager.Controls.Gun.Shot.canceled += Shot;
         }
 
         // 銃の表示切替
@@ -81,7 +81,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
 
         // 発射処理解除
         InputManager.Controls.Gun.Shot.started -= Shot;
-        InputManager.Controls.Gun.Shot.performed -= Shot;
+        InputManager.Controls.Gun.Shot.canceled -= Shot;
     }
 
     void Update()
@@ -247,29 +247,48 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     /// </summary>
     public static Action<int> OnGunShotAnimationCallback;
 
-    /// <summary>
-    /// 左クリックの検知
-    /// </summary>
-    void Shot(InputAction.CallbackContext context)
-    {
-        // Button型はfloatでプレス状態を表すことが多い（押されている=1、押されていない=0）
-        if (Time.time > shotTimer)
-        {
-            // 弾薬の残りがあるか判定
-            if (ammoClip[(int)selectedGunType] == 0)
-            {
-                // オートリロード
-                Reload();
+    [SerializeField] private float autoFireRate = 0.1f; // 連射間隔
 
-                // 処理終了
-                return;
+    // 連射コルーチン
+    IEnumerator AutoFireCoroutine()
+    {
+        while (true)
+        {
+            // Button型はfloatでプレス状態を表すことが多い（押されている=1、押されていない=0）
+            if (Time.time > shotTimer)
+            {
+                // 弾薬の残りがあるか判定
+                if (ammoClip[(int)selectedGunType] == 0)
+                {
+                    // オートリロード
+                    Reload();
+
+                    // 処理中断
+                    yield break;
+                }
+
+                // アニメーション
+                OnGunShotAnimationCallback?.Invoke((int)selectedGunType);
+
+                //銃の発射処理
+                FiringBullet();
             }
 
-            // アニメーション
-            OnGunShotAnimationCallback?.Invoke((int)selectedGunType);
+            yield return new WaitForSeconds(autoFireRate);
+        }
+    }
 
-            //銃の発射処理
-            FiringBullet();
+    void Shot(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            // 連射コルーチン開始
+            StartCoroutine("AutoFireCoroutine");
+        }
+        else if (context.canceled)
+        {
+            // 連射コルーチン停止
+            StopCoroutine("AutoFireCoroutine");
         }
     }
 
@@ -278,7 +297,6 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     /// </summary>
     void FiringBullet()
     {
-
         //Ray(光線)をカメラの中央から設定
         Vector2 pos = new Vector2(.5f, .5f);
         Ray ray = cameraController.GenerateRay(pos);
