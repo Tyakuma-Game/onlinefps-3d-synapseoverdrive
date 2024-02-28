@@ -1,11 +1,10 @@
-using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 /// <summary>
 /// Playerの回転を管理するクラス
 /// </summary>
-public class PlayerRotation : MonoBehaviourPunCallbacks
+public class PlayerRotation : MonoBehaviour
 {
     [Header(" Settings ")]
     [SerializeField] RotationSettings rotationSettings; //TODO： リファクタリングする！
@@ -13,11 +12,37 @@ public class PlayerRotation : MonoBehaviourPunCallbacks
     Vector2 rotationInput = Vector2.zero;
     InputAction lookAction;
 
-    void Start()
+    void Awake()
     {
-        if (!photonView.IsMine)
+        // 処理登録
+        PlayerEvent.OnPlayerInstantiated += HandlePlayerInstantiated;
+    }
+
+    void OnDestroy()
+    {
+        // 処理解除
+        PlayerEvent.OnPlayerInstantiated -= HandlePlayerInstantiated;
+        if (lookAction != null)
+        {
+            lookAction.started -= OnLookPerformed;
+            lookAction.performed -= OnLookPerformed;
+            lookAction.canceled -= OnLookCanceled;
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (rotationInput == Vector2.zero)
             return;
 
+        Rotate(rotationInput);
+    }
+
+    /// <summary>
+    /// プレイヤーがインスタンス化された際に呼ばれる処理
+    /// </summary>
+    void HandlePlayerInstantiated()
+    {
         // 取得
         lookAction = InputManager.Controls.Player.Look;
 
@@ -25,28 +50,6 @@ public class PlayerRotation : MonoBehaviourPunCallbacks
         lookAction.started += OnLookPerformed;
         lookAction.performed += OnLookPerformed;
         lookAction.canceled += OnLookCanceled;
-    }
-
-    void OnDestroy()
-    {
-        if (!photonView.IsMine)
-            return;
-
-        // イベントからメソッドの登録を解除
-        lookAction.started -= OnLookPerformed;
-        lookAction.performed -= OnLookPerformed;
-        lookAction.canceled -= OnLookCanceled;
-    }
-
-    void FixedUpdate()
-    {
-        if (!photonView.IsMine)
-            return;
-
-        if (rotationInput == Vector2.zero)
-            return;
-
-        Rotate(rotationInput);
     }
 
     /// <summary>
@@ -72,7 +75,7 @@ public class PlayerRotation : MonoBehaviourPunCallbacks
     void Rotate(Vector2 rotaInput)
     {
         // 計算
-        Vector2 rotation = new Vector2(rotaInput.x * rotationSettings.rotationSpeed, 0);
+        Vector2 rotation = new Vector2(rotaInput.x * rotationSettings.rotationSpeed, 0f);
 
         //横回転を反映
         transform.rotation = Quaternion.Euler           // オイラー角としての角度が返される

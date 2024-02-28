@@ -3,14 +3,22 @@ using System;
 using UnityEngine;
 
 /// <summary>
-/// 
+/// ネットワーク上でオブジェクトが生成されたかどうかを判定する処理
 /// </summary>
-public class PhotonEventManager : MonoBehaviourPunCallbacks
+public class PhotonEventManager : MonoBehaviour, IPunInstantiateMagicCallback
 {
-    public static event Action<GameObject> OnPlayerInstantiated;
-
-    public override void OnPhotonInstantiate(PhotonMessageInfo info)
+    public void OnPhotonInstantiate(PhotonMessageInfo info)
     {
-        OnPlayerInstantiated?.Invoke(info.photonView.gameObject);
+        if (info.Sender.IsLocal)
+        {
+            Debug.Log("自身がネットワークオブジェクトを生成しました");
+        }
+        else
+        {
+            Debug.Log("他プレイヤーがネットワークオブジェクトを生成しました");
+        }
+
+        //OnPlayerInstantiated?.Invoke(info.photonView.gameObject);
     }
+
 }

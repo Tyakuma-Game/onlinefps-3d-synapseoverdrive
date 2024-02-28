@@ -1,12 +1,11 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Photon.Pun;
-using System;
 
 /// <summary>
 /// プレイヤーの移動を管理するクラス
 /// </summary>
-public class PlayerMove : MonoBehaviourPunCallbacks
+public class PlayerMove : MonoBehaviour
 {
     /// <summary>
     /// 移動速度変更のCallback
@@ -27,11 +26,44 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     InputAction moveAction;
     InputAction sprintAction;
 
-    void Start()
+    void Awake()
     {
-        if (!photonView.IsMine)
-            return;
+        // 処理登録
+        PlayerEvent.OnPlayerInstantiated += HandlePlayerInstantiated;
+    }
 
+    void OnDestroy()
+    {
+        // 処理解除
+        PlayerEvent.OnPlayerInstantiated -= HandlePlayerInstantiated;
+        if (moveAction != null)
+        {
+            moveAction.started -= UpdateMoveDirection;
+            moveAction.performed -= UpdateMoveDirection;
+            moveAction.canceled -= UpdateMoveDirection;
+        }
+
+        if(sprintAction != null)
+        {
+            sprintAction.started -= OnDash;
+            sprintAction.canceled -= OnWalk;
+        }
+    }
+
+    void FixedUpdate()
+    {
+        // 移動処理を実行
+        Move(moveDirection);
+
+        // Animationの関係上...
+        OnSpeedChanged?.Invoke(currentSpeed * moveDirection.magnitude);
+    }
+
+    /// <summary>
+    /// プレイヤーがインスタンス化された際に呼ばれる処理
+    /// </summary>
+    void HandlePlayerInstantiated()
+    {
         // 取得
         moveAction = InputManager.Controls.Player.Move;
         sprintAction = InputManager.Controls.Player.Sprint;
@@ -46,33 +78,6 @@ public class PlayerMove : MonoBehaviourPunCallbacks
 
         // 初期化
         currentSpeed = walkSpeed;
-    }
-
-    void OnDestroy()
-    {
-        if (!photonView.IsMine)
-            return;
-
-        // 処理解除
-        moveAction.started -= UpdateMoveDirection;
-        moveAction.performed -= UpdateMoveDirection;
-        moveAction.canceled -= UpdateMoveDirection;
-
-        sprintAction.started -= OnDash;
-        sprintAction.canceled -= OnWalk;
-
-    }
-
-    void FixedUpdate()
-    {
-        if (!photonView.IsMine)
-            return;
-
-        // 移動処理を実行
-        Move(moveDirection);
-
-        // Animationの関係上...
-        OnSpeedChanged?.Invoke(currentSpeed * moveDirection.magnitude);
     }
 
     /// <summary>
@@ -101,7 +106,6 @@ public class PlayerMove : MonoBehaviourPunCallbacks
     {
         moveDirection = context.ReadValue<Vector2>();
     }
-        
 
     /// <summary>
     /// プレイヤーを指定された方向と速度で移動させる

@@ -1,4 +1,3 @@
-using Photon.Pun;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,7 +5,7 @@ using UnityEngine.InputSystem;
 /// <summary>
 /// Playerのジャンプに関するクラス
 /// </summary>
-public class PlayerJump : MonoBehaviourPunCallbacks
+public class PlayerJump : MonoBehaviour
 {
     /// <summary>
     /// 地面に接触しているかどうかの通知イベント
@@ -21,50 +20,53 @@ public class PlayerJump : MonoBehaviourPunCallbacks
     InputAction jumpAction;
     bool isGround = true;
 
-    void Start()
+    void Awake()
     {
-        if (!photonView.IsMine)
-            return;
-
-        // 取得
-        rb = GetComponent<Rigidbody>();
-        jumpAction = InputManager.Controls.Player.Jump;
-
         // 処理登録
-        jumpAction.started += OnJump;
+        PlayerEvent.OnPlayerInstantiated += HandlePlayerInstantiated;
     }
 
     void OnDestroy()
     {
-        if (!photonView.IsMine)
-            return;
-        
         // 処理解除
-        jumpAction.started -= OnJump;
+        PlayerEvent.OnPlayerInstantiated -= HandlePlayerInstantiated;
+        if (jumpAction != null)
+            jumpAction.started -= OnJump;
     }
 
+    /// <summary>
+    /// プレイヤーがインスタンス化された際に呼ばれる処理
+    /// </summary>
+    void HandlePlayerInstantiated()
+    {
+        rb = GetComponent<Rigidbody>();
+        jumpAction = InputManager.Controls.Player.Jump;
+        jumpAction.started += OnJump;
+    }
+
+    /// <summary>
+    /// 地面との接触判定を行い、接触状態が変化した場合はイベントを通じて通知
+    /// </summary>
+    /// <param name="collision">衝突したオブジェクトの情報</param>
     void OnCollisionEnter(Collision collision)
     {
-        // 地面に接触していない & 衝突したオブジェクトが指定された地面のレイヤーに含まれているかチェック
+        // 地面に接触していない & 衝突したオブジェクトが指定された地面のレイヤーに含まれているか
         if (!isGround && ((1 << collision.gameObject.layer) & groundLayers) != 0)
         {
-            // 変更と通知
             isGround = true;
             OnGroundContactChange?.Invoke(isGround);
         }
     }
 
     /// <summary>
-    /// ジャンプ処理
+    /// ジャンプの入力があった際に地面に接触している場合、ジャンプ処理を実行
     /// </summary>
+    /// <param name="context">入力のコンテキスト</param>
     void OnJump(InputAction.CallbackContext context)
     {
         if (isGround)
         {
-            // 力を加える
             rb.AddForce(jumpForce, ForceMode.VelocityChange);
-
-            // 変更と通知
             isGround = false;
             OnGroundContactChange?.Invoke(isGround);
         }

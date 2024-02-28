@@ -3,18 +3,6 @@ using Photon.Pun;
 using MiniMap;
 using System;
 
-// TODO: 作り直す
-
-/// <summary>
-/// プレイヤーのEvent処理
-/// </summary>
-public static class PlayerEvent
-{
-    public static Action onDamage;
-    public static Action onSpawn;
-    public static Action onDisappear;
-}
-
 /// <summary>
 /// Player管理クラス
 /// </summary>

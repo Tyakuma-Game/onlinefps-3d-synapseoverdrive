@@ -338,7 +338,7 @@ Transform:
   - {fileID: 2023666807}
   - {fileID: 1813100294}
   m_Father: {fileID: 535951492}
-  m_RootOrder: 82
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &11274109
 PrefabInstance:
@@ -10549,6 +10549,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 420172669}
+  - component: {fileID: 420172670}
   m_Layer: 0
   m_Name: Photon Event Manager
   m_TagString: Untagged
@@ -10571,6 +10572,18 @@ Transform:
   m_Father: {fileID: 1805891901}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &420172670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420172668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57f0df0d70e7e2d44bac52715e27ef01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &430791071
 GameObject:
   m_ObjectHideFlags: 0
@@ -12570,6 +12583,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3869676}
+  - {fileID: 763602676}
+  - {fileID: 1532799831}
+  - {fileID: 1347189012}
   - {fileID: 749457065}
   - {fileID: 894038970}
   - {fileID: 1879283846}
@@ -12610,10 +12627,10 @@ Transform:
   - {fileID: 576946501}
   - {fileID: 478349766}
   - {fileID: 147581202}
-  - {fileID: 2061022141}
   - {fileID: 467816473}
   - {fileID: 1178008049}
   - {fileID: 784332287}
+  - {fileID: 2061022141}
   - {fileID: 505636079}
   - {fileID: 615481868}
   - {fileID: 1315128976}
@@ -12652,15 +12669,11 @@ Transform:
   - {fileID: 2110537308}
   - {fileID: 1062801695}
   - {fileID: 1676822698}
-  - {fileID: 3869676}
   - {fileID: 863830412}
-  - {fileID: 763602676}
   - {fileID: 1531407955}
   - {fileID: 1509292280}
-  - {fileID: 1532799831}
   - {fileID: 1648455744}
   - {fileID: 2015501848}
-  - {fileID: 1347189012}
   - {fileID: 630440860}
   - {fileID: 1530406949}
   - {fileID: 1117995687}
@@ -18982,7 +18995,7 @@ Transform:
   - {fileID: 541352698}
   - {fileID: 2006639824}
   m_Father: {fileID: 535951492}
-  m_RootOrder: 84
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &765944656
 GameObject:
@@ -34023,7 +34036,7 @@ Transform:
   - {fileID: 36522359}
   - {fileID: 657661315}
   m_Father: {fileID: 535951492}
-  m_RootOrder: 90
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1347484221
 PrefabInstance:
@@ -38854,7 +38867,7 @@ Transform:
   - {fileID: 584959702}
   - {fileID: 1285890412}
   m_Father: {fileID: 535951492}
-  m_RootOrder: 87
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1534012019
 PrefabInstance:
@@ -56619,21 +56632,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 934038861596881045, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
-      propertyPath: m_Name
-      value: ViewPoint
-      objectReference: {fileID: 0}
-    - target: {fileID: 6624567064914251952, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
-      propertyPath: m_Name
-      value: EnemyIcon
-      objectReference: {fileID: 0}
     - target: {fileID: 8574140716887355001, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
       propertyPath: sceneViewId
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9102832984494105634, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
-      propertyPath: m_Name
-      value: SabViewPoint
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c4c19fa78c187a4b8b5530262e0e390, type: 3}
