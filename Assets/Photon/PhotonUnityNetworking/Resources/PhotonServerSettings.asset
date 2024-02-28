@@ -38,13 +38,9 @@ MonoBehaviour:
   - DestroyRpc
   - DestroySpaceship
   - Fire
+  - Hit
   - RespawnSpaceship
   - SetGun
-  - Hit
-  - SoundGeneration
-  - SoundStop
-  - ShotEffect
-  - NotShotSound
   - SpawnEffectActive
   DisableAutoOpenWizard: 1
   ShowSettings: 1
