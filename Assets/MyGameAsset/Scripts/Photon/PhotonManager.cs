@@ -81,6 +81,11 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         //メニューを全て閉じる
         CloseMenuUI();
 
+        AAA();
+    }
+
+    void AAA()
+    {
         //ロードパネルを表示してテキスト更新
         loadingPanel.SetActive(true);
         loadingText.text = "ネットワークに接続中...";
@@ -92,14 +97,12 @@ public class PhotonManager : MonoBehaviourPunCallbacks
             Debug.LogError("Error:NotConnect Internet");
         }
 
-        //初回接続時なら
         if (!PhotonNetwork.IsConnected)
         {
             //PhotonServerSettingsファイルの設定に従ってPhotonに接続
             PhotonNetwork.ConnectUsingSettings();
         }
     }
-
 
     /// <summary>
     /// ネットワーク接続確認
@@ -275,8 +278,10 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     /// </summary>
     public override void OnLeftRoom()
     {
+        // 別の物を表示するなら必要かも？
+
         //ロビーメニューを表示
-        LobbyMenuDisplay();
+        //LobbyMenuDisplay();
     }
 
 

@@ -13,8 +13,7 @@ public class AvatarTransformView : MonoBehaviourPunCallbacks, IPunObservable
     [SerializeField, Tooltip("他プレイヤーの移動判定基準値")]
     float MIN_MOVEMENT_THRESHOLD = 0.01f;
 
-    
-    float elapsedTime;              // 経過時間
+    float elapsedTime;       // 経過時間
     bool isOtherPlayerMoving = true;// 他のプレイヤーが停止しているか
 
     // 補間の座標
@@ -35,19 +34,19 @@ public class AvatarTransformView : MonoBehaviourPunCallbacks, IPunObservable
     void Start()
     {
         // 座標
-        startPosition   = transform.position;
-        endPosition     = startPosition;
+        startPosition = transform.position;
+        endPosition = startPosition;
 
         // 速度
-        startSpeed      = Vector3.zero;
-        endSpeed        = startSpeed;
+        startSpeed = Vector3.zero;
+        endSpeed = startSpeed;
 
         // 回転
-        startRotation   = transform.rotation;
-        endRotation     = startRotation;
+        startRotation = transform.rotation;
+        endRotation = startRotation;
 
         // 経過時間
-        elapsedTime     = Time.deltaTime;
+        elapsedTime = Time.deltaTime;
     }
 
     ///<summary>
@@ -59,10 +58,10 @@ public class AvatarTransformView : MonoBehaviourPunCallbacks, IPunObservable
         {
             // 自プレイヤーは毎フレームの移動量と経過時間を記録
             startPosition = endPosition;
-            endPosition   = transform.position;
+            endPosition = transform.position;
             startRotation = endRotation;
-            endRotation   = transform.rotation;
-            elapsedTime   = Time.deltaTime;
+            endRotation = transform.rotation;
+            elapsedTime = Time.deltaTime;
         }
         else
         {
@@ -106,16 +105,16 @@ public class AvatarTransformView : MonoBehaviourPunCallbacks, IPunObservable
             var lag = Mathf.Max(0f, unchecked(PhotonNetwork.ServerTimestamp - info.SentServerTimestamp) / 1000f);
 
             // 座標
-            startPosition = transform.position;                     // 受信時の座標を、補間の開始座標にする
-            endPosition = networkPosition + networkVelocity * lag;  // 現在時刻における予測座標を、補間の終了座標にする
+            startPosition = transform.position;           // 受信時の座標を、補間の開始座標にする
+            endPosition = networkPosition + networkVelocity * lag; // 現在時刻における予測座標を、補間の終了座標にする
 
             // 速度
-            startSpeed = endSpeed;                              // 前回の補間の終了速度を、補間の開始速度にする
-            endSpeed = networkVelocity * INTERPOLATION_PERIOD;  // 受信した秒速を、補間にかける時間あたりの速度に変換して、補間の終了速度にする
+            startSpeed = endSpeed;               // 前回の補間の終了速度を、補間の開始速度にする
+            endSpeed = networkVelocity * INTERPOLATION_PERIOD; // 受信した秒速を、補間にかける時間あたりの速度に変換して、補間の終了速度にする
 
             // 回転
             startRotation = transform.rotation; // 受信時の回転情報を、補間の開始回転にする
-            endRotation = networkRotation;      // 現在時刻における予測回転情報を、補間の終了回転にする
+            endRotation = networkRotation;   // 現在時刻における予測回転情報を、補間の終了回転にする
 
             // 経過時間リセット
             elapsedTime = 0f;
