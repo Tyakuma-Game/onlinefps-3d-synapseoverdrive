@@ -1,43 +1,40 @@
-using Photon.Pun;
-using System;
 using UnityEngine;
 using System.Collections;
 
 /// <summary>
 /// カメラのズーム処理クラス
 /// </summary>
-public class CameraZoom : MonoBehaviourPunCallbacks
+public class CameraZoom : MonoBehaviour
 {
-    /// <summary>
-    /// ズーム状態が変更されたときに発火するイベント
-    /// </summary>
-    public static Action<float, float> OnZoomStateChanged;
-
     [Header(" Settings ")]
     [SerializeField] float zoomThreshold = 0.01f;
 
     Camera myCamera;
     Coroutine zoomCoroutine;
 
-    void Start()
+    void Awake()
     {
-        if (!photonView.IsMine)
-            return;
-
-        // 取得
-        myCamera = Camera.main;
-
         // 処理登録
-        OnZoomStateChanged += HandleZoomChange;
+        PlayerEvent.OnPlayerInstantiated += HandlePlayerInstantiated;
     }
 
     void OnDestroy()
     {
-        if (!photonView.IsMine)
-            return;
-
         // 処理解除
-        OnZoomStateChanged -= HandleZoomChange;
+        PlayerEvent.OnPlayerInstantiated -= HandlePlayerInstantiated;
+        CameraEvents.OnZoomStateChanged -= HandleZoomChange;
+    }
+
+    /// <summary>
+    /// プレイヤーがインスタンス化された際に呼ばれる処理
+    /// </summary>
+    void HandlePlayerInstantiated()
+    {
+        // 取得
+        myCamera = Camera.main;
+
+        // 処理登録
+        CameraEvents.OnZoomStateChanged += HandleZoomChange;
     }
 
     /// <summary>
@@ -52,7 +49,7 @@ public class CameraZoom : MonoBehaviourPunCallbacks
         if (zoomCoroutine != null)
             StopCoroutine(zoomCoroutine);
 
-        // 新しいズームコルーチン開始
+        // 新ズームコルーチン開始
         zoomCoroutine = StartCoroutine(AdjustCameraZoom(targetZoom, zoomSpeed));
     }
 
@@ -65,13 +62,14 @@ public class CameraZoom : MonoBehaviourPunCallbacks
     /// <returns>コルーチンの実行制御に使用されるIEnumerator</returns>
     IEnumerator AdjustCameraZoom(float targetZoom, float zoomSpeed)
     {
-        while (Mathf.Abs(myCamera.fieldOfView - targetZoom) > zoomThreshold) // ズーム倍率に到達するまでループ
+        float deltaZoom = Mathf.Abs(myCamera.fieldOfView - targetZoom);
+        while (deltaZoom > zoomThreshold)
         {
             myCamera.fieldOfView = Mathf.Lerp(myCamera.fieldOfView, targetZoom, zoomSpeed * Time.deltaTime);
             yield return null;
         }
 
-        // 最終的に目標値設定
+        // 微調整
         myCamera.fieldOfView = targetZoom;
     }
 }

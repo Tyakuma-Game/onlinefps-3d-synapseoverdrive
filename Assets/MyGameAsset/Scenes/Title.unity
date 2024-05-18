@@ -896,7 +896,6 @@ GameObject:
   - component: {fileID: 209586232}
   - component: {fileID: 209586234}
   - component: {fileID: 209586233}
-  - component: {fileID: 209586235}
   m_Layer: 5
   m_Name: '[START]'
   m_TagString: Untagged
@@ -964,18 +963,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 209586231}
   m_CullTransparentMesh: 1
---- !u!114 &209586235
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 209586231}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1156b2ef8c6bcf04f9080de6ab8ff921, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &220025338
 GameObject:
   m_ObjectHideFlags: 0
@@ -5727,7 +5714,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 209586235}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameStart, Assembly-CSharp
         m_MethodName: PushGameStartButton
         m_Mode: 1

@@ -26,7 +26,7 @@ public class PlayerAnimator : MonoBehaviourPunCallbacks
         // èàóùìoò^
         PlayerMove.OnSpeedChanged += UpdateMoveSpeed;
         PlayerJump.OnGroundContactChange += OnGroundContactChange;
-        PlayerEvent.onDamage += OnDamage;
+        PlayerEvent.OnDamage += OnDamage;
 
         PlayerGunController.OnWeaponChangeCallback += OnWeaponChange;
         PlayerGunController.OnGunShotAnimationCallback += OnGunShot;
@@ -42,7 +42,7 @@ public class PlayerAnimator : MonoBehaviourPunCallbacks
         // èàóùâèú
         PlayerMove.OnSpeedChanged -= UpdateMoveSpeed;
         PlayerJump.OnGroundContactChange -= OnGroundContactChange;
-        PlayerEvent.onDamage -= OnDamage;
+        PlayerEvent.OnDamage -= OnDamage;
 
         PlayerGunController.OnWeaponChangeCallback -= OnWeaponChange;
         PlayerGunController.OnGunShotAnimationCallback -= OnGunShot;

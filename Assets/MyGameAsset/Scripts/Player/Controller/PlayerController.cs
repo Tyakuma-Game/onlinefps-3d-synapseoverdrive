@@ -104,14 +104,15 @@ public class PlayerController : MonoBehaviourPunCallbacks
         //自分なら
         if (photonView.IsMine)
         {
+            // ダメージイベント発火
+            PlayerEvent.OnDamage?.Invoke();
+
             //ダメージ
             playerStatus.OnDamage(damage);
 
             // HP更新処理
             OnHPChanged?.Invoke(playerStatus.CurrentHP);
 
-            // 死亡のその他処理
-            PlayerEvent.onDamage?.Invoke();
 
             //現在のHPが0以下の場合
             if (playerStatus.CurrentHP <= 0 && isShowDeath == false)

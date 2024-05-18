@@ -225,7 +225,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     void ZoomIn(InputAction.CallbackContext context)
     {
         OnGunZoomStateChanged?.Invoke(true);
-        CameraZoom.OnZoomStateChanged?.Invoke(gunDates[(int)selectedGunType].AdsZoom, gunDates[(int)selectedGunType].AdsSpeed);
+        CameraEvents.OnZoomStateChanged?.Invoke(gunDates[(int)selectedGunType].AdsZoom, gunDates[(int)selectedGunType].AdsSpeed);
     }
 
     /// <summary>
@@ -234,7 +234,7 @@ public class PlayerGunController : MonoBehaviourPunCallbacks
     void ZoomOut(InputAction.CallbackContext context)
     {
         OnGunZoomStateChanged?.Invoke(false);
-        CameraZoom.OnZoomStateChanged?.Invoke(60f, gunDates[(int)selectedGunType].AdsSpeed);
+        CameraEvents.OnZoomStateChanged?.Invoke(60f, gunDates[(int)selectedGunType].AdsSpeed);
     }
 
 

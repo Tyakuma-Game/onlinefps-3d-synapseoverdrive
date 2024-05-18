@@ -86,7 +86,7 @@ public class CameraRotation : MonoBehaviourPunCallbacks
                                 -verticalRotationRange, verticalRotationRange);
 
         // c‚Ì‹“_‰ñ“]‚ğ”½‰f
-        viewPoint.rotation = Quaternion.Euler(-verticalMouseInput, // -‚ğ•t‚¯‚È‚¢‚Æã‰º”½“]
+        viewPoint.rotation = Quaternion.Euler(-verticalMouseInput,
             viewPoint.transform.rotation.eulerAngles.y,
             viewPoint.transform.rotation.eulerAngles.z);
     }

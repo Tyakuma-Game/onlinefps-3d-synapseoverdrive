@@ -16,7 +16,7 @@ public class PlayerEvent : MonoBehaviour, IPunInstantiateMagicCallback
     /// <summary>
     /// プレイヤーがダメージを受けた時に発生するイベント
     /// </summary>
-    public static Action onDamage;
+    public static Action OnDamage;
 
     /// <summary>
     /// プレイヤーがゲームにスポーン（生成）した時に発生するイベント

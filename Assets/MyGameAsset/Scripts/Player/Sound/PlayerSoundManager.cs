@@ -21,13 +21,13 @@ public class PlayerSoundManager : MonoBehaviour
     void Start()
     {
         // ˆ—“o˜^
-        PlayerEvent.onDamage += OnDamage;
+        PlayerEvent.OnDamage += OnDamage;
     }
 
     void OnDestroy()
     {
         // ˆ—‰ğœ
-        PlayerEvent.onDamage -= OnDamage;
+        PlayerEvent.OnDamage -= OnDamage;
     }
 
     /// <summary>

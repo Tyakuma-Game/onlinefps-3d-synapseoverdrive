@@ -25,19 +25,18 @@ public class SpawnManager : MonoBehaviour
         else
             Destroy(gameObject);
 
-        // スポーンポイントを初期化
+        // 初期化
         InitializeSpawnPoints();
     }
 
     void Start()
     {
-        // ネットワーク接続がある場合のみプレイヤーをスポーン
         if (PhotonNetwork.IsConnected)
             SpawnPlayer();
     }
 
     /// <summary>
-    /// スポーンポイントの初期化
+    /// スポーンポイント初期化
     /// </summary>
     void InitializeSpawnPoints()
     {
@@ -50,7 +49,7 @@ public class SpawnManager : MonoBehaviour
     /// </summary>
     public void SpawnPlayer()
     {
-        // プレイヤー生成
+        // 生成
         Transform spawnPoint = GetRandomSpawnPoint();
         playerInstance = PhotonNetwork.Instantiate(playerPrefab.name, spawnPoint.position, spawnPoint.rotation);
         

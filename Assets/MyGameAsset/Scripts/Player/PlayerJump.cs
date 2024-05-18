@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 public class PlayerJump : MonoBehaviour
 {
     /// <summary>
-    /// 地面に接触しているかどうかの通知イベント
+    /// 地面との接触状態変更通知イベント
     /// </summary>
     public static event Action<bool> OnGroundContactChange;
 
@@ -39,8 +39,11 @@ public class PlayerJump : MonoBehaviour
     /// </summary>
     void HandlePlayerInstantiated()
     {
+        // 取得
         rb = GetComponent<Rigidbody>();
         jumpAction = InputManager.Controls.Player.Jump;
+
+        // 登録
         jumpAction.started += OnJump;
     }
 
