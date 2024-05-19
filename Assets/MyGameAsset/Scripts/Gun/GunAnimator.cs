@@ -14,6 +14,7 @@ public class GunAnimator : MonoBehaviourPunCallbacks
     const string HASH_ATTACK        = "Attack";
     const string HASH_MOVE_SPEED    = "MoveSpeed";
     const string HASH_IS_ZOOM       = "IsZoom";
+    const string HASH_IS_GROUND = "IsGround";
     const string HASH_WEAPON_CHANGE = "WeaponChange";
 
     void Start()
@@ -23,6 +24,7 @@ public class GunAnimator : MonoBehaviourPunCallbacks
 
         // 処理登録
         PlayerMove.OnSpeedChanged += UpdateMoveSpeed;
+        PlayerJump.OnGroundContactChange += OnGroundContactChange;
 
         PlayerGunController.OnGunZoomStateChanged += GunZoomStateChange;
         PlayerGunController.OnWeaponChangeCallback += OnWeaponChange;
@@ -36,6 +38,7 @@ public class GunAnimator : MonoBehaviourPunCallbacks
 
         // 処理解除
         PlayerMove.OnSpeedChanged -= UpdateMoveSpeed;
+        PlayerJump.OnGroundContactChange -= OnGroundContactChange;
 
         PlayerGunController.OnGunZoomStateChanged -= GunZoomStateChange;
         PlayerGunController.OnWeaponChangeCallback -= OnWeaponChange;
@@ -55,6 +58,13 @@ public class GunAnimator : MonoBehaviourPunCallbacks
     /// <param name="isZoom">ズーム中なのかどうか</param>
     void GunZoomStateChange(bool isZoom) =>
         gunAnimator.SetBool(HASH_IS_ZOOM, isZoom);
+
+    /// <summary>
+    /// 地面接触状態の更新
+    /// </summary>
+    /// <param name="isGround">地面接触状態</param>
+    void OnGroundContactChange(bool isGround) =>
+        gunAnimator.SetBool(HASH_IS_GROUND, isGround);
 
     /// <summary>
     /// 武器交換
